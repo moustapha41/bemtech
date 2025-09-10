@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galerie - BemTech Alumni</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Inter:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .gallery-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .gallery-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .gallery-header h1 {
+            font-size: 2.5rem;
+            color: var(--ink);
+            margin-bottom: 1rem;
+        }
+
+        .gallery-subtitle {
+            color: #666;
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Sections par année */
+        .year-section {
+            margin-bottom: 4rem;
+        }
+
+        .year-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 16px;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .year-title {
+            font-size: 2.5rem;
+            margin: 0;
+            font-weight: 700;
+        }
+
+        .year-stats {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        /* Filtres */
+        .filters-section {
+            background: white;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .filter-group {
+            margin-bottom: 2rem;
+        }
+
+        .filter-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .filter-group label {
+            display: block;
+            font-weight: 600;
+            color: var(--ink);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .filter-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .filter-tab {
+            padding: 0.5rem 1rem;
+            border: 2px solid #ddd;
+            background: white;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            color: #666;
+            font-weight: 500;
+        }
+
+        .filter-tab:hover {
+            border-color: var(--washu-red);
+            color: var(--washu-red);
+        }
+
+        .filter-tab.active {
+            background: var(--washu-red);
+            color: white;
+            border-color: var(--washu-red);
+        }
+
+        /* Grille de photos */
+        .photos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .photo-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .photo-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+        }
+
+        .photo-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            display: block;
+            background: #f0f0f0;
+            transition: opacity 0.3s ease;
+        }
+
+        .photo-image:not([src]) {
+            opacity: 0;
+        }
+
+        .photo-image[src] {
+            opacity: 1;
+        }
+
+        .photo-info {
+            padding: 1rem;
+        }
+
+        .photo-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--ink);
+        }
+
+        .photo-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .photo-date {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .photo-type {
+            background: var(--washu-red);
+            color: white;
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.9);
+        }
+
+        .modal-content {
+            position: relative;
+            margin: 5% auto;
+            width: 90%;
+            max-width: 800px;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .modal-image {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+        }
+
+        .modal-info {
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 25px;
+            color: white;
+            font-size: 35px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .close:hover {
+            opacity: 0.7;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .photos-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 1rem;
+            }
+            
+            .gallery-header h1 {
+                font-size: 2rem;
+            }
+            
+            .year-stats {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .photos-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="topline"></div>
+
+    <div class="masthead">
+        <div class="wrap">
+            <!-- Partie gauche -->
+            <div class="header-left">
+                <div class="brand-logo">
+                    <img alt="BEMTECH Logo" src="logob.png">
+                </div>
+                <span class="brand-divider" aria-hidden="true"></span>
+                <div class="brand-title">Alumni</div>
+            </div>
+
+            <!-- Partie droite -->
+            <div class="header-right">
+                <nav class="nav-block" aria-label="Primary">
+                    <div class="nav-top">
+                        <a href="#join" id="membershipBtn">Membership</a>
+                        <a href="actualite.html" class="restricted-link" data-page="actualites">Actualités &amp; Recompenses</a>
+                        <a href="vie_school.html" class="restricted-link" data-page="vie-ecole">Vie a l'ecole</a>
+                        <a href="after.html" class="restricted-link" data-page="apres-ecole">Apres l'ecole</a>
+                        <a href="contact.html">Contact</a>
+                    </div>
+                    <div class="nav-bottom">
+                        <!-- Notre Communaute -->
+                        <div class="dropdown">
+                            <a href="#">Notre Communauté</a>
+                            <ul class="submenu">
+                              <li><a href="reseau.html" class="restricted-link" data-page="reseau">Reseau</a></li>
+                              <li><a href="Qui.html">Qui sommes-nous ??</a></li>
+                              <li><a href="FAQ.html">FAQ</a></li>
+                            </ul>
+                          </div>
+                          <div class="dropdown">
+                            <a href="#">Carrières &amp; Ressources</a>
+                            <ul class="submenu">
+                              <li><a href="opportunite.html" class="restricted-link" data-page="opportunites">Opportunités</a></li>
+                              <li><a href="mentorat.html" class="restricted-link" data-page="mentorat">Mentorat / Developpement professionnel</a></li>
+                              <li><a href="projet.html" class="restricted-link" data-page="projet">Projet / Realisation</a></li>
+                            </ul>
+                          </div>
+                        <!-- Evenement -->
+                        <div class="dropdown">
+                            <a href="#">Événement</a>
+                            <ul class="submenu">
+                              <li><a href="calendrier.html" class="restricted-link" data-page="calendrier">Calendrier</a></li>
+                              <li><a href="reunion.html" class="restricted-link" data-page="retrouvaille">Reunion & Retrouvaille</a></li>
+                              <li><a href="evenements_etudiants.html" class="restricted-link" data-page="evenements-etudiants">Événements Étudiants</a></li>
+                              <li><a href="journee.html" class="restricted-link" data-page="journee-culturelle">Seminaire</a></li>
+                            </ul>
+                          </div>
+
+                        <!-- Benevole -->
+                        <div class="dropdown">
+                            <a href="#">Humanitaire</a>
+                            <ul class="submenu">
+                              <li><a href="don_annuel.html" class="restricted-link" data-page="don-annuel">Don annuel</a></li>
+                              <li><a href="retrouvaille.html" class="restricted-link" data-page="conseil">Aide et Solidarité</a></li>
+                              <li><a href="conseil.html" class="restricted-link" data-page="conseil">Benevolat</a></li>
+                            </ul>
+                          </div>
+                        
+                        <a href="Galerie.html" style="color: var(--washu-red); font-weight: 700;">Galerie</a>
+                        <button id="authBtn" class="auth-btn">Connexion</button>
+                    </div>
+                </nav>
+
+                <div class="logo-section-2">
+                    <img src="logor.png" alt="Logo">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <form class="login-form" id="loginForm">
+                <h2>Connexion</h2>
+                <div class="form-group">
+                    <label for="loginEmail">Email:</label>
+                    <input type="email" id="loginEmail" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Mot de passe:</label>
+                    <input type="password" id="loginPassword" name="password" required>
+                </div>
+                <button type="submit" class="login-btn">Se connecter</button>
+                <p class="login-help">Pas encore membre? <a href="#join">Rejoignez la communauté</a></p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Registration Modal -->
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <form class="login-form" id="registerForm">
+                <h2>Créer un compte</h2>
+                <div class="form-group">
+                    <label for="regNom">Nom complet:</label>
+                    <input type="text" id="regNom" name="nom" required>
+                </div>
+                <div class="form-group">
+                    <label for="regEmail">Email:</label>
+                    <input type="email" id="regEmail" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="regPassword">Mot de passe:</label>
+                    <input type="password" id="regPassword" name="password" required minlength="6">
+                </div>
+                <div class="form-group">
+                    <label for="regPromo">Promotion:</label>
+                    <select id="regPromo" name="promo" required>
+                        <option value="">Sélectionnez…</option>
+                        <option>2025</option>
+                        <option>2024</option>
+                        <option>2023</option>
+                        <option>2022</option>
+                        <option>2021</option>
+                        <option>2020</option>
+                        <option>Autre</option>
+                    </select>
+                </div>
+                <button type="submit" class="login-btn">Créer le compte</button>
+                <p class="login-help">Déjà membre? <a href="#" id="showLoginFromReg">Se connecter</a></p>
+            </form>
+        </div>
+    </div>
+
+    <div class="gallery-container">
+        <!-- En-tête -->
+        <div class="gallery-header">
+            <h1>Galerie Alumni</h1>
+            <p class="gallery-subtitle">
+                Revivez les moments marquants de notre communauté BemTech de 2022 à 2025. 
+                Découvrez nos événements, cérémonies et moments de partage.
+            </p>
+        </div>
+
+        <!-- Filtres -->
+        <div class="filters-section">
+            <div class="filter-group">
+                <label><i class="fas fa-calendar"></i> Filtrer par année</label>
+                <div class="filter-tabs">
+                    <button class="filter-tab active" onclick="filterPhotos('all', 'year')">Toutes</button>
+                    <button class="filter-tab" onclick="filterPhotos('2025', 'year')">2025</button>
+                    <button class="filter-tab" onclick="filterPhotos('2024', 'year')">2024</button>
+                    <button class="filter-tab" onclick="filterPhotos('2023', 'year')">2023</button>
+                    <button class="filter-tab" onclick="filterPhotos('2022', 'year')">2022</button>
+                </div>
+            </div>
+            <div class="filter-group">
+                <label><i class="fas fa-tags"></i> Type d'événement</label>
+                <div class="filter-tabs">
+                    <button class="filter-tab active" onclick="filterPhotos('all', 'type')">Tous</button>
+                    <button class="filter-tab" onclick="filterPhotos('graduation', 'type')">Graduation</button>
+                    <button class="filter-tab" onclick="filterPhotos('ceremonie', 'type')">Cérémonie de rentrée</button>
+                    <button class="filter-tab" onclick="filterPhotos('visite', 'type')">Visite d'entreprise</button>
+                    <button class="filter-tab" onclick="filterPhotos('weekend', 'type')">Weekend d'intégration</button>
+                    <button class="filter-tab" onclick="filterPhotos('conference', 'type')">Conférence</button>
+                    <button class="filter-tab" onclick="filterPhotos('salon', 'type')">Salon</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Toutes les photos -->
+        <div id="photosContainer" class="photos-grid">
+            <script>
+                const photos = [
+                    // 2022 Photos
+                    { src: '2022/Ceremonie_de_rentree/9B7CA6A3-3ACE-4D10-A643-0F02114877AA.JPG', title: 'Cérémonie de rentrée 2022', year: '2022', type: 'ceremonie', date: '2022-10-01' },
+                    { src: '2022/Visite_d_entreprise/A7711AB0-9BD2-437A-94AE-1BC8D569FB23.JPG', title: 'Visite d\'entreprise 2022', year: '2022', type: 'visite', date: '2022-11-15' },
+                    
+                    // 2023 Photos - Cérémonie de rentrée
+                    { src: '2023/Ceremonie_de_rentree/IMG_1657.jpg', title: 'Cérémonie de rentrée 2023 - Photo 1', year: '2023', type: 'ceremonie', date: '2023-10-01' },
+                    { src: '2023/Ceremonie_de_rentree/IMG_1658.jpg', title: 'Cérémonie de rentrée 2023 - Photo 2', year: '2023', type: 'ceremonie', date: '2023-10-01' },
+                    { src: '2023/Ceremonie_de_rentree/IMG_1659.jpg', title: 'Cérémonie de rentrée 2023 - Photo 3', year: '2023', type: 'ceremonie', date: '2023-10-01' },
+                    { src: '2023/Ceremonie_de_rentree/IMG_1660.jpg', title: 'Cérémonie de rentrée 2023 - Photo 4', year: '2023', type: 'ceremonie', date: '2023-10-01' },
+                    { src: '2023/Ceremonie_de_rentree/IMG_1661.jpg', title: 'Cérémonie de rentrée 2023 - Photo 5', year: '2023', type: 'ceremonie', date: '2023-10-01' },
+                    
+                    // 2023 Photos - Conférence
+                    { src: '2023/Conference/Copie de BEM TECH 15.jpg', title: 'Conférence 2023 - BEM TECH 15', year: '2023', type: 'conference', date: '2023-03-20' },
+                    { src: '2023/Conference/Copie de BEM TECH 17.jpg', title: 'Conférence 2023 - BEM TECH 17', year: '2023', type: 'conference', date: '2023-03-20' },
+                    { src: '2023/Conference/Copie de BEM TECH 21.jpg', title: 'Conférence 2023 - BEM TECH 21', year: '2023', type: 'conference', date: '2023-03-20' },
+                    { src: '2023/Conference/Copie de BEM TECH 52.jpg', title: 'Conférence 2023 - BEM TECH 52', year: '2023', type: 'conference', date: '2023-03-20' },
+                    { src: '2023/Conference/Copie de BEM TECH 58.jpg', title: 'Conférence 2023 - BEM TECH 58', year: '2023', type: 'conference', date: '2023-03-20' },
+                    { src: '2023/Conference/Copie de IMG-20220331-WA0013.jpg', title: 'Conférence 2023 - WhatsApp 13', year: '2023', type: 'conference', date: '2023-03-20' },
+                    { src: '2023/Conference/Copie de IMG-20220331-WA0017.jpg', title: 'Conférence 2023 - WhatsApp 17', year: '2023', type: 'conference', date: '2023-03-20' },
+                    
+                    // 2023 Photos - Salon
+                    { src: '2023/Salon/Copie de 20220630_112844.jpg', title: 'Salon 2023 - Photo 1', year: '2023', type: 'salon', date: '2023-06-30' },
+                    { src: '2023/Salon/Copie de BEM TECH 54.jpg', title: 'Salon 2023 - BEM TECH 54', year: '2023', type: 'salon', date: '2023-06-30' },
+                    { src: '2023/Salon/Copie de BEM TECH 8.jpg', title: 'Salon 2023 - BEM TECH 8', year: '2023', type: 'salon', date: '2023-06-30' },
+                    { src: '2023/Salon/Copie de IMG-20220311-WA0005.jpg', title: 'Salon 2023 - WhatsApp 5', year: '2023', type: 'salon', date: '2023-06-30' },
+                    { src: '2023/Salon/Copie de IMG-20220311-WA0006.jpg', title: 'Salon 2023 - WhatsApp 6', year: '2023', type: 'salon', date: '2023-06-30' },
+                    { src: '2023/Salon/Copie de IMG-20220311-WA0007.jpg', title: 'Salon 2023 - WhatsApp 7', year: '2023', type: 'salon', date: '2023-06-30' },
+                    { src: '2023/Salon/Copie de IMG-20220311-WA0009.jpg', title: 'Salon 2023 - WhatsApp 9', year: '2023', type: 'salon', date: '2023-06-30' },
+                    { src: '2023/Salon/Copie de IMG-20220325-WA0005.jpg', title: 'Salon 2023 - WhatsApp 25', year: '2023', type: 'salon', date: '2023-06-30' },
+                    
+                    // 2023 Photos - Visite d'entreprise
+                    { src: '2023/Visite_d_entreprise/Copie de IMG-20220610-WA0012.jpg', title: 'Visite d\'entreprise 2023 - Photo 1', year: '2023', type: 'visite', date: '2023-06-10' },
+                    { src: '2023/Visite_d_entreprise/Copie de IMG-20220610-WA0015.jpg', title: 'Visite d\'entreprise 2023 - Photo 2', year: '2023', type: 'visite', date: '2023-06-10' },
+                    { src: '2023/Visite_d_entreprise/Copie de IMG-20220613-WA0003.jpg', title: 'Visite d\'entreprise 2023 - Photo 3', year: '2023', type: 'visite', date: '2023-06-13' },
+                    { src: '2023/Visite_d_entreprise/Copie de IMG-20220613-WA0004.jpg', title: 'Visite d\'entreprise 2023 - Photo 4', year: '2023', type: 'visite', date: '2023-06-13' },
+                    { src: '2023/Visite_d_entreprise/Copie de IMG-20220613-WA0005.jpg', title: 'Visite d\'entreprise 2023 - Photo 5', year: '2023', type: 'visite', date: '2023-06-13' },
+                    { src: '2023/Visite_d_entreprise/Copie de IMG-20220613-WA0006.jpg', title: 'Visite d\'entreprise 2023 - Photo 6', year: '2023', type: 'visite', date: '2023-06-13' },
+                    { src: '2023/Visite_d_entreprise/Copie de IMG-20220613-WA0009.jpg', title: 'Visite d\'entreprise 2023 - Photo 7', year: '2023', type: 'visite', date: '2023-06-13' },
+                    { src: '2023/Visite_d_entreprise/Copie de IMG-20220613-WA0010.jpg', title: 'Visite d\'entreprise 2023 - Photo 8', year: '2023', type: 'visite', date: '2023-06-13' },
+                    { src: '2023/Visite_d_entreprise/IMG_0437.HEIC', title: 'Visite d\'entreprise 2023 - IMG 437', year: '2023', type: 'visite', date: '2023-06-13' },
+                    { src: '2023/Visite_d_entreprise/IMG_0440.HEIC', title: 'Visite d\'entreprise 2023 - IMG 440', year: '2023', type: 'visite', date: '2023-06-13' },
+                    { src: '2023/Visite_d_entreprise/IMG_0441.HEIC', title: 'Visite d\'entreprise 2023 - IMG 441', year: '2023', type: 'visite', date: '2023-06-13' },
+                    { src: '2023/Visite_d_entreprise/IMG_0443.HEIC', title: 'Visite d\'entreprise 2023 - IMG 443', year: '2023', type: 'visite', date: '2023-06-13' },
+                    { src: '2023/Visite_d_entreprise/IMG_0445.HEIC', title: 'Visite d\'entreprise 2023 - IMG 445', year: '2023', type: 'visite', date: '2023-06-13' },
+                    { src: '2023/Visite_d_entreprise/IMG_0453.HEIC', title: 'Visite d\'entreprise 2023 - IMG 453', year: '2023', type: 'visite', date: '2023-06-13' },
+                    { src: '2023/Visite_d_entreprise/IMG_0458.HEIC', title: 'Visite d\'entreprise 2023 - IMG 458', year: '2023', type: 'visite', date: '2023-06-13' },
+                    { src: '2023/Visite_d_entreprise/c7c162f3-ed45-4f02-b5ba-09b58d4bfb17.jpg', title: 'Visite d\'entreprise 2023 - Photo spéciale', year: '2023', type: 'visite', date: '2023-06-13' },
+                    
+                    // 2023 Photos - Weekend d'intégration
+                    { src: '2023/Weekend_d_integration/Image 2023-12-19 à 10.01.27_4c140149.jpg', title: 'Weekend d\'intégration 2023 - Photo 1', year: '2023', type: 'weekend', date: '2023-12-19' },
+                    { src: '2023/Weekend_d_integration/Image 2023-12-19 à 10.01.28_dbc9a58a.jpg', title: 'Weekend d\'intégration 2023 - Photo 2', year: '2023', type: 'weekend', date: '2023-12-19' },
+                    { src: '2023/Weekend_d_integration/Image 2023-12-19 à 10.04.20_f719a4bc.jpg', title: 'Weekend d\'intégration 2023 - Photo 3', year: '2023', type: 'weekend', date: '2023-12-19' },
+                    { src: '2023/Weekend_d_integration/Image 2023-12-19 à 10.11.55_84b07ef7.jpg', title: 'Weekend d\'intégration 2023 - Photo 4', year: '2023', type: 'weekend', date: '2023-12-19' },
+                    { src: '2023/Weekend_d_integration/Image 2023-12-19 à 10.11.58_a31187c3.jpg', title: 'Weekend d\'intégration 2023 - Photo 5', year: '2023', type: 'weekend', date: '2023-12-19' },
+                    { src: '2023/Weekend_d_integration/WhatsApp Image 2024-05-13 à 08.04.38_e7f61b0a.jpg', title: 'Weekend d\'intégration 2023 - WhatsApp 1', year: '2023', type: 'weekend', date: '2023-12-19' },
+                    { src: '2023/Weekend_d_integration/WhatsApp Image 2024-05-13 à 08.04.43_0c5614fb.jpg', title: 'Weekend d\'intégration 2023 - WhatsApp 2', year: '2023', type: 'weekend', date: '2023-12-19' },
+                    
+                    // 2024 Photos - Weekend d'intégration
+                    { src: '2024/Weekend_d_integration/WhatsApp Image 2024-05-13 à 08.04.39_d7532429.jpg', title: 'Weekend d\'intégration 2024 - Photo 1', year: '2024', type: 'weekend', date: '2024-05-13' },
+                    { src: '2024/Weekend_d_integration/WhatsApp Image 2024-05-13 à 08.04.40_6bed48ce.jpg', title: 'Weekend d\'intégration 2024 - Photo 2', year: '2024', type: 'weekend', date: '2024-05-13' },
+                    { src: '2024/Weekend_d_integration/WhatsApp Image 2024-05-13 à 08.04.40_837f96e5.jpg', title: 'Weekend d\'intégration 2024 - Photo 3', year: '2024', type: 'weekend', date: '2024-05-13' },
+                    { src: '2024/Weekend_d_integration/WhatsApp Image 2024-05-13 à 08.04.44_aa20014d.jpg', title: 'Weekend d\'intégration 2024 - Photo 4', year: '2024', type: 'weekend', date: '2024-05-13' },
+                    { src: '2024/Weekend_d_integration/WhatsApp Image 2024-05-13 à 08.04.45_485a4dac.jpg', title: 'Weekend d\'intégration 2024 - Photo 5', year: '2024', type: 'weekend', date: '2024-05-13' },
+                    { src: '2024/Weekend_d_integration/WhatsApp Image 2024-05-13 à 08.04.46_46e99427.jpg', title: 'Weekend d\'intégration 2024 - Photo 6', year: '2024', type: 'weekend', date: '2024-05-13' },
+                    { src: '2024/Weekend_d_integration/WhatsApp Image 2024-05-13 à 08.04.46_64e71609.jpg', title: 'Weekend d\'intégration 2024 - Photo 7', year: '2024', type: 'weekend', date: '2024-05-13' },
+                    
+                    // 2025 Photos - Graduation
+                    { src: '2025/Graduation/Sakoura-14.jpg', title: 'Graduation 2025 - Photo 1', year: '2025', type: 'graduation', date: '2025-07-15' },
+                    { src: '2025/Graduation/Sakoura-17.jpg', title: 'Graduation 2025 - Photo 2', year: '2025', type: 'graduation', date: '2025-07-15' },
+                    { src: '2025/Graduation/Sakoura-18.jpg', title: 'Graduation 2025 - Photo 3', year: '2025', type: 'graduation', date: '2025-07-15' },
+                    { src: '2025/Graduation/Sakoura-19.jpg', title: 'Graduation 2025 - Photo 4', year: '2025', type: 'graduation', date: '2025-07-15' },
+                    { src: '2025/Graduation/Sakoura-20.jpg', title: 'Graduation 2025 - Photo 5', year: '2025', type: 'graduation', date: '2025-07-15' },
+                    { src: '2025/Graduation/Sakoura-21.jpg', title: 'Graduation 2025 - Photo 6', year: '2025', type: 'graduation', date: '2025-07-15' },
+                    { src: '2025/Graduation/Sakoura-22.jpg', title: 'Graduation 2025 - Photo 7', year: '2025', type: 'graduation', date: '2025-07-15' },
+                    { src: '2025/Graduation/Sakoura-23.jpg', title: 'Graduation 2025 - Photo 8', year: '2025', type: 'graduation', date: '2025-07-15' },
+                    { src: '2025/Graduation/Sakoura-24.jpg', title: 'Graduation 2025 - Photo 9', year: '2025', type: 'graduation', date: '2025-07-15' },
+                    { src: '2025/Graduation/Sakoura-25.jpg', title: 'Graduation 2025 - Photo 10', year: '2025', type: 'graduation', date: '2025-07-15' },
+                    
+                    // 2025 Photos - Conférence
+                    { src: '2025/Conference/IMG_1622.jpg', title: 'Conférence 2025 - IMG 1622', year: '2025', type: 'conference', date: '2025-03-15' },
+                    { src: '2025/Conference/IMG_1639.jpg', title: 'Conférence 2025 - IMG 1639', year: '2025', type: 'conference', date: '2025-03-15' },
+                    { src: '2025/Conference/IMG_1654.jpg', title: 'Conférence 2025 - IMG 1654', year: '2025', type: 'conference', date: '2025-03-15' },
+                    { src: '2025/Conference/IMG_1655.jpg', title: 'Conférence 2025 - IMG 1655', year: '2025', type: 'conference', date: '2025-03-15' },
+                    { src: '2025/Conference/IMG_1656.jpg', title: 'Conférence 2025 - IMG 1656', year: '2025', type: 'conference', date: '2025-03-15' },
+                    { src: '2025/Conference/IMG_1657.jpg', title: 'Conférence 2025 - IMG 1657', year: '2025', type: 'conference', date: '2025-03-15' },
+                    
+                    // 2025 Photos - Salon
+                    { src: '2025/Salon/IMG_5953.jpg', title: 'Salon 2025 - IMG 5953', year: '2025', type: 'salon', date: '2025-06-20' },
+                    { src: '2025/Salon/IMG_7561.jpg', title: 'Salon 2025 - IMG 7561', year: '2025', type: 'salon', date: '2025-06-20' },
+                    { src: '2025/Salon/IMG_7564.jpg', title: 'Salon 2025 - IMG 7564', year: '2025', type: 'salon', date: '2025-06-20' },
+                    { src: '2025/Salon/IMG_7567.jpg', title: 'Salon 2025 - IMG 7567', year: '2025', type: 'salon', date: '2025-06-20' },
+                    { src: '2025/Salon/IMG_7581.jpg', title: 'Salon 2025 - IMG 7581', year: '2025', type: 'salon', date: '2025-06-20' },
+                    { src: '2025/Salon/IMG_7596.jpg', title: 'Salon 2025 - IMG 7596', year: '2025', type: 'salon', date: '2025-06-20' },
+                    { src: '2025/Salon/IMG_7602.jpg', title: 'Salon 2025 - IMG 7602', year: '2025', type: 'salon', date: '2025-06-20' },
+                    
+                    // 2025 Photos - Visite d'entreprise
+                    { src: '2025/Visite_d_entreprise/IMG_2616.HEIC', title: 'Visite d\'entreprise 2025 - IMG 2616', year: '2025', type: 'visite', date: '2025-05-10' },
+                    { src: '2025/Visite_d_entreprise/IMG_2619.HEIC', title: 'Visite d\'entreprise 2025 - IMG 2619', year: '2025', type: 'visite', date: '2025-05-10' },
+                    { src: '2025/Visite_d_entreprise/IMG_2620.HEIC', title: 'Visite d\'entreprise 2025 - IMG 2620', year: '2025', type: 'visite', date: '2025-05-10' },
+                    { src: '2025/Visite_d_entreprise/IMG_2623.HEIC', title: 'Visite d\'entreprise 2025 - IMG 2623', year: '2025', type: 'visite', date: '2025-05-10' },
+                    { src: '2025/Visite_d_entreprise/IMG_2624.HEIC', title: 'Visite d\'entreprise 2025 - IMG 2624', year: '2025', type: 'visite', date: '2025-05-10' },
+                    { src: '2025/Visite_d_entreprise/IMG_2628.HEIC', title: 'Visite d\'entreprise 2025 - IMG 2628', year: '2025', type: 'visite', date: '2025-05-10' },
+                    { src: '2025/Visite_d_entreprise/IMG_2631.HEIC', title: 'Visite d\'entreprise 2025 - IMG 2631', year: '2025', type: 'visite', date: '2025-05-10' },
+                    { src: '2025/Visite_d_entreprise/IMG_2642.HEIC', title: 'Visite d\'entreprise 2025 - IMG 2642', year: '2025', type: 'visite', date: '2025-05-10' },
+                    
+                    // 2025 Photos - Weekend d'intégration
+                    { src: '2025/Weekend_d_integration/IMG_8681.HEIC', title: 'Weekend d\'intégration 2025 - IMG 8681', year: '2025', type: 'weekend', date: '2025-12-15' },
+                    { src: '2025/Weekend_d_integration/IMG_9561.HEIC', title: 'Weekend d\'intégration 2025 - IMG 9561', year: '2025', type: 'weekend', date: '2025-12-15' },
+                    { src: '2025/Weekend_d_integration/IMG_9572.HEIC', title: 'Weekend d\'intégration 2025 - IMG 9572', year: '2025', type: 'weekend', date: '2025-12-15' },
+                    { src: '2025/Weekend_d_integration/IMG_9579.HEIC', title: 'Weekend d\'intégration 2025 - IMG 9579', year: '2025', type: 'weekend', date: '2025-12-15' },
+                    { src: '2025/Weekend_d_integration/IMG_9586.HEIC', title: 'Weekend d\'intégration 2025 - IMG 9586', year: '2025', type: 'weekend', date: '2025-12-15' },
+                    { src: '2025/Weekend_d_integration/IMG_9607.HEIC', title: 'Weekend d\'intégration 2025 - IMG 9607', year: '2025', type: 'weekend', date: '2025-12-15' },
+                    { src: '2025/Weekend_d_integration/IMG_9611.HEIC', title: 'Weekend d\'intégration 2025 - IMG 9611', year: '2025', type: 'weekend', date: '2025-12-15' },
+                    { src: '2025/Weekend_d_integration/IMG_9634.HEIC', title: 'Weekend d\'intégration 2025 - IMG 9634', year: '2025', type: 'weekend', date: '2025-12-15' },
+                    { src: '2025/Weekend_d_integration/IMG_9642.HEIC', title: 'Weekend d\'intégration 2025 - IMG 9642', year: '2025', type: 'weekend', date: '2025-12-15' },
+                    { src: '2025/Weekend_d_integration/IMG_9647.HEIC', title: 'Weekend d\'intégration 2025 - IMG 9647', year: '2025', type: 'weekend', date: '2025-12-15' }
+                ];
+
+                // Générer les cartes de photos dynamiquement
+                const photosContainer = document.getElementById('photosContainer');
+                
+                photos.forEach(photo => {
+                        const photoCard = document.createElement('div');
+                        photoCard.className = 'photo-card';
+                        photoCard.setAttribute('data-year', photo.year);
+                        photoCard.setAttribute('data-type', photo.type);
+                        
+                        photoCard.innerHTML = `
+                            <img src="${photo.src}" alt="${photo.title}" class="photo-image" loading="lazy" onclick="openModal('${photo.src}', '${photo.title}')">
+                            <div class="photo-info">
+                                <h3 class="photo-title">${photo.title}</h3>
+                                <div class="photo-meta">
+                                    <span class="photo-date">📅 ${photo.date}</span>
+                                    <span class="photo-type">${photo.type}</span>
+                                </div>
+                            </div>
+                        `;
+                        
+                        photosContainer.appendChild(photoCard);
+                    });
+
+                // Fonction pour ouvrir le modal photo
+                function openModal(src, title) {
+                    const modal = document.getElementById('photoModal');
+                    const modalImg = document.getElementById('modalImage');
+                    const modalTitle = document.getElementById('modalTitle');
+                    
+                    modal.style.display = 'block';
+                    modalImg.src = src;
+                    modalTitle.textContent = title;
+                }
+
+                // Fonction pour fermer le modal
+                function closeModal() {
+                    document.getElementById('photoModal').style.display = 'none';
+                }
+
+                // Fermer le modal en cliquant en dehors
+                window.onclick = function(event) {
+                    const modal = document.getElementById('photoModal');
+                    if (event.target === modal) {
+                        modal.style.display = 'none';
+                    }
+                }
+            </script>
+        </div>
+    </div>
+
+    <!-- Section Rejoindre la communauté -->
+    <section id="join">
+        <div class="container">
+            <h2>Rejoindre la communauté</h2>
+            <div class="card">
+                <form action="#" method="post" id="joinForm">
+                    <div class="grid" style="grid-template-columns:1fr 1fr">
+                        <div>
+                            <label for="nom">Nom complet</label>
+                            <input id="nom" name="nom" placeholder="Ex. Awa Mbaye" required />
+                        </div>
+                        <div>
+                            <label for="promo">Promotion</label>
+                            <select id="promo" name="promo" required>
+                                <option value="">Sélectionnez…</option>
+                                <option>2025</option>
+                                <option>2024</option>
+                                <option>2023</option>
+                                <option>2022</option>
+                                <option>Autre</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="grid" style="grid-template-columns:1fr 1fr">
+                        <div>
+                            <label for="email">Email</label>
+                            <input id="email" type="email" name="email" placeholder="prenom.nom@exemple.com" required />
+                        </div>
+                        <div>
+                            <label for="linkedin">Profil LinkedIn (optionnel)</label>
+                            <input id="linkedin" name="linkedin" placeholder="https://linkedin.com/in/…" />
+                        </div>
+                    </div>
+                    <div>
+                        <label for="motivation">Message (optionnel)</label>
+                        <textarea id="motivation" name="motivation" rows="4" placeholder="Dites-nous ce que vous attendez du réseau…"></textarea>
+                    </div>
+                    <div style="display:flex; gap:10px; align-items:center; justify-content:flex-end; margin-top:8px">
+                        <button class="btn ghost" type="reset">Réinitialiser</button>
+                        <button class="btn primary" type="submit">Envoyer la demande</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <br><br>
+    <footer class="site-footer">
+        <div class="footer-container">
+            <!-- Colonne 1 : Logo / Description -->
+            <div class="footer-about">
+                <h3>BemTech Alumni</h3>
+                <p>
+                    Connecter les anciens, inspirer la communauté et bâtir un futur meilleur ensemble.
+                </p>
+            </div>
+
+            <div class="footer-links">
+                <h4>Liens rapides</h4>
+                <ul>
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="#">Association</a></li>
+                    <li><a href="#">Événements</a></li>
+                    <li><a href="#">Carrières</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-social">
+                <h4>Suivez-nous</h4>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-tiktok"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bas du footer -->
+        <div class="footer-bottom">
+            <p>&copy; 2025 BemTech Alumni – Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <!-- Modal -->
+    <div id="photoModal" class="modal">
+        <span class="close">&times;</span>
+        <div class="modal-content">
+            <img id="modalImage" class="modal-image" src="" alt="">
+            <div class="modal-info">
+                <h3 id="modalTitle"></h3>
+                <p id="modalDescription"></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentYearFilter = 'all';
+        let currentTypeFilter = 'all';
+
+        function openModal(imageSrc, title) {
+            document.getElementById('modalImage').src = imageSrc;
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('photoModal').style.display = 'block';
+        }
+
+        function filterPhotos(value, filterType) {
+            // Mettre à jour les filtres actifs
+            if (filterType === 'year') {
+                currentYearFilter = value;
+                // Mettre à jour l'apparence des boutons année
+                document.querySelectorAll('.filter-group:first-child .filter-tab').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                event.target.classList.add('active');
+            } else if (filterType === 'type') {
+                currentTypeFilter = value;
+                // Mettre à jour l'apparence des boutons type
+                document.querySelectorAll('.filter-group:last-child .filter-tab').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                event.target.classList.add('active');
+            }
+
+            // Appliquer les filtres
+            const photos = document.querySelectorAll('.photo-card');
+            photos.forEach(photo => {
+                const photoYear = photo.getAttribute('data-year');
+                const photoType = photo.getAttribute('data-type');
+                
+                const yearMatch = currentYearFilter === 'all' || photoYear === currentYearFilter;
+                const typeMatch = currentTypeFilter === 'all' || photoType === currentTypeFilter;
+                
+                if (yearMatch && typeMatch) {
+                    photo.style.display = 'block';
+                } else {
+                    photo.style.display = 'none';
+                }
+            });
+        }
+
+        // Fermer le modal
+        document.querySelector('.close').onclick = function() {
+            document.getElementById('photoModal').style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('photoModal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        }
+    </script>
+
+    <script src="auth.js"></script>
+    <script src="animations.js"></script>
+</body>
+</html>

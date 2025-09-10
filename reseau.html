@@ -1,0 +1,2154 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>🌐 Réseau BemTech Alumni - Connectons l'Excellence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Inter:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="styles.css">
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  line-height: 1.6;
+  color: #2c3e50;
+  overflow-x: hidden;
+}
+
+
+/* Sections Créatives */
+.section-creative {
+  padding: 100px 0;
+  position: relative;
+}
+
+.container-creative {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.section-title {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.section-title h2 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.section-title p {
+  font-size: 1.2rem;
+  color: #666;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Cards Créatives */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
+}
+
+.card-creative {
+  background: white;
+  border-radius: 25px;
+  padding: 2.5rem;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.card-creative::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.1), transparent);
+  transition: left 0.5s ease;
+}
+
+.card-creative:hover::before {
+  left: 100%;
+}
+
+.card-creative:hover {
+  transform: translateY(-15px);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
+}
+
+.card-icon {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.card-creative h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #2c3e50;
+}
+
+.card-creative p {
+  color: #666;
+  line-height: 1.6;
+}
+
+/* Footer Créatif */
+.footer-creative {
+  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+  color: white;
+  padding: 4rem 0 2rem;
+  position: relative;
+}
+
+.footer-creative::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #667eea, transparent);
+}
+
+.footer-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 3rem;
+}
+
+.footer-section h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  color: #fff;
+}
+
+.footer-section p {
+  color: #bdc3c7;
+  line-height: 1.6;
+}
+
+.social-links {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.social-links a {
+  width: 50px;
+  height: 50px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.social-links a:hover {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  transform: translateY(-3px);
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  color: #bdc3c7;
+}
+
+/* Effets élégants supplémentaires */
+.elegant-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #667eea, transparent);
+  margin: 4rem 0;
+  position: relative;
+}
+
+.elegant-divider::before {
+  content: '✦';
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: white;
+  padding: 0 1rem;
+  color: #667eea;
+  font-size: 1rem;
+}
+
+.floating-elements {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.floating-shape {
+  position: absolute;
+  opacity: 0.1;
+  animation: float-elegant 20s ease-in-out infinite;
+}
+
+.shape-1 {
+  top: 10%;
+  left: 10%;
+  width: 100px;
+  height: 100px;
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  border-radius: 50%;
+  animation-delay: 0s;
+}
+
+.shape-2 {
+  top: 60%;
+  right: 15%;
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(45deg, #ff6b6b, #feca57);
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  animation-delay: 5s;
+}
+
+.shape-3 {
+  bottom: 20%;
+  left: 20%;
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(45deg, #4facfe, #00f2fe);
+  border-radius: 20%;
+  animation-delay: 10s;
+}
+
+@keyframes float-elegant {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  33% { transform: translateY(-30px) rotate(120deg); }
+  66% { transform: translateY(-15px) rotate(240deg); }
+}
+
+.section-creative::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 20% 80%, rgba(102, 126, 234, 0.03) 0%, transparent 50%),
+              radial-gradient(circle at 80% 20%, rgba(118, 75, 162, 0.03) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.card-creative {
+  position: relative;
+  overflow: hidden;
+}
+
+.card-creative::after {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, #667eea, #764ba2, #8b5cf6, #a855f7);
+  border-radius: 27px;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.card-creative:hover::after {
+  opacity: 0.1;
+}
+
+.elegant-badge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.glass-effect {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.elegant-button {
+  position: relative;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 50px;
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.elegant-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.elegant-button:hover::before {
+  left: 100%;
+}
+
+.elegant-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .hero-content-creative {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  
+  .hero-text h1 {
+    font-size: 2.5rem;
+  }
+  
+  .hero-stats {
+    grid-template-columns: 1fr;
+  }
+  
+  .nav-creative {
+    display: none;
+  }
+}
+
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.animate-on-scroll.animated {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.animate-on-scroll:nth-child(1) { transition-delay: 0.1s; }
+.animate-on-scroll:nth-child(2) { transition-delay: 0.2s; }
+.animate-on-scroll:nth-child(3) { transition-delay: 0.3s; }
+.animate-on-scroll:nth-child(4) { transition-delay: 0.4s; }
+.animate-on-scroll:nth-child(5) { transition-delay: 0.5s; }
+
+.section-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.definition-section {
+  padding: 80px 0;
+  background: #f8f9fa;
+}
+
+.definition-card {
+  background: white;
+  border-radius: 20px;
+  padding: 3rem;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.definition-card::before {
+  content: '📌';
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  font-size: 4rem;
+  opacity: 0.1;
+  transform: rotate(15deg);
+}
+
+.definition-card h2 {
+  color: #72bcf4;
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.definition-content {
+  font-size: 1.2rem;
+  line-height: 1.8;
+  color: #333;
+  margin-bottom: 2rem;
+}
+
+.definition-list {
+  list-style: none;
+  padding: 0;
+}
+
+.definition-list li {
+  padding: 0.8rem 0;
+  padding-left: 2rem;
+  position: relative;
+  font-size: 1.1rem;
+  color: #555;
+}
+
+.definition-list li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: #72bcf4;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.missions-section {
+  padding: 80px 0;
+  background: white;
+}
+
+.missions-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.missions-header h2 {
+  font-size: 2.8rem;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.missions-header .emoji {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.missions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.mission-card {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-radius: 20px;
+  padding: 2.5rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+  position: relative;
+  overflow: hidden;
+}
+
+.mission-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(114, 188, 244, 0.1), transparent);
+  transition: left 0.5s ease;
+}
+
+.mission-card:hover::before {
+  left: 100%;
+}
+
+.mission-card:hover {
+  transform: translateY(-10px);
+  border-color: #72bcf4;
+  box-shadow: 0 20px 40px rgba(114, 188, 244, 0.2);
+}
+
+.mission-number {
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  background: #72bcf4;
+  color: white;
+  border-radius: 50%;
+  line-height: 50px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+}
+
+.mission-card h3 {
+  font-size: 1.4rem;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.mission-card p {
+  color: #666;
+  line-height: 1.6;
+  font-size: 1rem;
+}
+
+.bureaux-section {
+  padding: 80px 0;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  position: relative;
+}
+
+.bureaux-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M20,20 Q50,5 80,20 Q95,50 80,80 Q50,95 20,80 Q5,50 20,20" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></svg>');
+  opacity: 0.3;
+}
+
+.bureaux-header {
+  text-align: center;
+  margin-bottom: 4rem;
+  position: relative;
+  z-index: 2;
+}
+
+.bureaux-header h2 {
+  font-size: 2.8rem;
+  margin-bottom: 1.5rem;
+}
+
+.bureaux-header p {
+  font-size: 1.2rem;
+  opacity: 0.9;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.continents-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 3rem;
+  position: relative;
+  z-index: 2;
+}
+
+.continent-card {
+  background: rgba(255,255,255,0.1);
+  border-radius: 25px;
+  padding: 2.5rem;
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255,255,255,0.2);
+  transition: all 0.3s ease;
+}
+
+.continent-card:hover {
+  transform: translateY(-10px);
+  background: rgba(255,255,255,0.15);
+  box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+}
+
+.continent-icon {
+  font-size: 3rem;
+  margin-bottom: 1.5rem;
+  display: block;
+  text-align: center;
+}
+
+.continent-card h3 {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-weight: 600;
+}
+
+.cities-list {
+  list-style: none;
+  padding: 0;
+}
+
+.cities-list li {
+  padding: 0.8rem 0;
+  padding-left: 2.5rem;
+  position: relative;
+  font-size: 1.1rem;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.cities-list li:last-child {
+  border-bottom: none;
+}
+
+.cities-list li::before {
+  content: '📍';
+  position: absolute;
+  left: 0;
+  font-size: 1.2rem;
+}
+
+.cta-section {
+  padding: 80px 0;
+  background: #f8f9fa;
+  text-align: center;
+}
+
+.cta-content {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.cta-section h2 {
+  font-size: 2.5rem;
+  color: #333;
+  margin-bottom: 1.5rem;
+}
+
+.cta-section p {
+  font-size: 1.2rem;
+  color: #666;
+  margin-bottom: 2.5rem;
+  line-height: 1.6;
+}
+
+.cta-buttons {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn-primary, .btn-secondary {
+  padding: 1rem 2.5rem;
+  border-radius: 50px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn-primary {
+  background: #72bcf4;
+  color: white;
+  border: 2px solid #72bcf4;
+}
+
+.btn-primary:hover {
+  background: #5aa3d9;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(114, 188, 244, 0.3);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: #72bcf4;
+  border: 2px solid #72bcf4;
+}
+
+.btn-secondary:hover {
+  background: #72bcf4;
+  color: white;
+  transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+  .hero-network h1 {
+    font-size: 2.5rem;
+  }
+  
+  .hero-network p {
+    font-size: 1.1rem;
+  }
+  
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+  
+  .definition-card {
+    padding: 2rem;
+  }
+  
+  .missions-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .continents-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .cta-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 0.8s ease forwards;
+}
+
+.fade-in:nth-child(1) { animation-delay: 0.1s; }
+.fade-in:nth-child(2) { animation-delay: 0.2s; }
+.fade-in:nth-child(3) { animation-delay: 0.3s; }
+.fade-in:nth-child(4) { animation-delay: 0.4s; }
+.fade-in:nth-child(5) { animation-delay: 0.5s; }
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+</style>
+</head>
+<body>
+  <div class="topline"></div>
+
+  <div class="masthead">
+    <div class="wrap">
+      <!-- Partie gauche -->
+      <div class="header-left">
+        <div class="brand-logo">
+          <img alt="BEMTECH Logo" src="logob.png">
+        </div>
+        <span class="brand-divider" aria-hidden="true"></span>
+        <div class="brand-title">Alumni</div>
+      </div>
+
+      <!-- Partie droite -->
+      <div class="header-right">
+        <nav class="nav-block" aria-label="Primary">
+          <div class="nav-top">
+            <a href="index.html#join" id="membershipBtn">Membership</a>
+            <a href="actualite.html" class="restricted-link" data-page="actualites">Actualités &amp; Recompenses</a>
+            <a href="vie_school.html" class="restricted-link" data-page="vie-ecole">Vie a l'ecole</a>
+            <a href="after.html" class="restricted-link" data-page="apres-ecole">Apres l'ecole</a>
+            <a href="contact.html">Contact</a>
+          </div>
+          <div class="nav-bottom">
+            <!-- Notre Communaute -->
+            <div class="dropdown">
+              <a href="#">Notre Communauté</a>
+              <ul class="submenu">
+                <li><a href="reseau.html" class="restricted-link" data-page="reseau">Reseau</a></li>
+                <li><a href="Qui.html">Qui sommes-nous ??</a></li>
+                <li><a href="FAQ.html">FAQ</a></li>
+              </ul>
+            </div>
+            <div class="dropdown">
+              <a href="#">Carrières &amp; Ressources</a>
+              <ul class="submenu">
+                <li><a href="opportunite.html" class="restricted-link" data-page="opportunites">Opportunités</a></li>
+                <li><a href="mentorat.html" class="restricted-link" data-page="mentorat">Mentorat / Developpement professionnel</a></li>
+                <li><a href="projet.html" class="restricted-link" data-page="projet">Projet / Realisation</a></li>
+              </ul>
+            </div>
+            <!-- Evenement -->
+            <div class="dropdown">
+              <a href="#">Événement</a>
+              <ul class="submenu">
+                <li><a href="calendrier.html" class="restricted-link" data-page="calendrier">Calendrier</a></li>
+                <li><a href="reunion.html" class="restricted-link" data-page="retrouvaille">Reunion & Retrouvaille</a></li>
+                <li><a href="evenements_etudiants.html" class="restricted-link" data-page="evenements-etudiants">Événements Étudiants</a></li>
+                <li><a href="journee.html" class="restricted-link" data-page="journee-culturelle">Seminaire</a></li>
+              </ul>
+            </div>
+
+            <!-- Benevole -->
+            <div class="dropdown">
+              <a href="#">Humanitaire</a>
+              <ul class="submenu">
+                <li><a href="don_annuel.html" class="restricted-link" data-page="don-annuel">Don annuel</a></li>
+                <li><a href="retrouvaille.html" class="restricted-link" data-page="conseil">Aide et Solidarité</a></li>
+                <li><a href="conseil.html" class="restricted-link" data-page="conseil">Benevolat</a></li>
+              </ul>
+            </div>
+            
+            <a href="Galerie.html">Galerie</a>
+            <button id="authBtn" class="auth-btn">Connexion</button>
+          </div>
+        </nav>
+
+        <div class="logo-section-2">
+          <img src="logor.png" alt="Logo">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hero Section Moderne -->
+  <section class="hero-modern">
+    <div class="hero-background">
+      <div class="gradient-orb orb-1"></div>
+      <div class="gradient-orb orb-2"></div>
+      <div class="gradient-orb orb-3"></div>
+    </div>
+    
+    <div class="hero-container">
+      <div class="hero-content-reseau">
+        <div class="hero-badge">
+          <span class="badge-icon">🌟</span>
+          <span>Réseau Alumni Mondial</span>
+        </div>
+        
+        <h1 class="hero-title">
+          Connectons l'<span class="gradient-text">Excellence</span>
+          <br>à travers le <span class="gradient-text">Monde</span>
+        </h1>
+        
+        <p class="hero-description">
+          Un bureau alumni est une antenne locale du réseau global BEM TECH Alumni qui regroupe les diplômés d'une même ville ou région pour représenter l'école, renforcer la cohésion et créer des opportunités.
+        </p>
+
+        
+        <div class="hero-stats-modern">
+          <div class="stat-item">
+            <div class="stat-number">6</div>
+            <div class="stat-label">Bureaux</div>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <div class="stat-number">3</div>
+            <div class="stat-label">Continents</div>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <div class="stat-number">300+</div>
+            <div class="stat-label">Alumni</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="hero-visual-modern">
+        <div class="visual-container">
+          <div class="geometric-carousel">
+            <div class="carousel-item active" data-shape="circle">
+              <div class="shape-container circle-shape">
+                <img src="A.jpg" alt="Alumni Excellence">
+                <div class="shape-overlay">
+                  <h4>🎓 Excellence</h4>
+                </div>
+              </div>
+            </div>
+            
+            <div class="carousel-item" data-shape="square">
+              <div class="shape-container square-shape">
+                <img src="B.jpg" alt="Global Network">
+                <div class="shape-overlay">
+                  <h4>🌐 Réseau Global</h4>
+                </div>
+              </div>
+            </div>
+            
+            <div class="carousel-item" data-shape="hexagon">
+              <div class="shape-container hexagon-shape">
+                <img src="C.jpg" alt="Innovation">
+                <div class="shape-overlay">
+                  <h4>💡 Innovation</h4>
+                </div>
+              </div>
+            </div>
+            
+            <div class="carousel-item" data-shape="diamond">
+              <div class="shape-container diamond-shape">
+                <img src="D.jpg" alt="Leadership">
+                <div class="shape-overlay">
+                  <h4>👑 Leadership</h4>
+                </div>
+              </div>
+            </div>
+            
+          </div>
+          
+          <div class="carousel-indicators">
+            <div class="indicator active" data-target="0"></div>
+            <div class="indicator" data-target="1"></div>
+            <div class="indicator" data-target="2"></div>
+            <div class="indicator" data-target="3"></div>
+          </div>
+          
+          <div class="geometric-particles">
+            <div class="particle particle-1"></div>
+            <div class="particle particle-2"></div>
+            <div class="particle particle-3"></div>
+            <div class="particle particle-4"></div>
+            <div class="particle particle-5"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section Missions -->
+  <section class="section-creative" id="about">
+    <div class="floating-elements">
+      <div class="floating-shape shape-1"></div>
+      <div class="floating-shape shape-2"></div>
+      <div class="floating-shape shape-3"></div>
+    </div>
+    
+    <div class="container-creative">
+      <div class="section-title animate-on-scroll">
+        <h2 class="text-gradient">🎓 Missions d'un Bureau Alumni</h2>
+        <p>Découvrez comment nos bureaux transforment les connexions en opportunités</p>
+      </div>
+      
+      <div class="elegant-divider"></div>
+      
+      <div class="cards-grid">
+        <div class="card-creative animate-on-scroll">
+          <div class="elegant-badge">Excellence</div>
+          <div class="card-icon"><i class="fas fa-handshake"></i></div>
+          <h3>1️⃣ Renforcer les liens</h3>
+          <p>Organiser des rencontres, ateliers et maintenir l'esprit de solidarité entre les diplômés pour créer une communauté unie et dynamique.</p>
+        </div>
+        
+        <div class="card-creative animate-on-scroll">
+          <div class="elegant-badge">Mentorat</div>
+          <div class="card-icon"><i class="fas fa-graduation-cap"></i></div>
+          <h3>2️⃣ Accompagner les jeunes diplômés</h3>
+          <p>Faciliter l'intégration professionnelle, proposer des stages et du mentorat personnalisé pour guider les nouveaux talents.</p>
+        </div>
+        
+        <div class="card-creative animate-on-scroll">
+          <div class="elegant-badge">Innovation</div>
+          <div class="card-icon"><i class="fas fa-rocket"></i></div>
+          <h3>3️⃣ Développer le rayonnement</h3>
+          <p>Être ambassadeur de BEM TECH, créer des partenariats stratégiques et promouvoir l'excellence de notre alma mater.</p>
+        </div>
+        
+        <div class="card-creative animate-on-scroll">
+          <div class="elegant-badge">Réseau</div>
+          <div class="card-icon"><i class="fas fa-network-wired"></i></div>
+          <h3>4️⃣ Créer des opportunités</h3>
+          <p>Faciliter le networking professionnel, développer des projets collaboratifs et partager des offres d'emploi exclusives.</p>
+        </div>
+        
+        <div class="card-creative animate-on-scroll">
+          <div class="elegant-badge">Dynamisme</div>
+          <div class="card-icon"><i class="fas fa-broadcast-tower"></i></div>
+          <h3>5️⃣ Animer le réseau</h3>
+          <p>Partager les informations relatives à BEM TECH, organiser des événements et mobiliser activement les anciens élèves.</p>
+        </div>
+      </div>
+      
+      <div style="text-align: center; margin-top: 3rem;">
+        <a href="#network" class="elegant-button">
+          <i class="fas fa-arrow-down"></i>
+          Découvrir nos bureaux
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section Bureaux Mondiaux -->
+  <section class="section-creative" id="network" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; position: relative; overflow: hidden;">
+    <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(circle at 20% 20%, rgba(255,255,255,0.1) 1px, transparent 1px), radial-gradient(circle at 80% 30%, rgba(255,255,255,0.1) 1px, transparent 1px), radial-gradient(circle at 30% 70%, rgba(255,255,255,0.1) 2px, transparent 2px), radial-gradient(circle at 70% 80%, rgba(255,255,255,0.1) 1px, transparent 1px); background-size: 100px 100px, 150px 150px, 200px 200px, 120px 120px; animation: twinkle 15s ease-in-out infinite;"></div>
+    
+    <div class="container-creative">
+      <div class="section-title animate-on-scroll">
+        <h2 style="color: white; text-shadow: 0 2px 10px rgba(0,0,0,0.3)">🌍 Nos Bureaux dans le Monde</h2>
+        <p style="color: rgba(255,255,255,0.9);">Le réseau Alumni de BEM TECH s'étend sur trois continents avec des bureaux stratégiquement positionnés</p>
+      </div>
+      
+      <div style="height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent); margin: 3rem 0; position: relative;">
+        <div style="position: absolute; top: -8px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 0 1rem; color: white; font-size: 0.9rem; border-radius: 10px;">✨ Excellence Mondiale ✨</div>
+      </div>
+      
+      <div class="cards-grid">
+        <div class="card-creative animate-on-scroll glass-effect" style="border: 2px solid rgba(114, 188, 244, 0.2); position: relative; background: white; box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);">
+          <div style="position: absolute; top: -10px; right: -10px; width: 30px; height: 30px; background: linear-gradient(45deg, #72bcf4, #4a9eff); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.8rem; font-weight: bold; box-shadow: 0 4px 15px rgba(114, 188, 244, 0.4);">2</div>
+          <div class="card-icon" style="background: linear-gradient(45deg, #72bcf4, #4a9eff); box-shadow: 0 8px 25px rgba(114, 188, 244, 0.3);"><i class="fas fa-globe-africa"></i></div>
+          <h3 style="color: #2c3e50; margin-bottom: 1.5rem;">🌍 Afrique</h3>
+          <div style="background: rgba(114, 188, 244, 0.1); padding: 1rem; border-radius: 15px; margin-bottom: 1rem;">
+            <p style="color: #2c3e50; margin: 0;">📍 <strong>Dakar, Sénégal</strong></p>
+          </div>
+          <div style="background: rgba(114, 188, 244, 0.1); padding: 1rem; border-radius: 15px;">
+            <p style="color: #2c3e50; margin: 0;">📍 <strong>Abidjan, Côte d'Ivoire</strong></p>
+          </div>
+        </div>
+        
+        <div class="card-creative animate-on-scroll glass-effect" style="border: 2px solid rgba(79, 172, 254, 0.2); position: relative; background: white; box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);">
+          <div style="position: absolute; top: -10px; right: -10px; width: 30px; height: 30px; background: linear-gradient(45deg, #4facfe, #00f2fe); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.8rem; font-weight: bold; box-shadow: 0 4px 15px rgba(79, 172, 254, 0.4);">2</div>
+          <div class="card-icon" style="background: linear-gradient(45deg, #4facfe, #00f2fe); box-shadow: 0 8px 25px rgba(79, 172, 254, 0.3);"><i class="fas fa-globe-europe"></i></div>
+          <h3 style="color: #2c3e50; margin-bottom: 1.5rem;">🇪🇺 Europe</h3>
+          <div style="background: rgba(79, 172, 254, 0.1); padding: 1rem; border-radius: 15px; margin-bottom: 1rem;">
+            <p style="color: #2c3e50; margin: 0;">📍 <strong>Paris, France</strong></p>
+          </div>
+          <div style="background: rgba(79, 172, 254, 0.1); padding: 1rem; border-radius: 15px;">
+            <p style="color: #2c3e50; margin: 0;">📍 <strong>Lille, France</strong></p>
+          </div>
+        </div>
+        
+        <div class="card-creative animate-on-scroll glass-effect" style="border: 2px solid rgba(168, 237, 234, 0.2); position: relative; background: white; box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);">
+          <div style="position: absolute; top: -10px; right: -10px; width: 30px; height: 30px; background: linear-gradient(45deg, #a8edea, #fed6e3); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.8rem; font-weight: bold; box-shadow: 0 4px 15px rgba(168, 237, 234, 0.4);">2</div>
+          <div class="card-icon" style="background: linear-gradient(45deg, #a8edea, #fed6e3); box-shadow: 0 8px 25px rgba(168, 237, 234, 0.3);"><i class="fas fa-globe-americas"></i></div>
+          <h3 style="color: #2c3e50; margin-bottom: 1.5rem;">🌎 Amérique du Nord</h3>
+          <div style="background: rgba(168, 237, 234, 0.1); padding: 1rem; border-radius: 15px; margin-bottom: 1rem;">
+            <p style="color: #2c3e50; margin: 0;">📍 <strong>Toronto, Canada</strong></p>
+          </div>
+          <div style="background: rgba(168, 237, 234, 0.1); padding: 1rem; border-radius: 15px;">
+            <p style="color: #2c3e50; margin: 0;">📍 <strong>San Diego, États-Unis</strong></p>
+          </div>
+        </div>
+      </div>
+      
+      <div style="text-align: center; margin-top: 4rem;">
+        <div style="display: inline-block; background: white; padding: 2rem; border-radius: 25px; box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15); border: 1px solid rgba(114, 188, 244, 0.2);">
+          <h3 style="color: #2c3e50; margin-bottom: 1rem;">🚀 Rejoindre un bureau</h3>
+          <p style="color: #6c757d; margin-bottom: 1.5rem;">"Envie de représenter votre communauté et de créer des liens , alors devenez membre du bureau des ajourd'hui </p>
+          <button id="joinBureauBtn" class="elegant-button" style="background: linear-gradient(135deg, #72bcf4, #4a9eff); color: white; border: none; cursor: pointer;">
+            <i class="fas fa-users"></i>
+            Rejoindre un Bureau
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  
+  <style>
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.3; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.1); }
+    }
+
+    /* Hero Section Moderne */
+    .hero-modern {
+      min-height: 100vh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+
+    .hero-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      overflow: hidden;
+    }
+
+    .gradient-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(40px);
+      opacity: 0.7;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .orb-1 {
+      width: 300px;
+      height: 300px;
+      background: linear-gradient(45deg, #72bcf4, #4a9eff);
+      top: 10%;
+      left: 10%;
+      animation-delay: 0s;
+    }
+
+    .orb-2 {
+      width: 200px;
+      height: 200px;
+      background: linear-gradient(45deg, #4facfe, #00f2fe);
+      top: 60%;
+      right: 20%;
+      animation-delay: 2s;
+    }
+
+    .orb-3 {
+      width: 150px;
+      height: 150px;
+      background: linear-gradient(45deg, #a8edea, #fed6e3);
+      bottom: 20%;
+      left: 60%;
+      animation-delay: 4s;
+    }
+
+    .hero-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-content-reseau {
+      color: white;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      padding: 0.5rem 1rem;
+      border-radius: 50px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      font-size: 0.9rem;
+      margin-bottom: 2rem;
+      animation: slideInUp 0.8s ease-out;
+    }
+
+    .badge-icon {
+      font-size: 1.2rem;
+    }
+
+    .hero-title {
+      font-size: 3.5rem;
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+      animation: slideInUp 0.8s ease-out 0.2s both;
+    }
+
+    .gradient-text {
+      background: linear-gradient(45deg, #72bcf4, #4a9eff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-description {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      opacity: 0.9;
+      margin-bottom: 2rem;
+      animation: slideInUp 0.8s ease-out 0.4s both;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 3rem;
+      animation: slideInUp 0.8s ease-out 0.6s both;
+    }
+
+    .btn-primary, .btn-secondary {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 1rem 2rem;
+      border-radius: 50px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    .btn-primary {
+      background: linear-gradient(45deg, #72bcf4, #4a9eff);
+      color: white;
+      box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(10px);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+    }
+
+    .hero-stats-modern {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      animation: slideInUp 0.8s ease-out 0.8s both;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-number {
+      display: block;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #4a9eff;
+    }
+
+    .stat-label {
+      font-size: 0.9rem;
+      opacity: 0.8;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .stat-divider {
+      width: 1px;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    .hero-visual-modern {
+      position: relative;
+      height: 600px;
+    }
+
+    .visual-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Carousel géométrique */
+    .geometric-carousel {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 350px;
+      height: 350px;
+    }
+
+    .carousel-item {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transform: scale(0.8) rotate(45deg);
+      transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .carousel-item.active {
+      opacity: 1;
+      transform: scale(1) rotate(0deg);
+    }
+
+    .shape-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+    }
+
+    .shape-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+
+    .shape-container:hover img {
+      transform: scale(1.1);
+    }
+
+    .shape-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(transparent, rgba(0,0,0,0.8));
+      padding: 20px;
+      transform: translateY(100%);
+      transition: transform 0.4s ease;
+    }
+
+    .shape-container:hover .shape-overlay {
+      transform: translateY(0);
+    }
+
+    .shape-overlay h4 {
+      color: white;
+      margin: 0;
+      font-size: 1.1rem;
+      text-align: center;
+    }
+
+    /* Formes géométriques */
+    .circle-shape {
+      border-radius: 50%;
+      background: linear-gradient(45deg, #72bcf4, #4a9eff);
+      padding: 8px;
+    }
+
+    .circle-shape img {
+      border-radius: 50%;
+    }
+
+    .square-shape {
+      border-radius: 20px;
+      background: linear-gradient(45deg, #4facfe, #00f2fe);
+      padding: 8px;
+      transform: rotate(0deg);
+    }
+
+    .square-shape img {
+      border-radius: 15px;
+    }
+
+    .hexagon-shape {
+      background: linear-gradient(45deg, #a8edea, #fed6e3);
+      padding: 8px;
+      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    }
+
+    .hexagon-shape img {
+      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    }
+
+    .diamond-shape {
+      background: linear-gradient(45deg, #f093fb, #f5576c);
+      padding: 8px;
+      transform: rotate(45deg);
+      border-radius: 20px;
+    }
+
+    .diamond-shape img {
+      transform: rotate(-45deg);
+      border-radius: 15px;
+    }
+
+
+    /* Indicateurs du carousel */
+    .carousel-indicators {
+      position: absolute;
+      bottom: -60px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 10px;
+    }
+
+    .indicator {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .indicator.active {
+      background: #4a9eff;
+      transform: scale(1.2);
+    }
+
+    .indicator:hover {
+      background: rgba(255, 255, 255, 0.6);
+    }
+
+    /* Particules géométriques flottantes */
+    .geometric-particles {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      pointer-events: none;
+    }
+
+    .particle {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      opacity: 0.6;
+      animation: particleFloat 8s ease-in-out infinite;
+    }
+
+    .particle-1 {
+      top: 10%;
+      left: 10%;
+      background: #72bcf4;
+      border-radius: 50%;
+      animation-delay: 0s;
+    }
+
+    .particle-2 {
+      top: 20%;
+      right: 15%;
+      background: #4facfe;
+      clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+      animation-delay: 1s;
+    }
+
+    .particle-3 {
+      bottom: 30%;
+      left: 20%;
+      background: #4a9eff;
+      transform: rotate(45deg);
+      animation-delay: 2s;
+    }
+
+    .particle-4 {
+      bottom: 10%;
+      right: 10%;
+      background: #a8edea;
+      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+      animation-delay: 3s;
+    }
+
+    .particle-5 {
+      top: 60%;
+      left: 5%;
+      background: #f093fb;
+      border-radius: 50%;
+      animation-delay: 4s;
+    }
+
+
+    @keyframes slideInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideInRight {
+      from {
+        opacity: 0;
+        transform: translate(-30%, -50%);
+      }
+      to {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+      }
+    }
+
+
+    @keyframes dash {
+      to {
+        stroke-dashoffset: -20;
+      }
+    }
+
+    @keyframes particleFloat {
+      0%, 100% { 
+        transform: translateY(0px) rotate(0deg); 
+        opacity: 0.6; 
+      }
+      50% { 
+        transform: translateY(-30px) rotate(180deg); 
+        opacity: 1; 
+      }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        text-align: center;
+      }
+
+      .hero-title {
+        font-size: 2.5rem;
+      }
+
+      .hero-visual-modern {
+        height: 400px;
+      }
+
+      .main-visual {
+        width: 250px;
+        height: 250px;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .hero-stats-modern {
+        justify-content: center;
+      }
+    }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(5px);
+      animation: fadeIn 0.3s ease;
+    }
+
+    .modal-content {
+      background-color: white;
+      margin: 2% auto;
+      padding: 0;
+      border-radius: 20px;
+      width: 90%;
+      max-width: 600px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+      animation: slideInDown 0.4s ease;
+    }
+
+    .modal-header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 2rem;
+      border-radius: 20px 20px 0 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-header h2 {
+      margin: 0;
+      font-size: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .close {
+      color: white;
+      font-size: 2rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+    }
+
+    .close:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: rotate(90deg);
+    }
+
+    .modal-body {
+      padding: 2rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: #2c3e50;
+      font-size: 0.9rem;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      border: 2px solid #e9ecef;
+      border-radius: 10px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: #72bcf4;
+      box-shadow: 0 0 0 3px rgba(114, 188, 244, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .form-group select {
+      cursor: pointer;
+    }
+
+    .form-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: flex-end;
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid #e9ecef;
+    }
+
+    .btn-cancel,
+    .btn-submit {
+      padding: 0.8rem 1.5rem;
+      border: none;
+      border-radius: 50px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+    }
+
+    .btn-cancel {
+      background: #f8f9fa;
+      color: #6c757d;
+      border: 2px solid #e9ecef;
+    }
+
+    .btn-cancel:hover {
+      background: #e9ecef;
+      transform: translateY(-2px);
+    }
+
+    .btn-submit {
+      background: linear-gradient(135deg, #72bcf4, #4a9eff);
+      color: white;
+      min-width: 180px;
+      justify-content: center;
+    }
+
+    .btn-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(114, 188, 244, 0.3);
+    }
+
+    .btn-submit:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes slideInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Success/Error Messages */
+    .alert {
+      padding: 1rem;
+      border-radius: 10px;
+      margin-bottom: 1rem;
+      display: none;
+    }
+
+    .alert-success {
+      background: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+
+    .alert-error {
+      background: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .modal-content {
+        width: 95%;
+        margin: 5% auto;
+      }
+      
+      .modal-header,
+      .modal-body {
+        padding: 1.5rem;
+      }
+      
+      .form-actions {
+        flex-direction: column;
+      }
+      
+      .btn-cancel,
+      .btn-submit {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+
+  </style>
+
+
+  <script>
+    // Animation au scroll moderne
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -100px 0px'
+    };
+
+    const scrollObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animated');
+        }
+      });
+    }, observerOptions);
+
+    // Observer tous les éléments avec animation
+    document.querySelectorAll('.animate-on-scroll').forEach(el => {
+      scrollObserver.observe(el);
+    });
+
+    // Animation des statistiques au chargement
+    function animateStats() {
+      const statNumbers = document.querySelectorAll('.stat-number');
+      
+      statNumbers.forEach(stat => {
+        const finalValue = stat.textContent;
+        const numericValue = parseInt(finalValue.replace(/\D/g, ''));
+        const suffix = finalValue.replace(/\d/g, '');
+        
+        let currentValue = 0;
+        const increment = numericValue / 60;
+        
+        const timer = setInterval(() => {
+          currentValue += increment;
+          if (currentValue >= numericValue) {
+            stat.textContent = finalValue;
+            clearInterval(timer);
+          } else {
+            stat.textContent = Math.floor(currentValue) + suffix;
+          }
+        }, 25);
+      });
+    }
+
+    // Effets interactifs sur les nœuds du réseau
+    document.querySelectorAll('.network-node').forEach(node => {
+      node.addEventListener('click', function() {
+        this.style.animation = 'none';
+        setTimeout(() => {
+          this.style.animation = 'pulse 2s ease-in-out infinite';
+        }, 100);
+      });
+    });
+
+    // Header scroll effect
+    window.addEventListener('scroll', () => {
+      const header = document.querySelector('.creative-header');
+      if (window.scrollY > 100) {
+        header.style.background = 'rgba(255, 255, 255, 0.98)';
+        header.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.1)';
+      } else {
+        header.style.background = 'rgba(255, 255, 255, 0.95)';
+        header.style.boxShadow = 'none';
+      }
+    });
+
+    // Smooth scroll pour les liens d'ancrage
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+
+    // Carousel géométrique automatique
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.carousel-item');
+    const indicators = document.querySelectorAll('.indicator');
+    const totalSlides = slides.length;
+
+    function showSlide(index) {
+      // Retirer la classe active de tous les éléments
+      slides.forEach(slide => slide.classList.remove('active'));
+      indicators.forEach(indicator => indicator.classList.remove('active'));
+      
+      // Ajouter la classe active à l'élément courant
+      slides[index].classList.add('active');
+      indicators[index].classList.add('active');
+    }
+
+    function nextSlide() {
+      currentSlide = (currentSlide + 1) % totalSlides;
+      showSlide(currentSlide);
+    }
+
+    // Auto-rotation toutes les 4 secondes
+    setInterval(nextSlide, 4000);
+
+    // Gestion des clics sur les indicateurs
+    indicators.forEach((indicator, index) => {
+      indicator.addEventListener('click', () => {
+        currentSlide = index;
+        showSlide(currentSlide);
+      });
+    });
+
+    // Démarrer les animations au chargement
+    window.addEventListener('load', () => {
+      setTimeout(animateStats, 1000);
+      // Initialiser le premier slide
+      showSlide(0);
+    });
+
+
+    // Parallax effect léger
+    window.addEventListener('scroll', () => {
+      const scrolled = window.pageYOffset;
+      const parallax = document.querySelector('.hero-creative::before');
+      if (parallax) {
+        const speed = scrolled * 0.5;
+        parallax.style.transform = `translateY(${speed}px)`;
+      }
+    });
+
+    // Modal functionality - Wait for DOM to be loaded
+    document.addEventListener('DOMContentLoaded', function() {
+      const modal = document.getElementById('joinBureauModal');
+      const btn = document.getElementById('joinBureauBtn');
+      const span = document.getElementsByClassName('close')[0];
+      const cancelBtn = document.querySelector('.btn-cancel');
+      const form = document.getElementById('joinBureauForm');
+
+      // Check if elements exist
+      if (!modal || !btn || !span || !cancelBtn || !form) {
+        console.error('Modal elements not found');
+        return;
+      }
+
+    // Open modal
+    btn.onclick = function() {
+      modal.style.display = 'block';
+      document.body.style.overflow = 'hidden';
+    }
+
+    // Close modal functions
+    function closeModal() {
+      modal.style.display = 'none';
+      document.body.style.overflow = 'auto';
+      form.reset();
+      hideAlert();
+    }
+
+    span.onclick = closeModal;
+    cancelBtn.onclick = closeModal;
+
+    // Close modal when clicking outside
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        closeModal();
+      }
+    }
+
+    // Alert functions
+    function showAlert(message, type) {
+      const alertDiv = document.createElement('div');
+      alertDiv.className = `alert alert-${type}`;
+      alertDiv.style.display = 'block';
+      alertDiv.innerHTML = message;
+      
+      if (type === 'success') {
+        // For success messages, replace the entire modal content
+        const modalBody = document.querySelector('.modal-body');
+        modalBody.innerHTML = `
+          <div class="success-container" style="text-align: center; padding: 2rem;">
+            <div style="font-size: 4rem; color: #28a745; margin-bottom: 1rem;">
+              <i class="fas fa-check-circle"></i>
+            </div>
+            <h3 style="color: #28a745; margin-bottom: 1rem;">Candidature envoyée !</h3>
+            <p style="font-size: 1.1rem; margin-bottom: 2rem; color: #666;">
+              Votre demande d'adhésion au bureau a été envoyée avec succès.<br>
+              Nous vous contacterons bientôt par email.
+            </p>
+            <button onclick="closeModal()" class="btn-submit" style="background: #28a745;">
+              <i class="fas fa-check"></i>
+              Parfait !
+            </button>
+          </div>
+        `;
+        
+        // Auto-close after 5 seconds
+        setTimeout(() => {
+          closeModal();
+        }, 5000);
+      } else {
+        // For error messages, show at the top of the form
+        const modalBody = document.querySelector('.modal-body');
+        modalBody.insertBefore(alertDiv, modalBody.firstChild);
+      }
+    }
+
+    function hideAlert() {
+      const alert = document.querySelector('.alert');
+      if (alert) {
+        alert.remove();
+      }
+    }
+
+    // Form submission
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      const submitBtn = document.querySelector('.btn-submit');
+      const originalText = submitBtn.innerHTML;
+      
+      // Show loading state
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Envoi en cours...';
+      
+      hideAlert();
+      
+      // Get form data
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData);
+      
+      try {
+        console.log('Sending data:', data);
+        
+        const response = await fetch('http://localhost:4000/api/join-bureau', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+        
+        console.log('Response status:', response.status);
+        
+        if (!response.ok) {
+          const errorText = await response.text();
+          console.error('Response error:', errorText);
+          throw new Error(`HTTP ${response.status}: ${errorText}`);
+        }
+        
+        const result = await response.json();
+        console.log('Response data:', result);
+        
+        if (result.success) {
+          showAlert('<i class="fas fa-check-circle"></i> <strong>Candidature envoyée avec succès !</strong><br>Nous vous contacterons bientôt.', 'success');
+        } else {
+          showAlert('<i class="fas fa-exclamation-triangle"></i> <strong>Erreur :</strong> ' + (result.message || 'Une erreur est survenue'), 'error');
+        }
+      } catch (error) {
+        console.error('Fetch error:', error);
+        showAlert('<i class="fas fa-exclamation-triangle"></i> <strong>Erreur de connexion :</strong> ' + error.message, 'error');
+      } finally {
+        // Reset button
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalText;
+      }
+    });
+
+    }); // End of DOMContentLoaded
+  </script>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <!-- Colonne 1 : Logo / Description -->
+      <div class="footer-about">
+        <h3>BemTech Alumni</h3>
+        <p>
+          Connecter les anciens, inspirer la communauté et bâtir un futur meilleur ensemble.
+        </p>
+      </div>
+
+      <div class="footer-links">
+        <h4>Liens rapides</h4>
+        <ul>
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="Qui.html">Association</a></li>
+          <li><a href="calendrier.html">Événements</a></li>
+          <li><a href="opportunite.html">Carrières</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-social">
+        <h4>Suivez-nous</h4>
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#"><i class="fab fa-youtube"></i></a>
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-tiktok"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bas du footer -->
+    <div class="footer-bottom">
+      <p>&copy; 2025 BemTech Alumni – Tous droits réservés.</p>
+    </div>
+  </footer>
+
+  <!-- Modal pour rejoindre un bureau -->
+  <div id="joinBureauModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2><i class="fas fa-users"></i> Rejoindre un Bureau Alumni</h2>
+        <span class="close">&times;</span>
+      </div>
+      <div class="modal-body">
+        <form id="joinBureauForm">
+          <div class="form-group">
+            <label for="nom">Nom *</label>
+            <input type="text" id="nom" name="nom" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="prenom">Prénom *</label>
+            <input type="text" id="prenom" name="prenom" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="promotion">Promotion / Année *</label>
+            <input type="text" id="promotion" name="promotion" placeholder="Ex: 2020, Master 2022" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="bureau">Bureau choisi *</label>
+            <select id="bureau" name="bureau" required>
+              <option value="">Sélectionnez un bureau</option>
+              <optgroup label="🌍 Afrique">
+                <option value="Dakar">Dakar, Sénégal</option>
+                <option value="Abidjan">Abidjan, Côte d'Ivoire</option>
+              </optgroup>
+              <optgroup label="🇪🇺 Europe">
+                <option value="Paris">Paris, France</option>
+                <option value="Lille">Lille, France</option>
+              </optgroup>
+              <optgroup label="🌎 Amérique du Nord">
+                <option value="Toronto">Toronto, Canada</option>
+                <option value="San Diego">San Diego, États-Unis</option>
+              </optgroup>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="email">Email *</label>
+            <input type="email" id="email" name="email" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="telephone">Téléphone</label>
+            <input type="tel" id="telephone" name="telephone" placeholder="+33 1 23 45 67 89">
+          </div>
+          
+          <div class="form-group">
+            <label for="motivation">Motivation (optionnel)</label>
+            <textarea id="motivation" name="motivation" rows="3" placeholder="Pourquoi souhaitez-vous rejoindre ce bureau ?"></textarea>
+          </div>
+          
+          <div class="form-actions">
+            <button type="button" class="btn-cancel">Annuler</button>
+            <button type="submit" class="btn-submit">
+              <i class="fas fa-paper-plane"></i>
+              Envoyer ma candidature
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="auth.js"></script>
+</body>
+</html>

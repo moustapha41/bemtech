@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Vie à l'école - BemTech Alumni</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Inter:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<link rel="stylesheet" href="styles.css">
+<style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 40px;
+      background: #f9f9f9;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    /* Conteneur centré */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      overflow: hidden;
+      text-align: center;
+    }
+
+    .card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+
+    .card h3 {
+      margin: 15px 0 10px;
+    }
+
+    .card button {
+      margin-bottom: 20px;
+      background: #79c8f7;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+
+    .card button:hover {
+      background: rgb(235, 149, 149);
+    }
+
+    /* Séparateur */
+    .separator {
+      border: none;
+      border-top: 2px solid #999;
+      margin: 40px 0;
+      color: aqua;
+    }
+
+    /* Popup */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      max-width: 600px;
+      max-height: 80vh;
+      overflow-y: auto;
+      position: relative;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    .close {
+      position: absolute;
+      top: 15px; right: 20px;
+      font-size: 28px;
+      cursor: pointer;
+      color: #999;
+      transition: color 0.3s ease;
+    }
+
+    .close:hover {
+      color: #333;
+    }
+
+    .modal-text h3 {
+      color: #333;
+      font-size: 1.4rem;
+      margin-bottom: 15px;
+      border-bottom: 2px solid #f0f0f0;
+      padding-bottom: 10px;
+    }
+
+    .modal-text > p {
+      color: #666;
+      line-height: 1.6;
+      margin-bottom: 25px;
+      font-size: 1.1rem;
+    }
+
+    .campus-section {
+      margin-bottom: 20px;
+      padding: 15px;
+      background: #f8f9fa;
+      border-radius: 10px;
+      border-left: 4px solid #72bcf4;
+    }
+
+    .campus-section h4 {
+      color: #333;
+      font-size: 1.2rem;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    .campus-section p {
+      color: #555;
+      line-height: 1.5;
+      margin: 0;
+      font-size: 1rem;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(-20px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+  </style>
+</head>
+<body>
+  <div class="topline"></div>
+
+  <div class="masthead">
+    <div class="wrap">
+      <!-- Partie gauche -->
+      <div class="header-left">
+        <div class="brand-logo">
+          <img alt="BEMTECH Logo" src="logob.png">
+        </div>
+        <span class="brand-divider" aria-hidden="true"></span>
+        <div class="brand-title">Alumni</div>
+      </div>
+
+      <!-- Partie droite -->
+      <div class="header-right">
+        <nav class="nav-block" aria-label="Primary">
+          <div class="nav-top">
+            <a href="index.html#join" id="membershipBtn">Membership</a>
+            <a href="actualite.html" class="restricted-link" data-page="actualites">Actualités &amp; Recompenses</a>
+            <a href="vie_school.html" class="restricted-link" data-page="vie-ecole" style="color: var(--washu-red); font-weight: 700;">Vie a l'ecole</a>
+            <a href="after.html" class="restricted-link" data-page="apres-ecole">Apres l'ecole</a>
+            <a href="contact.html">Contact</a>
+          </div>
+          <div class="nav-bottom">
+            <!-- Notre Communaute -->
+            <div class="dropdown">
+              <a href="#">Notre Communauté</a>
+              <ul class="submenu">
+                <li><a href="reseau.html" class="restricted-link" data-page="reseau">Reseau</a></li>
+                <li><a href="Qui.html">Qui sommes-nous ??</a></li>
+                <li><a href="FAQ.html">FAQ</a></li>
+              </ul>
+            </div>
+            <div class="dropdown">
+              <a href="#">Carrières &amp; Ressources</a>
+              <ul class="submenu">
+                <li><a href="opportunite.html" class="restricted-link" data-page="opportunites">Opportunités</a></li>
+                <li><a href="mentorat.html" class="restricted-link" data-page="mentorat">Mentorat / Developpement professionnel</a></li>
+                <li><a href="projet.html" class="restricted-link" data-page="projet">Projet / Realisation</a></li>
+              </ul>
+            </div>
+            <!-- Evenement -->
+            <div class="dropdown">
+              <a href="#">Événement</a>
+              <ul class="submenu">
+                <li><a href="calendrier.html" class="restricted-link" data-page="calendrier">Calendrier</a></li>
+                <li><a href="reunion.html" class="restricted-link" data-page="retrouvaille">Reunion & Retrouvaille</a></li>
+                <li><a href="evenements_etudiants.html" class="restricted-link" data-page="evenements-etudiants">Événements Étudiants</a></li>
+                <li><a href="journee.html" class="restricted-link" data-page="journee-culturelle">Seminaire</a></li>
+              </ul>
+            </div>
+
+            <!-- Benevole -->
+            <div class="dropdown">
+              <a href="#">Humanitaire</a>
+              <ul class="submenu">
+                <li><a href="don_annuel.html" class="restricted-link" data-page="don-annuel">Don annuel</a></li>
+                <li><a href="retrouvaille.html" class="restricted-link" data-page="conseil">Aide et Solidarité</a></li>
+                <li><a href="conseil.html" class="restricted-link" data-page="conseil">Benevolat</a></li>
+              </ul>
+            </div>
+            
+            <a href="Galerie.html">Galerie</a>
+            <button id="authBtn" class="auth-btn">Connexion</button>
+          </div>
+        </nav>
+
+        <div class="logo-section-2">
+          <img src="logor.png" alt="Logo">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main style="padding: 40px 0;">
+    <h1 style="margin-bottom: 40px; margin-left: 20px;">Vie à l'école</h1>
+
+  <div class="container">
+    <!-- Première rangée -->
+    <div class="grid">
+      <div class="card">
+        <img src="IMG_4362.jpg" alt="">
+        <h3>Le campus</h3>
+        <button onclick="openModal('modal1')">Lire la suite</button>
+      </div>
+
+      <div class="card">
+        <img src="IMG_8197.jpg" alt="">
+        <h3>Move’ Étudiant</h3>
+        <button onclick="openModal('modal2')">Lire la suite</button>
+      </div>
+
+      <div class="card">
+        <img src="IMG_6953.jpg" alt="">
+        <h3>Les actualités de la vie à l'école</h3>
+        <button onclick="openModal('modal3')">Lire la suite</button>
+      </div>
+    </div>
+
+    <!-- Séparateur -->
+    <hr class="separator">
+
+    <!-- Deuxième rangée -->
+    <div class="grid">
+      <div class="card">
+        <img src="Projet1.jpg" alt="">
+        <h3>Projets des étudiants</h3>
+        <button onclick="openModal('modal4')">Lire la suite</button>
+      </div>
+
+      <div class="card">
+        <img src="WhatsApp Image 2024-05-13 à 07.58.28_581fef57.jpg" alt="">
+        <h3>Les séminaires et forums</h3>
+        <button onclick="openModal('modal5')">Lire la suite</button>
+      </div>
+
+      <div class="card">
+        <img src="WhatsApp Image 2024-05-13 à 08.04.41_b5d87f9a.jpg" alt="">
+        <h3>Les événements annuels</h3>
+        <button onclick="openModal('modal6')">Lire la suite</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Popups -->
+  <div id="modal1" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('modal1')">&times;</span>
+      <h2>Le campus</h2>
+      <div class="modal-text">
+        <h3>🌍 Le Campus</h3>
+        <p>Notre campus offre un environnement moderne et inspirant, pensé pour favoriser à la fois l'apprentissage et la convivialité.</p>
+        
+        <div class="campus-section">
+          <h4>📚 Des salles équipées</h4>
+          <p>Les étudiants bénéficient de salles de cours dotées de matériel moderne et d'outils numériques adaptés aux nouveaux modes d'enseignement.</p>
+        </div>
+        
+        <div class="campus-section">
+          <h4>🌳 Espaces verts & détente</h4>
+          <p>Des espaces verts et des coins de détente permettent de souffler entre deux cours. Des zones de jeux et gaming sont également disponibles, afin d'allier esprit d'équipe et moments de loisir.</p>
+        </div>
+        
+        <div class="campus-section">
+          <h4>🍴 Un restaurant convivial</h4>
+          <p>Le restaurant du campus propose un lieu de rencontre autour de repas équilibrés et variés, renforçant les liens entre étudiants.</p>
+        </div>
+        
+        <div class="campus-section">
+          <h4>👩‍🏫 Une vraie complicité avec les professeurs</h4>
+          <p>Au-delà des cours, le campus favorise la proximité et la complicité entre enseignants et étudiants, créant une atmosphère familiale et motivante.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="modal2" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('modal2')">&times;</span>
+      <h2>Move' Étudiant</h2>
+      <div class="modal-text">
+        <h3>🎓 La Vie Associative</h3>
+        <p>La vie associative est au cœur de l'expérience étudiante. Elle permet aux jeunes de s'engager, de développer des compétences pratiques et de créer des liens forts au-delà des cours.</p>
+        
+        <div class="campus-section">
+          <h4>🎉 Le BDE (Bureau des Étudiants)</h4>
+          <p>Véritable moteur de la vie étudiante, le BDE organise les événements festifs, culturels et sportifs. Il incarne la convivialité et la cohésion entre promotions.</p>
+        </div>
+        
+        <div class="campus-section">
+          <h4>🔬 Le Club Scientifique</h4>
+          <p>Espace de curiosité et d'expérimentation, le club scientifique permet aux étudiants de travailler sur des projets de recherche, de participer à des concours et de développer leur esprit critique.</p>
+        </div>
+        
+        <div class="campus-section">
+          <h4>💡 Le Club Innovation</h4>
+          <p>Un lieu où les idées prennent vie. Les étudiants y conçoivent des projets créatifs et concrets, en mettant en avant la technologie, l'entrepreneuriat et l'esprit start-up.</p>
+        </div>
+        
+        <div class="campus-section">
+          <h4>🛡️ Le Club Cybersécurité</h4>
+          <p>Défi, entraide et apprentissage : ce club forme les passionnés de sécurité informatique à travers des challenges, ateliers pratiques et compétitions de type Capture The Flag (CTF).</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="modal3" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('modal3')">&times;</span>
+      <h2>Les actualités</h2>
+      <p>Retrouvez ici les dernières nouvelles de la vie étudiante, les projets et les réussites des étudiants.</p>
+    </div>
+  </div>
+
+  <div id="modal4" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('modal4')">&times;</span>
+      <h2>Projets des étudiants</h2>
+      <div class="modal-text">
+        <h3>💡 Projets des étudiants</h3>
+        <p>Les projets étudiants constituent l'un des piliers de la formation et une véritable vitrine de la créativité sur le campus.</p>
+        
+        <div class="campus-section">
+          <h4>🧪 Un laboratoire bien équipé</h4>
+          <p>Les futurs ingénieurs disposent d'un laboratoire moderne, doté d'outils et de technologies de pointe, leur permettant de passer de la théorie à la pratique. C'est un espace d'expérimentation, d'innovation et de collaboration.</p>
+        </div>
+        
+        <div class="campus-section">
+          <h4>🌍 Des projets innovants chaque année</h4>
+          <p>À la fin de chaque année académique, les étudiants présentent des projets originaux qui répondent à des enjeux actuels et réels. Ces initiatives couvrent des domaines variés : technologie, sciences, entrepreneuriat, développement durable, etc.</p>
+        </div>
+        
+        <div class="campus-section">
+          <h4>🛡️ Un engagement pour la souveraineté numérique</h4>
+          <p>Beaucoup de projets s'orientent vers des solutions favorisant l'autonomie technologique et la souveraineté numérique, renforçant ainsi l'ambition d'une innovation locale au service de la société.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="modal5" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('modal5')">&times;</span>
+      <h2>Séminaires et forums</h2>
+      <p>Des conférences et forums sont organisés régulièrement pour favoriser les échanges entre étudiants et professionnels.</p>
+    </div>
+  </div>
+
+  <div id="modal6" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('modal6')">&times;</span>
+      <h2>Les événements annuels</h2>
+      <div class="modal-text">
+        <h3>🎉 Les événements annuels</h3>
+        <p>Chaque année, le campus vit au rythme d'événements marquants qui renforcent la cohésion et enrichissent l'expérience étudiante.</p>
+        
+        <div class="campus-section">
+          <h4>🤝 Week-end d'intégration</h4>
+          <p>Un moment fort pour accueillir les nouveaux étudiants, créer des liens et lancer l'année dans une ambiance festive et conviviale.</p>
+        </div>
+        
+        <div class="campus-section">
+          <h4>🏢 Salons & Conférences</h4>
+          <p>Le campus organise régulièrement des salons et conférences réunissant professionnels, experts et étudiants. Ces événements favorisent l'échange, le réseautage et l'ouverture sur le monde professionnel.</p>
+        </div>
+        
+        <div class="campus-section">
+          <h4>🎓 Cérémonie de rentrée & Graduation</h4>
+          <p>La cérémonie de rentrée marque le début officiel de l'année académique, tandis que la graduation célèbre la réussite et l'aboutissement du parcours des étudiants.</p>
+        </div>
+        
+        <div class="campus-section">
+          <h4>🏭 Visites d'entreprises</h4>
+          <p>Tout au long de l'année, les étudiants ont l'opportunité de découvrir des entreprises, d'échanger avec des professionnels et de s'immerger dans leur futur environnement de travail.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <!-- Colonne 1 : Logo / Description -->
+      <div class="footer-about">
+        <h3>BemTech Alumni</h3>
+        <p>
+          Connecter les anciens, inspirer la communauté et bâtir un futur meilleur ensemble.
+        </p>
+      </div>
+
+      <div class="footer-links">
+        <h4>Liens rapides</h4>
+        <ul>
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="Qui.html">Association</a></li>
+          <li><a href="calendrier.html">Événements</a></li>
+          <li><a href="opportunite.html">Carrières</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-social">
+        <h4>Suivez-nous</h4>
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#"><i class="fab fa-youtube"></i></a>
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-tiktok"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bas du footer -->
+    <div class="footer-bottom">
+      <p>&copy; 2025 BemTech Alumni – Tous droits réservés.</p>
+    </div>
+  </footer>
+
+  <script src="auth.js"></script>
+  <script>
+    function openModal(id) {
+      document.getElementById(id).style.display = "flex";
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).style.display = "none";
+    }
+
+    // Fermer le popup si on clique en dehors
+    window.onclick = function(event) {
+      document.querySelectorAll('.modal').forEach(modal => {
+        if (event.target === modal) {
+          modal.style.display = "none";
+        }
+      });
+    }
+  </script>
+
+
+</body>
+</html>

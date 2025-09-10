@@ -1,0 +1,1408 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administration - BemTech Alumni</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .admin-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .admin-header {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .admin-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 10px;
+        }
+
+        .admin-subtitle {
+            color: #718096;
+            font-size: 1.1rem;
+        }
+
+        .login-section {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-group {
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2d3748;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .login-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .admin-section {
+            display: none;
+        }
+
+        .tabs-container {
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .tabs {
+            display: flex;
+            background: #f7fafc;
+            border-bottom: 1px solid #e2e8f0;
+            overflow-x: auto;
+        }
+
+        .tab {
+            padding: 16px 24px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            color: #718096;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            position: relative;
+        }
+
+        .tab:hover {
+            background: #edf2f7;
+            color: #4a5568;
+        }
+
+        .tab.active {
+            color: #667eea;
+            background: white;
+        }
+
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: #667eea;
+        }
+
+        .tab-content {
+            padding: 20px;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .stat-number.pending { color: #f6ad55; }
+        .stat-number.approved { color: #68d391; }
+        .stat-number.rejected { color: #fc8181; }
+        .stat-number.total { color: #667eea; }
+
+        .stat-label {
+            color: #718096;
+            font-weight: 500;
+        }
+
+        .requests-table {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .table-header {
+            background: #f7fafc;
+            padding: 20px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .table-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #2d3748;
+        }
+
+        .table-content {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 16px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        th {
+            background: #f7fafc;
+            font-weight: 600;
+            color: #4a5568;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-pending {
+            background: #fed7aa;
+            color: #c05621;
+        }
+
+        .status-approved {
+            background: #c6f6d5;
+            color: #276749;
+        }
+
+        .status-rejected {
+            background: #fed7d7;
+            color: #c53030;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-approve {
+            background: #68d391;
+            color: white;
+        }
+
+        .btn-approve:hover {
+            background: #48bb78;
+        }
+
+        .btn-reject {
+            background: #fc8181;
+            color: white;
+        }
+
+        .btn-reject:hover {
+            background: #f56565;
+        }
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-danger {
+            background: #fc8181;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #f56565;
+        }
+
+        .activity-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-left: 4px solid #667eea;
+        }
+
+        .activity-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .activity-user {
+            font-weight: 600;
+            color: #2d3748;
+        }
+
+        .activity-time {
+            color: #718096;
+            font-size: 0.9rem;
+        }
+
+        .activity-status {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .status-online {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+
+        .status-offline {
+            background: #fed7d7;
+            color: #742a2a;
+        }
+
+        .status-recent {
+            background: #fef5e7;
+            color: #744210;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 16px 24px;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            z-index: 1000;
+            animation: slideIn 0.3s ease;
+        }
+
+        .notification.success {
+            background: #48bb78;
+        }
+
+        .notification.error {
+            background: #f56565;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .access-link {
+            background: #edf2f7;
+            padding: 12px;
+            border-radius: 6px;
+            margin-top: 10px;
+            font-family: monospace;
+            font-size: 12px;
+            word-break: break-all;
+            border: 1px solid #e2e8f0;
+        }
+
+        .copy-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            cursor: pointer;
+            margin-left: 8px;
+        }
+
+        .logout-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #fc8181;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <button class="logout-btn" id="logoutBtn" style="display: none;">
+            <i class="fas fa-sign-out-alt"></i> Déconnexion
+        </button>
+
+        <div class="admin-header">
+            <h1 class="admin-title">
+                <i class="fas fa-shield-alt"></i> Administration BemTech Alumni
+            </h1>
+            <p class="admin-subtitle">Gestion centralisée de toutes les données BemTech Alumni</p>
+        </div>
+
+        <!-- Section de connexion -->
+        <div class="login-section" id="loginSection">
+            <h2 style="margin-bottom: 20px; color: #2d3748;">
+                <i class="fas fa-lock"></i> Connexion Administrateur
+            </h2>
+            <form class="login-form" id="adminLoginForm">
+                <div class="form-group">
+                    <label for="adminEmail">Email</label>
+                    <input type="email" id="adminEmail" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="adminPassword">Mot de passe</label>
+                    <input type="password" id="adminPassword" name="password" required>
+                </div>
+                <button type="submit" class="login-btn">
+                    <i class="fas fa-sign-in-alt"></i> Se connecter
+                </button>
+            </form>
+        </div>
+
+        <!-- Section d'administration -->
+        <div class="admin-section" id="adminSection">
+            <!-- Onglets de navigation -->
+            <div class="tabs-container">
+                <div class="tabs">
+                    <button class="tab active" onclick="adminPanel.switchTab('membership')">
+                        <i class="fas fa-user-plus"></i> Demandes d'adhésion
+                    </button>
+                    <button class="tab" onclick="adminPanel.switchTab('users')">
+                        <i class="fas fa-users"></i> Utilisateurs
+                    </button>
+                    <button class="tab" onclick="adminPanel.switchTab('bureau')">
+                        <i class="fas fa-building"></i> Demandes Bureau
+                    </button>
+                    <button class="tab" onclick="adminPanel.switchTab('projects')">
+                        <i class="fas fa-project-diagram"></i> Projets
+                    </button>
+                    <button class="tab" onclick="adminPanel.switchTab('events')">
+                        <i class="fas fa-calendar-alt"></i> Événements
+                    </button>
+                    <button class="tab" onclick="adminPanel.switchTab('activity')">
+                        <i class="fas fa-chart-line"></i> Activité Utilisateurs
+                    </button>
+                </div>
+            </div>
+
+            <!-- Contenu des onglets -->
+            <div id="membershipTab" class="tab-content">
+                <h2 class="section-title">
+                    <i class="fas fa-user-plus"></i> Demandes d'adhésion à la communauté
+                </h2>
+                <!-- Statistiques -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number pending" id="pendingCount">0</div>
+                    <div class="stat-label">En attente</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number approved" id="approvedCount">0</div>
+                    <div class="stat-label">Approuvées</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number rejected" id="rejectedCount">0</div>
+                    <div class="stat-label">Rejetées</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number total" id="totalCount">0</div>
+                    <div class="stat-label">Total</div>
+                </div>
+            </div>
+
+                <!-- Tableau des demandes -->
+                <div class="requests-table">
+                <div class="table-header">
+                    <h3 class="table-title">
+                        <i class="fas fa-users"></i> Demandes d'adhésion
+                    </h3>
+                </div>
+                <div class="table-content">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nom</th>
+                                <th>Email</th>
+                                <th>Promotion</th>
+                                <th>Date</th>
+                                <th>Statut</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="requestsTableBody">
+                            <!-- Les demandes seront chargées ici -->
+                        </tbody>
+                    </table>
+                </div>
+                </div>
+            </div>
+
+            <!-- Onglet Utilisateurs -->
+            <div id="usersTab" class="tab-content" style="display: none;">
+                <h2 class="section-title">
+                    <i class="fas fa-users"></i> Utilisateurs enregistrés
+                </h2>
+                <div class="requests-table">
+                    <div class="table-header">
+                        <h3 class="table-title">
+                            <i class="fas fa-users"></i> Liste des utilisateurs
+                        </h3>
+                    </div>
+                    <div class="table-content">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Nom</th>
+                                    <th>Email</th>
+                                    <th>Promotion</th>
+                                    <th>Rôle</th>
+                                    <th>Date d'inscription</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="usersTableBody">
+                                <!-- Les utilisateurs seront chargés ici -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Onglet Demandes Bureau -->
+            <div id="bureauTab" class="tab-content" style="display: none;">
+                <h2 class="section-title">
+                    <i class="fas fa-building"></i> Demandes d'adhésion aux bureaux
+                </h2>
+                <div class="requests-table">
+                    <div class="table-header">
+                        <h3 class="table-title">
+                            <i class="fas fa-building"></i> Demandes bureau
+                        </h3>
+                    </div>
+                    <div class="table-content">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Nom</th>
+                                    <th>Email</th>
+                                    <th>Bureau</th>
+                                    <th>Promotion</th>
+                                    <th>Date</th>
+                                    <th>Statut</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="bureauTableBody">
+                                <!-- Les demandes bureau seront chargées ici -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Onglet Projets -->
+            <div id="projectsTab" class="tab-content" style="display: none;">
+                <h2 class="section-title">
+                    <i class="fas fa-project-diagram"></i> Projets de la communauté
+                </h2>
+                <div class="requests-table">
+                    <div class="table-header">
+                        <h3 class="table-title">
+                            <i class="fas fa-project-diagram"></i> Liste des projets
+                        </h3>
+                    </div>
+                    <div class="table-content">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Titre</th>
+                                    <th>Auteur</th>
+                                    <th>Email</th>
+                                    <th>Participants</th>
+                                    <th>Date création</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="projectsTableBody">
+                                <!-- Les projets seront chargés ici -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Onglet Événements -->
+            <div id="eventsTab" class="tab-content" style="display: none;">
+                <h2 class="section-title">
+                    <i class="fas fa-calendar-alt"></i> Événements de la communauté
+                </h2>
+                <div class="requests-table">
+                    <div class="table-header">
+                        <h3 class="table-title">
+                            <i class="fas fa-calendar-alt"></i> Liste des événements
+                        </h3>
+                    </div>
+                    <div class="table-content">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Titre</th>
+                                    <th>Organisateur</th>
+                                    <th>Date</th>
+                                    <th>Lieu</th>
+                                    <th>Participants</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="eventsTableBody">
+                                <!-- Les événements seront chargés ici -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Onglet Activité Utilisateurs -->
+            <div id="activityTab" class="tab-content" style="display: none;">
+                <h2 class="section-title">
+                    <i class="fas fa-chart-line"></i> Activité des utilisateurs
+                </h2>
+                
+                <!-- Statistiques d'activité -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number total" id="onlineCount">0</div>
+                        <div class="stat-label">En ligne maintenant</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number pending" id="recentCount">0</div>
+                        <div class="stat-label">Connectés récemment</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number approved" id="todayCount">0</div>
+                        <div class="stat-label">Connexions aujourd'hui</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number rejected" id="weekCount">0</div>
+                        <div class="stat-label">Cette semaine</div>
+                    </div>
+                </div>
+
+                <!-- Liste des utilisateurs actifs -->
+                <div class="requests-table">
+                    <div class="table-header">
+                        <h3 class="table-title">
+                            <i class="fas fa-users"></i> Utilisateurs les plus actifs
+                        </h3>
+                    </div>
+                    <div class="table-content">
+                        <div id="activityList">
+                            <!-- Les activités seront chargées ici -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class AdminPanel {
+            constructor() {
+                this.apiUrl = 'http://localhost:4000/api';
+                this.token = localStorage.getItem('adminToken');
+                this.init();
+            }
+
+            init() {
+                this.bindEvents();
+                if (this.token) {
+                    this.verifyToken();
+                }
+            }
+
+            bindEvents() {
+                const loginForm = document.getElementById('adminLoginForm');
+                const logoutBtn = document.getElementById('logoutBtn');
+
+                loginForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.handleLogin(e);
+                });
+
+                logoutBtn.addEventListener('click', () => {
+                    this.logout();
+                });
+            }
+
+            async handleLogin(e) {
+                const formData = new FormData(e.target);
+                const email = formData.get('email');
+                const password = formData.get('password');
+
+                try {
+                    const response = await fetch(`${this.apiUrl}/login`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ email, password })
+                    });
+
+                    const data = await response.json();
+
+                    if (response.ok && data.user.role === 'admin') {
+                        this.token = data.token;
+                        localStorage.setItem('adminToken', this.token);
+                        this.showAdminPanel();
+                        this.loadAllData();
+                        this.showNotification('Connexion réussie', 'success');
+                    } else {
+                        this.showNotification('Accès refusé. Droits administrateur requis.', 'error');
+                    }
+                } catch (error) {
+                    console.error('Login error:', error);
+                    this.showNotification('Erreur de connexion', 'error');
+                }
+            }
+
+            async verifyToken() {
+                try {
+                    const response = await fetch(`${this.apiUrl}/verify-token`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ token: this.token })
+                    });
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        if (data.user.role === 'admin') {
+                            this.showAdminPanel();
+                            this.loadAllData();
+                        } else {
+                            this.logout();
+                        }
+                    } else {
+                        this.logout();
+                    }
+                } catch (error) {
+                    console.error('Token verification error:', error);
+                    this.logout();
+                }
+            }
+
+            showAdminPanel() {
+                document.getElementById('loginSection').style.display = 'none';
+                document.getElementById('adminSection').style.display = 'block';
+                document.getElementById('logoutBtn').style.display = 'block';
+            }
+
+            logout() {
+                localStorage.removeItem('adminToken');
+                this.token = null;
+                document.getElementById('loginSection').style.display = 'block';
+                document.getElementById('adminSection').style.display = 'none';
+                document.getElementById('logoutBtn').style.display = 'none';
+            }
+
+            async loadRequests() {
+                try {
+                    const response = await fetch(`${this.apiUrl}/membership-requests`, {
+                        headers: {
+                            'Authorization': `Bearer ${this.token}`
+                        }
+                    });
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        this.displayRequests(data.requests);
+                        this.updateStats(data.requests);
+                    } else {
+                        this.showNotification('Erreur lors du chargement des demandes', 'error');
+                    }
+                } catch (error) {
+                    console.error('Load requests error:', error);
+                    this.showNotification('Erreur de connexion', 'error');
+                }
+            }
+
+            displayRequests(requests) {
+                const tbody = document.getElementById('requestsTableBody');
+                tbody.innerHTML = '';
+
+                requests.forEach(request => {
+                    const row = document.createElement('tr');
+                    const date = new Date(request.created_at).toLocaleDateString('fr-FR');
+                    
+                    row.innerHTML = `
+                        <td><strong>${request.nom}</strong></td>
+                        <td>${request.email}</td>
+                        <td><span style="background: #e2e8f0; padding: 2px 8px; border-radius: 12px; font-size: 12px;">${request.promo}</span></td>
+                        <td>${date}</td>
+                        <td><span class="status-badge status-${request.status}">${this.getStatusText(request.status)}</span></td>
+                        <td>
+                            <div class="action-buttons">
+                                ${request.status === 'pending' ? `
+                                    <button class="btn btn-approve" onclick="adminPanel.approveRequest(${request.id})">
+                                        <i class="fas fa-check"></i> Approuver
+                                    </button>
+                                    <button class="btn btn-reject" onclick="adminPanel.rejectRequest(${request.id})">
+                                        <i class="fas fa-times"></i> Rejeter
+                                    </button>
+                                ` : ''}
+                                ${request.status === 'approved' && request.access_token ? `
+                                    <div class="access-link">
+                                        <strong>Lien d'accès:</strong><br>
+                                        <span id="link-${request.id}">http://localhost:4000/access.html?token=${request.access_token}</span>
+                                        <button class="copy-btn" onclick="adminPanel.copyLink('link-${request.id}')">
+                                            <i class="fas fa-copy"></i> Copier
+                                        </button>
+                                    </div>
+                                ` : ''}
+                            </div>
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            }
+
+            updateStats(requests) {
+                const stats = {
+                    pending: requests.filter(r => r.status === 'pending').length,
+                    approved: requests.filter(r => r.status === 'approved').length,
+                    rejected: requests.filter(r => r.status === 'rejected').length,
+                    total: requests.length
+                };
+
+                document.getElementById('pendingCount').textContent = stats.pending;
+                document.getElementById('approvedCount').textContent = stats.approved;
+                document.getElementById('rejectedCount').textContent = stats.rejected;
+                document.getElementById('totalCount').textContent = stats.total;
+            }
+
+            async approveRequest(id) {
+                try {
+                    const response = await fetch(`${this.apiUrl}/membership-requests/${id}/approve`, {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': `Bearer ${this.token}`
+                        }
+                    });
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        this.showNotification(`Demande approuvée! Lien généré: ${data.accessLink}`, 'success');
+                        this.loadRequests(); // Recharger les demandes
+                    } else {
+                        this.showNotification('Erreur lors de l\'approbation', 'error');
+                    }
+                } catch (error) {
+                    console.error('Approve request error:', error);
+                    this.showNotification('Erreur de connexion', 'error');
+                }
+            }
+
+            async rejectRequest(id) {
+                if (!confirm('Êtes-vous sûr de vouloir rejeter cette demande ?')) {
+                    return;
+                }
+
+                try {
+                    const response = await fetch(`${this.apiUrl}/membership-requests/${id}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Authorization': `Bearer ${this.token}`,
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ status: 'rejected' })
+                    });
+
+                    if (response.ok) {
+                        this.showNotification('Demande rejetée', 'success');
+                        this.loadRequests(); // Recharger les demandes
+                    } else {
+                        this.showNotification('Erreur lors du rejet', 'error');
+                    }
+                } catch (error) {
+                    console.error('Reject request error:', error);
+                    this.showNotification('Erreur de connexion', 'error');
+                }
+            }
+
+            copyLink(elementId) {
+                const element = document.getElementById(elementId);
+                const text = element.textContent;
+                
+                navigator.clipboard.writeText(text).then(() => {
+                    this.showNotification('Lien copié dans le presse-papiers!', 'success');
+                }).catch(() => {
+                    // Fallback pour les navigateurs plus anciens
+                    const textArea = document.createElement('textarea');
+                    textArea.value = text;
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textArea);
+                    this.showNotification('Lien copié!', 'success');
+                });
+            }
+
+            getStatusText(status) {
+                const statusMap = {
+                    'pending': 'En attente',
+                    'approved': 'Approuvée',
+                    'rejected': 'Rejetée'
+                };
+                return statusMap[status] || status;
+            }
+
+            switchTab(tabName) {
+                // Masquer tous les onglets
+                const tabs = ['membership', 'users', 'bureau', 'projects', 'events', 'activity'];
+                tabs.forEach(tab => {
+                    document.getElementById(`${tab}Tab`).style.display = 'none';
+                });
+                
+                // Retirer la classe active de tous les boutons
+                document.querySelectorAll('.tab').forEach(tab => {
+                    tab.classList.remove('active');
+                });
+                
+                // Afficher l'onglet sélectionné
+                document.getElementById(`${tabName}Tab`).style.display = 'block';
+                
+                // Ajouter la classe active au bouton sélectionné
+                document.querySelector(`[onclick="adminPanel.switchTab('${tabName}')"]`).classList.add('active');
+                
+                // Charger les données selon l'onglet
+                switch(tabName) {
+                    case 'membership':
+                        this.loadRequests();
+                        break;
+                    case 'users':
+                        this.loadUsers();
+                        break;
+                    case 'bureau':
+                        this.loadBureauRequests();
+                        break;
+                    case 'projects':
+                        this.loadProjects();
+                        break;
+                    case 'events':
+                        this.loadEvents();
+                        break;
+                    case 'activity':
+                        this.loadUserActivity();
+                        break;
+                }
+            }
+
+            loadAllData() {
+                this.loadRequests();
+            }
+
+            async loadUsers() {
+                try {
+                    const response = await fetch(`${this.apiUrl}/users`, {
+                        headers: {
+                            'Authorization': `Bearer ${this.token}`
+                        }
+                    });
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        this.displayUsers(data.users);
+                    } else {
+                        this.showNotification('Erreur lors du chargement des utilisateurs', 'error');
+                    }
+                } catch (error) {
+                    console.error('Load users error:', error);
+                    this.showNotification('Erreur de connexion', 'error');
+                }
+            }
+
+            displayUsers(users) {
+                const tbody = document.getElementById('usersTableBody');
+                tbody.innerHTML = '';
+
+                users.forEach(user => {
+                    const row = document.createElement('tr');
+                    const date = new Date(user.created_at).toLocaleDateString('fr-FR');
+                    
+                    row.innerHTML = `
+                        <td><strong>${user.nom}</strong></td>
+                        <td>${user.email}</td>
+                        <td><span style="background: #e2e8f0; padding: 2px 8px; border-radius: 12px; font-size: 12px;">${user.promo}</span></td>
+                        <td><span class="status-badge ${user.role === 'admin' ? 'status-approved' : 'status-pending'}">${user.role}</span></td>
+                        <td>${date}</td>
+                        <td>
+                            <div class="action-buttons">
+                                ${user.id !== 11 ? `
+                                    <button class="btn ${user.role === 'admin' ? 'btn-reject' : 'btn-approve'}" onclick="adminPanel.toggleUserRole(${user.id}, '${user.role}')">
+                                        <i class="fas fa-user-shield"></i> ${user.role === 'admin' ? 'Retirer Admin' : 'Faire Admin'}
+                                    </button>
+                                    <button class="btn btn-danger" onclick="adminPanel.removeUser(${user.id})">
+                                        <i class="fas fa-trash"></i> Retirer
+                                    </button>
+                                ` : '<span style="color: #718096; font-style: italic;">Super Admin</span>'}
+                            </div>
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            }
+
+            async loadBureauRequests() {
+                try {
+                    const response = await fetch(`${this.apiUrl}/bureau-requests`, {
+                        headers: {
+                            'Authorization': `Bearer ${this.token}`
+                        }
+                    });
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        this.displayBureauRequests(data.requests);
+                    } else {
+                        this.showNotification('Erreur lors du chargement des demandes bureau', 'error');
+                    }
+                } catch (error) {
+                    console.error('Load bureau requests error:', error);
+                    this.showNotification('Erreur de connexion', 'error');
+                }
+            }
+
+            displayBureauRequests(requests) {
+                const tbody = document.getElementById('bureauTableBody');
+                tbody.innerHTML = '';
+
+                requests.forEach(request => {
+                    const row = document.createElement('tr');
+                    const date = new Date(request.created_at).toLocaleDateString('fr-FR');
+                    
+                    row.innerHTML = `
+                        <td><strong>${request.prenom} ${request.nom}</strong></td>
+                        <td>${request.email}</td>
+                        <td><span style="background: #667eea; color: white; padding: 2px 8px; border-radius: 12px; font-size: 12px;">${request.bureau}</span></td>
+                        <td><span style="background: #e2e8f0; padding: 2px 8px; border-radius: 12px; font-size: 12px;">${request.promotion}</span></td>
+                        <td>${date}</td>
+                        <td><span class="status-badge status-${request.status}">${this.getStatusText(request.status)}</span></td>
+                        <td>
+                            <div class="action-buttons">
+                                ${request.status === 'pending' ? `
+                                    <button class="btn btn-approve" onclick="adminPanel.updateBureauRequest(${request.id}, 'approved')">
+                                        <i class="fas fa-check"></i> Approuver
+                                    </button>
+                                    <button class="btn btn-reject" onclick="adminPanel.updateBureauRequest(${request.id}, 'rejected')">
+                                        <i class="fas fa-times"></i> Rejeter
+                                    </button>
+                                ` : ''}
+                            </div>
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            }
+
+            async loadProjects() {
+                try {
+                    const response = await fetch(`${this.apiUrl}/projects`);
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        this.displayProjects(data.projects);
+                    } else {
+                        this.showNotification('Erreur lors du chargement des projets', 'error');
+                    }
+                } catch (error) {
+                    console.error('Load projects error:', error);
+                    this.showNotification('Erreur de connexion', 'error');
+                }
+            }
+
+            displayProjects(projects) {
+                const tbody = document.getElementById('projectsTableBody');
+                tbody.innerHTML = '';
+
+                projects.forEach(project => {
+                    const row = document.createElement('tr');
+                    
+                    row.innerHTML = `
+                        <td><strong>${project.title}</strong><br><small style="color: #718096;">${project.objective.substring(0, 100)}...</small></td>
+                        <td>${project.author}</td>
+                        <td>${project.email}</td>
+                        <td><span style="background: #68d391; color: white; padding: 2px 8px; border-radius: 12px; font-size: 12px;">${project.participants.length} participants</span></td>
+                        <td>${project.dateCreated}</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn" style="background: #4299e1; color: white;" onclick="adminPanel.viewProjectDetails(${project.id})">
+                                    <i class="fas fa-eye"></i> Voir
+                                </button>
+                            </div>
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            }
+
+            async loadEvents() {
+                try {
+                    const response = await fetch(`${this.apiUrl}/organized-events`, {
+                        headers: {
+                            'Authorization': `Bearer ${this.token}`
+                        }
+                    });
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        this.displayEvents(data.events);
+                    } else {
+                        this.showNotification('Erreur lors du chargement des événements', 'error');
+                    }
+                } catch (error) {
+                    console.error('Load events error:', error);
+                    this.showNotification('Erreur de connexion', 'error');
+                }
+            }
+
+            displayEvents(events) {
+                const tbody = document.getElementById('eventsTableBody');
+                tbody.innerHTML = '';
+
+                events.forEach(event => {
+                    const row = document.createElement('tr');
+                    const date = new Date(event.created_at).toLocaleDateString('fr-FR');
+                    
+                    row.innerHTML = `
+                        <td><strong>${event.event_type}</strong></td>
+                        <td>${event.organizer_email}</td>
+                        <td>${event.location}</td>
+                        <td>${date}</td>
+                        <td><span class="status-badge status-${event.status}">${this.getStatusText(event.status)}</span></td>
+                        <td>
+                            <div class="action-buttons">
+                                ${event.status === 'pending' ? `
+                                    <button class="btn btn-approve" onclick="adminPanel.updateEventStatus(${event.id}, 'approved')">
+                                        <i class="fas fa-check"></i> Approuver
+                                    </button>
+                                    <button class="btn btn-reject" onclick="adminPanel.updateEventStatus(${event.id}, 'rejected')">
+                                        <i class="fas fa-times"></i> Rejeter
+                                    </button>
+                                ` : ''}
+                            </div>
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            }
+
+            async updateBureauRequest(id, status) {
+                try {
+                    const response = await fetch(`${this.apiUrl}/bureau-requests/${id}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Authorization': `Bearer ${this.token}`,
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ status })
+                    });
+
+                    if (response.ok) {
+                        this.showNotification(`Demande ${status === 'approved' ? 'approuvée' : 'rejetée'}`, 'success');
+                        this.loadBureauRequests();
+                    } else {
+                        this.showNotification('Erreur lors de la mise à jour', 'error');
+                    }
+                } catch (error) {
+                    console.error('Update bureau request error:', error);
+                    this.showNotification('Erreur de connexion', 'error');
+                }
+            }
+
+            async updateEventStatus(id, status) {
+                try {
+                    const response = await fetch(`${this.apiUrl}/organized-events/${id}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Authorization': `Bearer ${this.token}`,
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ status })
+                    });
+
+                    if (response.ok) {
+                        this.showNotification(`Événement ${status === 'approved' ? 'approuvé' : 'rejeté'}`, 'success');
+                        this.loadEvents();
+                    } else {
+                        this.showNotification('Erreur lors de la mise à jour', 'error');
+                    }
+                } catch (error) {
+                    console.error('Update event status error:', error);
+                    this.showNotification('Erreur de connexion', 'error');
+                }
+            }
+
+            async toggleUserRole(userId, currentRole) {
+                const newRole = currentRole === 'admin' ? 'member' : 'admin';
+                const action = newRole === 'admin' ? 'promouvoir' : 'rétrograder';
+                
+                if (!confirm(`Êtes-vous sûr de vouloir ${action} cet utilisateur ?`)) {
+                    return;
+                }
+
+                try {
+                    const response = await fetch(`${this.apiUrl}/users/${userId}/role`, {
+                        method: 'PUT',
+                        headers: {
+                            'Authorization': `Bearer ${this.token}`,
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ role: newRole })
+                    });
+
+                    if (response.ok) {
+                        this.showNotification(`Utilisateur ${newRole === 'admin' ? 'promu administrateur' : 'rétrogradé membre'}`, 'success');
+                        this.loadUsers(); // Recharger la liste
+                    } else {
+                        this.showNotification('Erreur lors de la modification du rôle', 'error');
+                    }
+                } catch (error) {
+                    console.error('Toggle user role error:', error);
+                    this.showNotification('Erreur de connexion', 'error');
+                }
+            }
+
+            viewProjectDetails(projectId) {
+                this.showNotification('Fonctionnalité à venir : Détails du projet', 'success');
+            }
+
+            async removeUser(userId) {
+                if (!confirm('Êtes-vous sûr de vouloir supprimer définitivement cet utilisateur ? Cette action est irréversible.')) {
+                    return;
+                }
+
+                try {
+                    const response = await fetch(`${this.apiUrl}/users/${userId}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'Authorization': `Bearer ${this.token}`
+                        }
+                    });
+
+                    if (response.ok) {
+                        this.showNotification('Utilisateur supprimé avec succès', 'success');
+                        this.loadUsers(); // Recharger la liste des utilisateurs
+                    } else {
+                        this.showNotification('Erreur lors de la suppression de l\'utilisateur', 'error');
+                    }
+                } catch (error) {
+                    console.error('Remove user error:', error);
+                    this.showNotification('Erreur de connexion', 'error');
+                }
+            }
+
+            async loadUserActivity() {
+                try {
+                    const response = await fetch(`${this.apiUrl}/user-activity`, {
+                        headers: {
+                            'Authorization': `Bearer ${this.token}`
+                        }
+                    });
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        this.displayUserActivity(data);
+                    } else {
+                        this.showNotification('Erreur lors du chargement de l\'activité', 'error');
+                    }
+                } catch (error) {
+                    console.error('Load user activity error:', error);
+                    this.showNotification('Erreur de connexion', 'error');
+                }
+            }
+
+            displayUserActivity(data) {
+                // Mettre à jour les statistiques
+                document.getElementById('onlineCount').textContent = data.stats.online || 0;
+                document.getElementById('recentCount').textContent = data.stats.recent || 0;
+                document.getElementById('todayCount').textContent = data.stats.today || 0;
+                document.getElementById('weekCount').textContent = data.stats.week || 0;
+
+                // Afficher la liste des activités
+                const activityList = document.getElementById('activityList');
+                activityList.innerHTML = '';
+
+                if (data.activities && data.activities.length > 0) {
+                    data.activities.forEach(activity => {
+                        const activityCard = document.createElement('div');
+                        activityCard.className = 'activity-card';
+                        
+                        const lastSeen = new Date(activity.last_login);
+                        const now = new Date();
+                        const diffMinutes = Math.floor((now - lastSeen) / (1000 * 60));
+                        
+                        let timeText = '';
+                        let statusClass = '';
+                        
+                        if (diffMinutes < 5) {
+                            timeText = 'En ligne maintenant';
+                            statusClass = 'status-online';
+                        } else if (diffMinutes < 60) {
+                            timeText = `Il y a ${diffMinutes} minutes`;
+                            statusClass = 'status-recent';
+                        } else if (diffMinutes < 1440) {
+                            const hours = Math.floor(diffMinutes / 60);
+                            timeText = `Il y a ${hours} heure${hours > 1 ? 's' : ''}`;
+                            statusClass = 'status-recent';
+                        } else {
+                            const days = Math.floor(diffMinutes / 1440);
+                            timeText = `Il y a ${days} jour${days > 1 ? 's' : ''}`;
+                            statusClass = 'status-offline';
+                        }
+
+                        activityCard.innerHTML = `
+                            <div class="activity-header">
+                                <div>
+                                    <div class="activity-user">${activity.nom}</div>
+                                    <div class="activity-time">${activity.email} • Promo ${activity.promo}</div>
+                                </div>
+                                <div class="activity-status ${statusClass}">
+                                    ${timeText}
+                                </div>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
+                                <div style="font-size: 0.9rem; color: #718096;">
+                                    <i class="fas fa-mouse-pointer"></i> ${activity.total_logins || 0} connexions
+                                </div>
+                                <div style="font-size: 0.9rem; color: #718096;">
+                                    <i class="fas fa-calendar"></i> Inscrit le ${new Date(activity.created_at).toLocaleDateString('fr-FR')}
+                                </div>
+                            </div>
+                        `;
+                        
+                        activityList.appendChild(activityCard);
+                    });
+                } else {
+                    activityList.innerHTML = '<div style="text-align: center; padding: 40px; color: #718096;">Aucune activité récente trouvée</div>';
+                }
+            }
+
+            showNotification(message, type) {
+                const notification = document.createElement('div');
+                notification.className = `notification ${type}`;
+                notification.textContent = message;
+                document.body.appendChild(notification);
+
+                setTimeout(() => {
+                    notification.remove();
+                }, 3000);
+            }
+        }
+
+        // Initialiser le panneau d'administration
+        const adminPanel = new AdminPanel();
+    </script>
+</body>
+</html>

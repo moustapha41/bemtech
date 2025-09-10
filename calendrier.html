@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendrier des Événements - BemTech Alumni</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Inter:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .calendar-hero {
+            background: radial-gradient(ellipse at center, #1a1a2e 0%, #16213e 25%, #0f3460 50%, #533483 75%, #8b5a96 100%);
+            color: white;
+            padding: 100px 0 80px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .calendar-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(2px 2px at 20px 30px, rgba(255,255,255,0.8), transparent),
+                radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.6), transparent),
+                radial-gradient(1px 1px at 90px 40px, rgba(255,255,255,0.9), transparent),
+                radial-gradient(1px 1px at 130px 80px, rgba(255,255,255,0.7), transparent),
+                radial-gradient(2px 2px at 160px 30px, rgba(255,255,255,0.5), transparent),
+                radial-gradient(1px 1px at 200px 60px, rgba(255,255,255,0.8), transparent),
+                radial-gradient(2px 2px at 250px 20px, rgba(255,255,255,0.6), transparent),
+                radial-gradient(1px 1px at 300px 90px, rgba(255,255,255,0.9), transparent);
+            background-repeat: repeat;
+            background-size: 350px 110px;
+            animation: galaxyMove 60s linear infinite;
+        }
+        
+        .calendar-hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.2) 0%, transparent 50%);
+            animation: nebulaFloat 40s ease-in-out infinite alternate;
+        }
+        
+        @keyframes galaxyMove {
+            0% { transform: translateX(0px) translateY(0px); }
+            25% { transform: translateX(-50px) translateY(-25px); }
+            50% { transform: translateX(-100px) translateY(0px); }
+            75% { transform: translateX(-50px) translateY(25px); }
+            100% { transform: translateX(0px) translateY(0px); }
+        }
+        
+        @keyframes nebulaFloat {
+            0% { 
+                transform: scale(1) rotate(0deg);
+                opacity: 0.7;
+            }
+            50% { 
+                transform: scale(1.1) rotate(180deg);
+                opacity: 0.9;
+            }
+            100% { 
+                transform: scale(1.2) rotate(360deg);
+                opacity: 0.6;
+            }
+        }
+        
+        .calendar-hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 800;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 2;
+            text-align: center;
+        }
+        
+        .calendar-hero p {
+            font-size: 1.3rem;
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0.95;
+            position: relative;
+            z-index: 2;
+            text-align: center;
+        }
+
+        .calendar-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 80px 20px;
+        }
+
+        .calendar-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .calendar-nav {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-btn {
+            background: linear-gradient(135deg, #79c8f7, #79c8f7);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background: linear-gradient(135deg, #79c8f7, #79c8f7);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(231, 76, 60, 0.3);
+        }
+
+        .current-month {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin: 0 20px;
+        }
+
+        .filter-controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 8px 16px;
+            border: 2px solid #79c8f7;
+            background: transparent;
+            color: #79c8f7;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .filter-btn.active {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 1px;
+            background: #ecf0f1;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        .calendar-header {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white;
+            padding: 20px 10px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .calendar-day {
+            background: white;
+            min-height: 120px;
+            padding: 15px 10px;
+            position: relative;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .calendar-day:hover {
+            background: #f8f9fa;
+            transform: scale(1.02);
+            z-index: 2;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .calendar-day.other-month {
+            background: #f8f9fa;
+            color: #bdc3c7;
+        }
+
+        .calendar-day.today {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+        }
+
+        .day-number {
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+        }
+
+        .event-item {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            margin-bottom: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .event-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .event-item.reunion {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+        }
+
+        .event-item.etudiant {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+        }
+
+        .event-item.seminaire {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+        }
+
+        .event-item.actualite {
+            background: linear-gradient(135deg, #27ae60, #229954);
+        }
+
+        .event-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            max-width: 600px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #7f8c8d;
+            transition: color 0.3s ease;
+        }
+
+        .modal-close:hover {
+            color: #e74c3c;
+        }
+
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+        }
+
+        .stats-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 60px 20px;
+            margin: 60px 0;
+            border-radius: 20px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #79c8f7;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            color: #7f8c8d;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .calendar-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .calendar-nav {
+                justify-content: center;
+            }
+            
+            .filter-controls {
+                justify-content: center;
+            }
+            
+            .calendar-day {
+                min-height: 80px;
+                padding: 8px 5px;
+            }
+            
+            .current-month {
+                font-size: 1.5rem;
+                margin: 0 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="topline"></div>
+
+    <div class="masthead">
+        <div class="wrap">
+            <!-- Partie gauche -->
+            <div class="header-left">
+                <div class="brand-logo">
+                    <img alt="BEMTECH Logo" src="logob.png">
+                </div>
+                <span class="brand-divider" aria-hidden="true"></span>
+                <div class="brand-title">Alumni</div>
+            </div>
+
+            <!-- Partie droite -->
+            <div class="header-right">
+                <nav class="nav-block" aria-label="Primary">
+                    <div class="nav-top">
+                        <a href="index.html#join">Membership</a>
+                        <a href="actualite.html">Actualités & Récompenses</a>
+                        <a href="vie_school.html">Vie à l'école</a>
+                        <a href="after.html">Après l'école</a>
+                        <a href="contact.html">Contactez-nous</a>
+                    </div>
+                    <div class="nav-bottom">
+                        <!-- Notre Communaute -->
+                        <div class="dropdown">
+                            <a href="#">Notre Communauté</a>
+                            <ul class="submenu">
+                                <li><a href="reseau.html">Réseau</a></li>
+                                <li><a href="Qui.html">Qui sommes-nous ?</a></li>
+                                <li><a href="FAQ.html">FAQ</a></li>
+                            </ul>
+                        </div>
+                        <div class="dropdown">
+                            <a href="#">Carrières & Ressources</a>
+                            <ul class="submenu">
+                                <li><a href="opportunite.html">Opportunités</a></li>
+                                <li><a href="mentorat.html">Mentorat / Développement professionnel</a></li>
+                                <li><a href="projet.html">Projet / Réalisation</a></li>
+                            </ul>
+                        </div>
+                        <!-- Evenement -->
+                        <div class="dropdown">
+                            <a href="#" style="color: var(--washu-red);">Événement</a>
+                            <ul class="submenu">
+                                <li><a href="calendrier.html" style="font-weight: bold; color: var(--washu-red);">Calendrier</a></li>
+                                <li><a href="reunion.html">Réunion & Retrouvaille</a></li>
+                                <li><a href="evenements_etudiants.html">Événements Étudiants</a></li>
+                                <li><a href="journee.html">Séminaire</a></li>
+                            </ul>
+                        </div>
+
+                        <!-- Benevole -->
+                        <div class="dropdown">
+                            <a href="#">Humanitaire</a>
+                            <ul class="submenu">
+                                <li><a href="don_annuel.html">Don annuel</a></li>
+                                <li><a href="retrouvaille.html">Aide et Solidarité</a></li>
+                                <li><a href="conseil.html">Bénévolat</a></li>
+                            </ul>
+                        </div>
+                        
+                        <a href="Galerie.html">Galerie</a>
+                        <button id="authBtn" class="auth-btn">Connexion</button>
+                    </div>
+                </nav>
+
+                <div class="logo-section-2">
+                    <img src="logor.png" alt="Logo">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="calendar-hero">
+        <h1>Calendrier des Événements</h1>
+        <p>Découvrez tous les événements BEM TECH Alumni en un coup d'œil</p>
+    </section>
+
+    <!-- Statistiques -->
+    <section class="stats-section">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">10+</div>
+                <div class="stat-label">Événements par an</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">500+</div>
+                <div class="stat-label">Participants</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">5</div>
+                <div class="stat-label">Types d'événements</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">8</div>
+                <div class="stat-label">Mois d'activité</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Calendrier Principal -->
+    <section class="calendar-container">
+        <div class="calendar-controls">
+            <div class="calendar-nav">
+                <button class="nav-btn" onclick="previousMonth()">
+                    <i class="fas fa-chevron-left"></i> Précédent
+                </button>
+                <div class="current-month" id="currentMonth">Janvier 2025</div>
+                <button class="nav-btn" onclick="nextMonth()">
+                    Suivant <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+            
+            <div class="filter-controls">
+                <button class="filter-btn active" onclick="filterEvents('all')">Tous</button>
+                <button class="filter-btn" onclick="filterEvents('reunion')">Réunions</button>
+                <button class="filter-btn" onclick="filterEvents('etudiant')">Étudiants</button>
+                <button class="filter-btn" onclick="filterEvents('seminaire')">Séminaires</button>
+                <button class="filter-btn" onclick="filterEvents('actualite')">Actualités</button>
+            </div>
+        </div>
+
+        <!-- Légende -->
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-color" style="background: linear-gradient(135deg, #e74c3c, #c0392b);"></div>
+                <span>Réunions & Retrouvailles</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: linear-gradient(135deg, #3498db, #2980b9);"></div>
+                <span>Événements Étudiants</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: linear-gradient(135deg, #f39c12, #e67e22);"></div>
+                <span>Séminaires & Conférences</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: linear-gradient(135deg, #27ae60, #229954);"></div>
+                <span>Actualités & Nouveautés</span>
+            </div>
+        </div>
+
+        <div class="calendar-grid" id="calendarGrid">
+            <!-- Le calendrier sera généré par JavaScript -->
+        </div>
+    </section>
+
+    <!-- Modal pour les détails des événements -->
+    <div class="event-modal" id="eventModal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal()">&times;</span>
+            <div id="modalContent">
+                <!-- Contenu dynamique -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-about">
+                <h3>BEM TECH Alumni</h3>
+                <p>Connecter les anciens, inspirer la communauté et bâtir un meilleur future ensemble.</p>
+            </div>
+
+            <div class="footer-links">
+                <h4>Liens rapides</h4>
+                <ul>
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="reseau.html">Association</a></li>
+                    <li><a href="calendrier.html">Événements</a></li>
+                    <li><a href="opportunite.html">Carrières</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-social">
+                <h4>Suivez-nous</h4>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-tiktok"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2025 BEM TECH Alumni
+                <li><a href="calendrier.html">Événements</a></li> – Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <script src="auth.js"></script>
+    <script>
+        // Données des événements basées sur les pages analysées
+        const events = [
+            // Événements Étudiants
+            { date: '2025-01-15', title: 'Weekend d\'Intégration', type: 'etudiant', description: 'Accueil des nouveaux étudiants avec activités ludiques et enrichissantes' },
+            { date: '2025-02-20', title: 'Visite d\'Entreprise Tech', type: 'etudiant', description: 'Découverte du monde professionnel chez nos partenaires' },
+            { date: '2025-03-10', title: 'Cérémonie de Rentrée', type: 'etudiant', description: 'Événement solennel marquant le début de l\'année académique' },
+            { date: '2025-07-15', title: 'Cérémonie de Graduation', type: 'etudiant', description: 'Remise des diplômes et célébration des accomplissements' },
+            
+            // Réunions & Retrouvailles
+            { date: '2025-01-25', title: 'Assemblée Générale Annuelle', type: 'reunion', description: 'Bilan des activités et orientations futures de l\'association' },
+            { date: '2025-02-14', title: 'Cocktail Alumni', type: 'reunion', description: 'Rencontre décontractée autour d\'un verre dans un lieu prestigieux' },
+            { date: '2025-03-20', title: 'Cérémonie de Remise des Prix', type: 'reunion', description: 'Reconnaissance des alumni qui se sont distingués' },
+            { date: '2025-04-18', title: 'Dîner de Promotion 2020', type: 'reunion', description: 'Soirée conviviale pour maintenir les liens d\'amitié' },
+            { date: '2025-05-22', title: 'Tournoi Sportif Alumni', type: 'reunion', description: 'Compétitions amicales alliant sport et esprit d\'équipe' },
+            { date: '2025-06-15', title: 'Grande Réunion des Alumni', type: 'reunion', description: 'Le grand rassemblement annuel de tous les anciens étudiants' },
+            
+            // Séminaires & Conférences
+            { date: '2025-01-30', title: 'Salon Tech Innovation', type: 'seminaire', description: 'Découverte des dernières innovations technologiques' },
+            { date: '2025-02-25', title: 'Conférence IA & Machine Learning', type: 'seminaire', description: 'Présentation des avancées en intelligence artificielle' },
+            { date: '2025-03-15', title: 'Salon de l\'Entrepreneuriat', type: 'seminaire', description: 'Rencontres avec des entrepreneurs et startups' },
+            { date: '2025-04-10', title: 'Conférence Cybersécurité', type: 'seminaire', description: 'Enjeux et solutions en matière de sécurité informatique' },
+            { date: '2025-05-08', title: 'Salon Fintech Africa', type: 'seminaire', description: 'Technologies financières en Afrique' },
+            { date: '2025-06-12', title: 'Conférence Green Tech', type: 'seminaire', description: 'Technologies vertes et développement durable' },
+            { date: '2025-09-20', title: 'Forum Débat Tech', type: 'seminaire', description: 'Débats sur les enjeux technologiques actuels' },
+            { date: '2025-10-15', title: 'Salon de l\'Orientation', type: 'seminaire', description: 'Guidance professionnelle pour les étudiants' },
+            
+            // Actualités & Nouveautés
+            { date: '2025-01-10', title: 'Lancement Partenariat Seneca', type: 'actualite', description: 'Nouveau programme International Bachelor of Technology' },
+            { date: '2025-02-05', title: 'Nouvelles Filières 2025', type: 'actualite', description: 'Présentation des spécialisations: Computer Engineering, Cybersecurity, Data Science' },
+            { date: '2025-03-01', title: 'Programme International Master', type: 'actualite', description: 'Lancement des programmes USA & Europe' },
+            { date: '2025-04-01', title: 'Salon Institutionnel', type: 'actualite', description: 'Événements officiels avec nos partenaires institutionnels' },
+            { date: '2025-11-15', title: 'Accueil Nouveaux Intégrés Lille', type: 'actualite', description: 'Cérémonie d\'accueil pour les nouveaux diplômés à Lille' },
+            { date: '2025-12-10', title: 'Retrouvailles Multi-villes', type: 'actualite', description: 'Événements simultanés à Dakar, Abidjan et Lille' }
+        ];
+
+        let currentDate = new Date();
+        let currentFilter = 'all';
+
+        function generateCalendar(year, month) {
+            const firstDay = new Date(year, month, 1);
+            const lastDay = new Date(year, month + 1, 0);
+            const startDate = new Date(firstDay);
+            startDate.setDate(startDate.getDate() - firstDay.getDay());
+            
+            const calendarGrid = document.getElementById('calendarGrid');
+            calendarGrid.innerHTML = '';
+
+            // Headers
+            const days = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
+            days.forEach(day => {
+                const header = document.createElement('div');
+                header.className = 'calendar-header';
+                header.textContent = day;
+                calendarGrid.appendChild(header);
+            });
+
+            // Calendar days
+            const current = new Date(startDate);
+            for (let i = 0; i < 42; i++) {
+                const dayElement = document.createElement('div');
+                dayElement.className = 'calendar-day';
+                
+                if (current.getMonth() !== month) {
+                    dayElement.classList.add('other-month');
+                }
+                
+                if (current.toDateString() === new Date().toDateString()) {
+                    dayElement.classList.add('today');
+                }
+
+                const dayNumber = document.createElement('div');
+                dayNumber.className = 'day-number';
+                dayNumber.textContent = current.getDate();
+                dayElement.appendChild(dayNumber);
+
+                // Add events for this day
+                const dateString = current.toISOString().split('T')[0];
+                const dayEvents = events.filter(event => event.date === dateString);
+                
+                dayEvents.forEach(event => {
+                    if (currentFilter === 'all' || currentFilter === event.type) {
+                        const eventElement = document.createElement('div');
+                        eventElement.className = `event-item ${event.type}`;
+                        eventElement.textContent = event.title;
+                        eventElement.onclick = () => showEventDetails(event);
+                        dayElement.appendChild(eventElement);
+                    }
+                });
+
+                calendarGrid.appendChild(dayElement);
+                current.setDate(current.getDate() + 1);
+            }
+        }
+
+        function updateMonthDisplay() {
+            const months = [
+                'Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin',
+                'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'
+            ];
+            document.getElementById('currentMonth').textContent = 
+                `${months[currentDate.getMonth()]} ${currentDate.getFullYear()}`;
+        }
+
+        function previousMonth() {
+            currentDate.setMonth(currentDate.getMonth() - 1);
+            updateMonthDisplay();
+            generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
+        }
+
+        function nextMonth() {
+            currentDate.setMonth(currentDate.getMonth() + 1);
+            updateMonthDisplay();
+            generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
+        }
+
+        function filterEvents(type) {
+            currentFilter = type;
+            
+            // Update filter buttons
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Regenerate calendar with filter
+            generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
+        }
+
+        function showEventDetails(event) {
+            const modal = document.getElementById('eventModal');
+            const modalContent = document.getElementById('modalContent');
+            
+            const typeNames = {
+                'reunion': 'Réunion & Retrouvaille',
+                'etudiant': 'Événement Étudiant',
+                'seminaire': 'Séminaire & Conférence',
+                'actualite': 'Actualité & Nouveauté'
+            };
+
+            modalContent.innerHTML = `
+                <h2>${event.title}</h2>
+                <p><strong>Type:</strong> ${typeNames[event.type]}</p>
+                <p><strong>Date:</strong> ${new Date(event.date).toLocaleDateString('fr-FR', {
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                })}</p>
+                <p><strong>Description:</strong> ${event.description}</p>
+                <div style="margin-top: 30px;">
+                    <button class="nav-btn" onclick="closeModal()">Fermer</button>
+                    <button class="nav-btn" style="margin-left: 10px;">S'inscrire</button>
+                </div>
+            `;
+            
+            modal.style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('eventModal').style.display = 'none';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('eventModal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        // Initialize calendar
+        updateMonthDisplay();
+        generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
+    </script>
+</body>
+</html>

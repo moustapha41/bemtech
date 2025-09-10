@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Projets & Réalisations - BemTech Alumni</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Inter:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<link rel="stylesheet" href="styles.css">
+<style>
+/* Page-specific styles for projet.html */
+.projet-hero {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  padding: 80px 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.projet-hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="%2372bcf4" stroke-width="0.5" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+  opacity: 0.3;
+}
+
+.hero-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+  min-height: 500px;
+}
+
+.hero-content {
+  z-index: 2;
+  position: relative;
+}
+
+.hero-image-section {
+  position: relative;
+  z-index: 2;
+}
+
+.image-container {
+  position: relative;
+  border-radius: 25px;
+  overflow: hidden;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
+  transition: all 0.4s ease;
+  background: white;
+  padding: 8px;
+}
+
+.image-container:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 35px 80px rgba(114, 188, 244, 0.25);
+}
+
+.hero-main-image {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 20px;
+  transition: transform 0.4s ease;
+}
+
+.image-container:hover .hero-main-image {
+  transform: scale(1.05);
+}
+
+.image-overlay {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+  background: linear-gradient(135deg, rgba(114, 188, 244, 0.95), rgba(74, 158, 255, 0.95));
+  border-radius: 15px;
+  padding: 20px;
+  color: white;
+  backdrop-filter: blur(10px);
+  transform: translateY(100%);
+  transition: transform 0.4s ease;
+}
+
+.image-container:hover .image-overlay {
+  transform: translateY(0);
+}
+
+.overlay-content h3 {
+  margin: 0 0 8px 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.overlay-content p {
+  margin: 0;
+  opacity: 0.9;
+  font-size: 0.95rem;
+}
+
+.projet-container {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 20px;
+  position: relative;
+  z-index: 2;
+}
+
+.projet-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.projet-header h1 {
+  font-family: "Merriweather", Georgia, serif;
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 20px;
+  background: linear-gradient(135deg, var(--washu-red), #4a9eff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: fadeUp 1s ease-out;
+}
+
+.projet-subtitle {
+  font-size: 1.3rem;
+  color: #666;
+  max-width: 600px;
+  margin: 0 auto 40px;
+  line-height: 1.6;
+  animation: fadeUp 1s ease-out 0.2s both;
+}
+
+.main-buttons {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+  margin: 50px 0;
+  animation: fadeUp 1s ease-out 0.4s both;
+}
+
+.main-btn {
+  padding: 18px 40px;
+  border-radius: 50px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  min-width: 220px;
+  text-align: center;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+
+.main-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  transition: left 0.6s;
+}
+
+.main-btn:hover::before {
+  left: 100%;
+}
+
+.btn-find {
+  background: linear-gradient(135deg, var(--washu-red), #4a9eff);
+  color: white;
+  border: 2px solid transparent;
+}
+
+.btn-find:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 35px rgba(114, 188, 244, 0.4);
+}
+
+.btn-submit {
+  background: transparent;
+  color: var(--washu-red);
+  border: 2px solid var(--washu-red);
+}
+
+.btn-submit:hover {
+  background: var(--washu-red);
+  color: white;
+  transform: translateY(-3px);
+  box-shadow: 0 15px 35px rgba(114, 188, 244, 0.3);
+}
+
+.features-section {
+  padding: 80px 0;
+  background: white;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 40px;
+  margin-top: 60px;
+}
+
+.feature-card {
+  background: white;
+  border-radius: 20px;
+  padding: 40px 30px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  transition: all 0.4s ease;
+  border: 1px solid #f0f0f0;
+  position: relative;
+  overflow: hidden;
+}
+
+.feature-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(135deg, var(--washu-red), #4a9eff);
+  transform: scaleX(0);
+  transition: transform 0.4s ease;
+}
+
+.feature-card:hover::before {
+  transform: scaleX(1);
+}
+
+.feature-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(114, 188, 244, 0.15);
+}
+
+.feature-icon {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, var(--washu-red), #4a9eff);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 25px;
+  font-size: 2rem;
+  color: white;
+}
+
+.feature-card h3 {
+  font-family: "Merriweather", Georgia, serif;
+  font-size: 1.4rem;
+  margin-bottom: 15px;
+  color: var(--ink);
+}
+
+.feature-card p {
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.stats-section {
+  background: linear-gradient(135deg, #2c3e50, #34495e);
+  padding: 80px 0;
+  color: white;
+  position: relative;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 40px;
+  text-align: center;
+}
+
+.stat-item {
+  padding: 20px;
+}
+
+.stat-number {
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--washu-red);
+  display: block;
+  margin-bottom: 10px;
+  font-family: "Merriweather", Georgia, serif;
+}
+
+.stat-label {
+  font-size: 1.1rem;
+  opacity: 0.9;
+}
+
+.cta-section {
+  background: #f8f9fa;
+  padding: 80px 0;
+  text-align: center;
+}
+
+/* Modal Styles */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(5px);
+}
+
+.modal-content {
+  background-color: white;
+  margin: 5% auto;
+  padding: 0;
+  border-radius: 20px;
+  width: 90%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+  animation: modalSlideIn 0.4s ease-out;
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-50px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.modal-header {
+  background: linear-gradient(135deg, var(--washu-red), #4a9eff);
+  color: white;
+  padding: 25px 30px;
+  border-radius: 20px 20px 0 0;
+  position: relative;
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-family: "Merriweather", Georgia, serif;
+  font-size: 1.8rem;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.close {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: white;
+  font-size: 2rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.close:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-50%) rotate(90deg);
+}
+
+.modal-body {
+  padding: 30px;
+}
+
+.form-group {
+  margin-bottom: 25px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: var(--ink);
+  font-size: 1.1rem;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 15px;
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--washu-red);
+  box-shadow: 0 0 0 3px rgba(114, 188, 244, 0.1);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.submit-btn {
+  background: linear-gradient(135deg, var(--washu-red), #4a9eff);
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  border-radius: 50px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(114, 188, 244, 0.3);
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 25px;
+  margin-top: 20px;
+}
+
+.project-card {
+  background: white;
+  border: 2px solid #f0f0f0;
+  border-radius: 15px;
+  padding: 25px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.project-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(135deg, var(--washu-red), #4a9eff);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.project-card:hover::before {
+  transform: scaleX(1);
+}
+
+.project-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(114, 188, 244, 0.15);
+  border-color: var(--washu-red);
+}
+
+.project-title {
+  font-family: "Merriweather", Georgia, serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.project-objective {
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.project-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  font-size: 0.9rem;
+  color: #888;
+}
+
+.join-btn {
+  background: transparent;
+  color: var(--washu-red);
+  border: 2px solid var(--washu-red);
+  padding: 10px 20px;
+  border-radius: 25px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.join-btn:hover {
+  background: var(--washu-red);
+  color: white;
+  transform: translateY(-2px);
+}
+
+.join-btn.joined {
+  background: #28a745;
+  border-color: #28a745;
+  color: white;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: #666;
+}
+
+.empty-state i {
+  font-size: 4rem;
+  color: #ddd;
+  margin-bottom: 20px;
+}
+
+.empty-state h3 {
+  font-family: "Merriweather", Georgia, serif;
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: var(--ink);
+}
+
+.success-message {
+  background: #d4edda;
+  color: #155724;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #c3e6cb;
+  display: none;
+}
+
+.success-message.show {
+  display: block;
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.project-info {
+  background: #f8f9fa;
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 25px;
+}
+
+.project-info h4 {
+  margin: 0 0 10px 0;
+  color: var(--ink);
+  font-family: "Merriweather", Georgia, serif;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.project-info p {
+  margin: 0;
+  color: #666;
+  line-height: 1.5;
+}
+
+.cta-content {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.cta-content h2 {
+  font-family: "Merriweather", Georgia, serif;
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: var(--ink);
+}
+
+.cta-content p {
+  font-size: 1.2rem;
+  color: #666;
+  margin-bottom: 40px;
+  line-height: 1.6;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .hero-layout {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    text-align: center;
+  }
+  
+  .hero-image-section {
+    order: -1;
+  }
+  
+  .image-container {
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  
+  .hero-main-image {
+    height: 300px;
+  }
+  
+  .projet-header h1 {
+    font-size: 2.5rem;
+  }
+  
+  .main-buttons {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .main-btn {
+    width: 100%;
+    max-width: 300px;
+  }
+  
+  .features-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-main-image {
+    height: 250px;
+  }
+  
+  .image-overlay {
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+    padding: 15px;
+  }
+  
+  .overlay-content h3 {
+    font-size: 1rem;
+  }
+  
+  .overlay-content p {
+    font-size: 0.85rem;
+  }
+}
+</style>
+</head>
+<body>
+  <div class="topline"></div>
+
+  <div class="masthead">
+    <div class="wrap">
+      <!-- Partie gauche -->
+      <div class="header-left">
+        <div class="brand-logo">
+          <img alt="BEMTECH Logo" src="logob.png">
+        </div>
+        <span class="brand-divider" aria-hidden="true"></span>
+        <div class="brand-title">Alumni</div>
+      </div>
+
+      <!-- Partie droite -->
+      <div class="header-right">
+        <nav class="nav-block" aria-label="Primary">
+          <div class="nav-top">
+            <a href="index.html#join" id="membershipBtn">Membership</a>
+            <a href="actualite.html" class="restricted-link" data-page="actualites">Actualités &amp; Recompenses</a>
+            <a href="vie_school.html" class="restricted-link" data-page="vie-ecole">Vie a l'ecole</a>
+            <a href="after.html" class="restricted-link" data-page="apres-ecole">Apres l'ecole</a>
+            <a href="contact.html">Contact</a>
+          </div>
+          <div class="nav-bottom">
+            <!-- Notre Communaute -->
+            <div class="dropdown">
+              <a href="#">Notre Communauté</a>
+              <ul class="submenu">
+                <li><a href="reseau.html" class="restricted-link" data-page="reseau">Reseau</a></li>
+                <li><a href="Qui.html">Qui sommes-nous ??</a></li>
+                <li><a href="FAQ.html">FAQ</a></li>
+              </ul>
+            </div>
+            <div class="dropdown">
+              <a href="#">Carrières &amp; Ressources</a>
+              <ul class="submenu">
+                <li><a href="opportunite.html" class="restricted-link" data-page="opportunites">Opportunités</a></li>
+                <li><a href="mentorat.html" class="restricted-link" data-page="mentorat">Mentorat / Developpement professionnel</a></li>
+                <li><a href="projet.html" class="restricted-link" data-page="projet">Projet / Realisation</a></li>
+              </ul>
+            </div>
+            <!-- Evenement -->
+            <div class="dropdown">
+              <a href="#">Événement</a>
+              <ul class="submenu">
+                <li><a href="calendrier.html" class="restricted-link" data-page="calendrier">Calendrier</a></li>
+                <li><a href="reunion.html" class="restricted-link" data-page="retrouvaille">Reunion & Retrouvaille</a></li>
+                <li><a href="evenements_etudiants.html" class="restricted-link" data-page="evenements-etudiants">Événements Étudiants</a></li>
+                <li><a href="journee.html" class="restricted-link" data-page="journee-culturelle">Seminaire</a></li>
+              </ul>
+            </div>
+
+            <!-- Benevole -->
+            <div class="dropdown">
+              <a href="#">Humanitaire</a>
+              <ul class="submenu">
+                <li><a href="don_annuel.html" class="restricted-link" data-page="don-annuel">Don annuel</a></li>
+                <li><a href="retrouvaille.html" class="restricted-link" data-page="conseil">Aide et Solidarité</a></li>
+                <li><a href="conseil.html" class="restricted-link" data-page="conseil">Benevolat</a></li>
+              </ul>
+            </div>
+            
+            <a href="Galerie.html">Galerie</a>
+            <button id="authBtn" class="auth-btn">Connexion</button>
+          </div>
+        </nav>
+
+        <div class="logo-section-2">
+          <img src="logor.png" alt="Logo">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hero Section -->
+  <section class="projet-hero">
+    <div class="projet-container">
+      <div class="hero-layout">
+        <div class="hero-content">
+          <div class="projet-header">
+            <h1>Projets & Réalisations</h1>
+            <p class="projet-subtitle">
+              Découvrez les projets innovants de notre communauté alumni et partagez vos propres réalisations. 
+              Ensemble, construisons un écosystème de collaboration et d'innovation.
+            </p>
+            
+            <div class="main-buttons">
+              <button id="findProjectBtn" class="main-btn btn-find">
+                <i class="fas fa-search"></i> Trouver un projet
+              </button>
+              <button id="submitProjectBtn" class="main-btn btn-submit">
+                <i class="fas fa-plus-circle"></i> Soumettre un projet
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="hero-image-section">
+          <div class="image-container">
+            <img src="WhatsApp Image 2024-05-13 à 08.04.28_6d7d6b2b.jpg" alt="Équipe BemTech Alumni sur le terrain" class="hero-main-image">
+            <div class="image-overlay">
+              <div class="overlay-content">
+                <h3><i class="fas fa-users"></i> Notre Équipe en Action</h3>
+                <p>Des projets concrets, des résultats tangibles</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features-section">
+    <div class="projet-container">
+      <div class="projet-header">
+        <h2 style="font-family: 'Merriweather', Georgia, serif; font-size: 2.5rem; color: var(--ink);">
+          Pourquoi partager vos projets ?
+        </h2>
+        <p style="font-size: 1.1rem; color: #666; max-width: 700px; margin: 0 auto;">
+          Notre plateforme de projets connecte les talents, favorise l'innovation et crée des opportunités uniques de collaboration.
+        </p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-users"></i>
+          </div>
+          <h3>Collaboration</h3>
+          <p>Trouvez des partenaires, des mentors et des collaborateurs pour vos projets les plus ambitieux.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-lightbulb"></i>
+          </div>
+          <h3>Innovation</h3>
+          <p>Découvrez les dernières innovations et tendances dans votre domaine d'expertise.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-rocket"></i>
+          </div>
+          <h3>Opportunités</h3>
+          <p>Accédez à des opportunités d'investissement, de financement et de développement commercial.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-award"></i>
+          </div>
+          <h3>Reconnaissance</h3>
+          <p>Mettez en valeur vos réalisations et gagnez en visibilité auprès de la communauté.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-handshake"></i>
+          </div>
+          <h3>Mentorat</h3>
+          <p>Bénéficiez de l'expertise d'alumni expérimentés ou partagez vos connaissances.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- CTA Section -->
+  <section class="cta-section">
+    <div class="projet-container">
+      <div class="cta-content">
+        <h2>Prêt à rejoindre l'aventure ?</h2>
+        <p>
+          Que vous ayez un projet à partager ou que vous cherchiez à vous investir dans de nouvelles initiatives, 
+          notre communauté vous attend.
+        </p>
+        <div class="main-buttons">
+          <button id="findProjectBtn2" class="main-btn btn-find">
+            <i class="fas fa-search"></i> Explorer les projets
+          </button>
+          <button id="submitProjectBtn2" class="main-btn btn-submit">
+            <i class="fas fa-paper-plane"></i> Proposer un projet
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Submit Project Modal -->
+  <div id="submitModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2><i class="fas fa-plus-circle"></i> Soumettre un Projet</h2>
+        <span class="close" id="submitClose">&times;</span>
+      </div>
+      <div class="modal-body">
+        <div id="submitSuccess" class="success-message">
+          <i class="fas fa-check-circle"></i> Votre projet a été soumis avec succès !
+        </div>
+        <form id="submitForm">
+          <div class="form-group">
+            <label for="projectTitle">Titre du Projet *</label>
+            <input type="text" id="projectTitle" name="title" required placeholder="Ex: Application mobile de covoiturage">
+          </div>
+          <div class="form-group">
+            <label for="projectObjective">Objectif du Projet *</label>
+            <textarea id="projectObjective" name="objective" required placeholder="Décrivez l'objectif principal de votre projet, les problèmes qu'il résout et l'impact attendu..."></textarea>
+          </div>
+          <div class="form-group">
+            <label for="projectAuthor">Votre Nom *</label>
+            <input type="text" id="projectAuthor" name="author" required placeholder="Votre nom complet">
+          </div>
+          <div class="form-group">
+            <label for="projectEmail">Email *</label>
+            <input type="email" id="projectEmail" name="email" required placeholder="votre.email@exemple.com">
+          </div>
+          <div class="form-group">
+            <label for="projectPhone">Numéro de téléphone *</label>
+            <input type="tel" id="projectPhone" name="phone" required placeholder="+221 XX XXX XX XX">
+          </div>
+          <button type="submit" class="submit-btn">
+            <i class="fas fa-paper-plane"></i> Soumettre le Projet
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Find Projects Modal -->
+  <div id="findModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2><i class="fas fa-search"></i> Projets Disponibles</h2>
+        <span class="close" id="findClose">&times;</span>
+      </div>
+      <div class="modal-body">
+        <div id="projectsList">
+          <!-- Projects will be loaded here -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Join Project Modal -->
+  <div id="joinModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2><i class="fas fa-user-plus"></i> Rejoindre le Projet</h2>
+        <span class="close" id="joinClose">&times;</span>
+      </div>
+      <div class="modal-body">
+        <div id="joinSuccess" class="success-message">
+          <i class="fas fa-check-circle"></i> Vous avez rejoint le projet avec succès !
+        </div>
+        <div id="selectedProjectInfo" class="project-info">
+          <!-- Selected project info will be displayed here -->
+        </div>
+        <form id="projectJoinForm">
+          <div class="form-group">
+            <label for="joinName">Votre Nom *</label>
+            <input type="text" id="joinName" name="name" required placeholder="Votre nom complet">
+          </div>
+          <div class="form-group">
+            <label for="joinEmail">Email *</label>
+            <input type="email" id="joinEmail" name="email" required placeholder="votre.email@exemple.com">
+          </div>
+          <div class="form-group">
+            <label for="joinPhone">Numéro de téléphone *</label>
+            <input type="tel" id="joinPhone" name="phone" required placeholder="+221 XX XXX XX XX">
+          </div>
+          <button type="submit" class="submit-btn">
+            <i class="fas fa-user-plus"></i> Rejoindre le Projet
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <!-- Colonne 1 : Logo / Description -->
+      <div class="footer-about">
+        <h3>BEM TECH Alumni</h3>
+        <p>
+          Connecter les anciens, inspirer la communauté et bâtir un meilleur future ensemble.
+        </p>
+      </div>
+
+      <div class="footer-links">
+        <h4>Liens rapides</h4>
+        <ul>
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="reseau.html">Association</a></li>
+          <li><a href="calendrier.html">Événements</a></li>
+          <li><a href="opportunite.html">Carrières</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-social">
+        <h4>Suivez-nous</h4>
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#"><i class="fab fa-youtube"></i></a>
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-tiktok"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bas du footer -->
+    <div class="footer-bottom">
+      <p>&copy; 2025 BEM TECH Alumni – Tous droits réservés.</p>
+    </div>
+  </footer>
+
+  <script src="auth.js"></script>
+  <script>
+    // Simple scroll animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, observerOptions);
+
+    // Observe feature cards
+    document.querySelectorAll('.feature-card').forEach(card => {
+      card.style.opacity = '0';
+      card.style.transform = 'translateY(30px)';
+      card.style.transition = 'all 0.6s ease';
+      observer.observe(card);
+    });
+
+    // Project Management System
+    class ProjectManager {
+      constructor() {
+        this.projects = [];
+        this.apiUrl = 'http://localhost:4000/api';
+        this.initEventListeners();
+      }
+
+      async loadProjects() {
+        try {
+          const response = await fetch(`${this.apiUrl}/projects`);
+          if (response.ok) {
+            const data = await response.json();
+            this.projects = data.projects || [];
+            return this.projects;
+          } else {
+            console.error('Erreur lors du chargement des projets');
+            return [];
+          }
+        } catch (error) {
+          console.error('Erreur de connexion:', error);
+          return [];
+        }
+      }
+
+      async saveProject(projectData) {
+        try {
+          const response = await fetch(`${this.apiUrl}/projects`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(projectData)
+          });
+          
+          const data = await response.json();
+          
+          if (response.ok) {
+            return { success: true, project: data.project };
+          } else {
+            return { success: false, message: data.error || 'Erreur lors de la création du projet' };
+          }
+        } catch (error) {
+          console.error('Erreur de connexion:', error);
+          return { success: false, message: 'Erreur de connexion au serveur' };
+        }
+      }
+
+      async joinProject(projectId, participantData) {
+        try {
+          const response = await fetch(`${this.apiUrl}/projects/${projectId}/join`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(participantData)
+          });
+          
+          const data = await response.json();
+          
+          if (response.ok) {
+            return { success: true, participant: data.participant };
+          } else {
+            return { success: false, message: data.error || 'Erreur lors de l\'inscription au projet' };
+          }
+        } catch (error) {
+          console.error('Erreur de connexion:', error);
+          return { success: false, message: 'Erreur de connexion au serveur' };
+        }
+      }
+
+      initEventListeners() {
+        // Modal triggers
+        document.getElementById('submitProjectBtn').addEventListener('click', () => this.openSubmitModal());
+        document.getElementById('submitProjectBtn2').addEventListener('click', () => this.openSubmitModal());
+        document.getElementById('findProjectBtn').addEventListener('click', () => this.openFindModal());
+        document.getElementById('findProjectBtn2').addEventListener('click', () => this.openFindModal());
+
+        // Modal closes
+        document.getElementById('submitClose').addEventListener('click', () => this.closeModal('submitModal'));
+        document.getElementById('findClose').addEventListener('click', () => this.closeModal('findModal'));
+        document.getElementById('joinClose').addEventListener('click', () => this.closeModal('joinModal'));
+
+        // Click outside to close
+        window.addEventListener('click', (e) => {
+          if (e.target.classList.contains('modal')) {
+            this.closeModal(e.target.id);
+          }
+        });
+
+        // Form submission
+        document.getElementById('submitForm').addEventListener('submit', (e) => this.handleSubmit(e));
+        document.getElementById('projectJoinForm').addEventListener('submit', (e) => this.handleJoinSubmit(e));
+      }
+
+      openSubmitModal() {
+        document.getElementById('submitModal').style.display = 'block';
+        document.body.style.overflow = 'hidden';
+      }
+
+      async openFindModal() {
+        document.getElementById('findModal').style.display = 'block';
+        document.body.style.overflow = 'hidden';
+        await this.renderProjects();
+      }
+
+      closeModal(modalId) {
+        document.getElementById(modalId).style.display = 'none';
+        document.body.style.overflow = 'auto';
+        
+        // Reset form and hide success message
+        if (modalId === 'submitModal') {
+          document.getElementById('submitForm').reset();
+          document.getElementById('submitSuccess').classList.remove('show');
+        }
+        if (modalId === 'joinModal') {
+          document.getElementById('projectJoinForm').reset();
+          document.getElementById('joinSuccess').classList.remove('show');
+        }
+      }
+
+      async handleSubmit(e) {
+        e.preventDefault();
+        
+        const formData = new FormData(e.target);
+        const projectData = {
+          title: formData.get('title'),
+          objective: formData.get('objective'),
+          author: formData.get('author'),
+          email: formData.get('email'),
+          phone: formData.get('phone')
+        };
+
+        const result = await this.saveProject(projectData);
+        
+        if (result.success) {
+          // Show success message
+          document.getElementById('submitSuccess').classList.add('show');
+          
+          // Reset form
+          e.target.reset();
+          
+          // Close modal after 2 seconds
+          setTimeout(() => {
+            this.closeModal('submitModal');
+          }, 2000);
+        } else {
+          // Show error message
+          alert(result.message);
+        }
+      }
+
+      async renderProjects() {
+        const container = document.getElementById('projectsList');
+        
+        // Show loading state
+        container.innerHTML = '<div style="text-align: center; padding: 40px;"><i class="fas fa-spinner fa-spin"></i> Chargement des projets...</div>';
+        
+        const projects = await this.loadProjects();
+        
+        if (projects.length === 0) {
+          container.innerHTML = `
+            <div class="empty-state">
+              <i class="fas fa-folder-open"></i>
+              <h3>Aucun projet disponible</h3>
+              <p>Soyez le premier à soumettre un projet !</p>
+            </div>
+          `;
+          return;
+        }
+
+        container.innerHTML = `
+          <div class="projects-grid">
+            ${projects.map(project => this.renderProjectCard(project)).join('')}
+          </div>
+        `;
+
+        // Add event listeners for join buttons
+        container.querySelectorAll('.join-btn').forEach(btn => {
+          btn.addEventListener('click', (e) => this.handleJoin(e));
+        });
+      }
+
+      renderProjectCard(project) {
+        const currentUserEmail = localStorage.getItem('currentUserEmail');
+        const hasJoined = currentUserEmail && project.participants.some(p => p.email === currentUserEmail);
+        
+        return `
+          <div class="project-card">
+            <div class="project-title">
+              <i class="fas fa-lightbulb"></i>
+              ${project.title}
+            </div>
+            <div class="project-meta">
+              <span><i class="fas fa-user"></i> ${project.author}</span>
+              <span><i class="fas fa-calendar"></i> ${project.dateCreated}</span>
+            </div>
+            <div class="project-objective">
+              ${project.objective}
+            </div>
+            <div class="project-meta">
+              <span><i class="fas fa-users"></i> ${project.participants.length} participant(s)</span>
+              <span><i class="fas fa-envelope"></i> ${project.email}</span>
+            </div>
+            <button class="join-btn ${hasJoined ? 'joined' : ''}" data-project-id="${project.id}" ${hasJoined ? 'disabled' : ''}>
+              ${hasJoined ? '<i class="fas fa-check"></i> Déjà rejoint' : '<i class="fas fa-plus"></i> Rejoindre le projet'}
+            </button>
+          </div>
+        `;
+      }
+
+      async handleJoin(e) {
+        const projectId = parseInt(e.target.dataset.projectId);
+        
+        // Reload projects to get the latest data
+        await this.loadProjects();
+        const project = this.projects.find(p => p.id === projectId);
+        if (!project) return;
+
+        // Check if user already joined
+        const currentUserEmail = localStorage.getItem('currentUserEmail');
+        if (currentUserEmail && project.participants.some(p => p.email === currentUserEmail)) {
+          return; // Already joined
+        }
+
+        // Store the project ID for the join modal
+        this.selectedProjectId = projectId;
+        
+        // Display project info in the join modal
+        document.getElementById('selectedProjectInfo').innerHTML = `
+          <h4><i class="fas fa-lightbulb"></i> ${project.title}</h4>
+          <p><strong>Créé par:</strong> ${project.author}</p>
+          <p><strong>Objectif:</strong> ${project.objective}</p>
+          <p><strong>Participants actuels:</strong> ${project.participants.length}</p>
+        `;
+        
+        // Open join modal
+        document.getElementById('joinModal').style.display = 'block';
+        document.body.style.overflow = 'hidden';
+      }
+
+      async handleJoinSubmit(e) {
+        e.preventDefault();
+        
+        const formData = new FormData(e.target);
+        const participantData = {
+          name: formData.get('name'),
+          email: formData.get('email'),
+          phone: formData.get('phone')
+        };
+
+        const result = await this.joinProject(this.selectedProjectId, participantData);
+        
+        if (result.success) {
+          // Store current user email for future reference
+          localStorage.setItem('currentUserEmail', participantData.email);
+          localStorage.setItem('currentUser', participantData.name);
+          
+          // Show success message
+          document.getElementById('joinSuccess').classList.add('show');
+          
+          // Reset form
+          e.target.reset();
+          
+          // Close modal after 2 seconds and refresh projects list
+          setTimeout(async () => {
+            this.closeModal('joinModal');
+            await this.renderProjects(); // Refresh the projects list
+          }, 2000);
+        } else {
+          // Show error message
+          alert(result.message);
+        }
+      }
+    }
+
+    // Initialize the project manager when DOM is loaded
+    document.addEventListener('DOMContentLoaded', () => {
+      new ProjectManager();
+    });
+
+  </script>
+</body>
+</html>

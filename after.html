@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Après l'école - BemTech Alumni</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Inter:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<link rel="stylesheet" href="styles.css">
+<style>
+  :root{
+    --brand:#79c8f7;     /* bordeaux du site */
+    --ink:#1d1d1f;
+    --muted:#e6e6e6;
+  }
+
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    color:var(--ink);
+    background:#fff;
+  }
+
+  .page{
+    max-width:1200px;
+    margin:0 auto;
+    padding:40px 20px 80px;
+  }
+
+  h1{
+    font-size:44px;
+    font-weight:700;
+    margin:0 0 6px;
+  }
+  .heading-rule{
+    width:110px;height:2px;background:var(--muted);margin:18px 0 28px;
+  }
+
+  /* grille des cartes */
+  .grid{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap:48px;
+  }
+  @media (max-width: 980px){
+    .grid{grid-template-columns:1fr}
+  }
+
+  .card{
+    display:flex;
+    flex-direction:column;
+  }
+  .card .media{
+    width:100%;
+    height:220px;
+    border-radius:8px;
+    overflow:hidden;
+    background:#ddd;
+  }
+  .card .media img{
+    width:100%; height:100%; object-fit:cover; display:block;
+  }
+
+  .card h3{
+    margin:16px 0 8px;
+    font-size:22px;
+    line-height:1.3;
+  }
+
+  .btn{
+    align-self:flex-start;
+    background:var(--brand);
+    color:#fff;
+    border:none;
+    padding:10px 18px;
+    border-radius:999px;
+    cursor:pointer;
+    font-weight:600;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+  }
+  .btn:focus-visible{outline:2px solid #000; outline-offset:2px}
+  .btn:hover{filter:brightness(1.05)}
+  .btn .chev{font-size:18px; line-height:0}
+
+  /* le trait en bas de chaque carte */
+  .card .bottom-rule{
+    height:2px;
+    background:var(--muted);
+    margin:28px 0 0;
+    width:100%;
+  }
+
+  /* ===== MODAL (popup moderne) ===== */
+  .modal{
+    position:fixed; inset:0;
+    background:rgba(0,0,0,0);
+    display:none;
+    align-items:center; justify-content:center;
+    padding:20px;
+    z-index:1000;
+    backdrop-filter:blur(0px);
+    opacity:0;
+    transition:all 0.4s ease-out;
+  }
+  .modal[aria-hidden="false"]{
+    display:flex;
+    background:rgba(0,0,0,.7);
+    backdrop-filter:blur(8px);
+    opacity:1;
+  }
+
+  .modal-sheet{
+    position:relative;
+    background:#fff;
+    width:min(95vw, 600px);
+    max-height:80vh;
+    border-radius:20px;
+    box-shadow:0 25px 80px rgba(0,0,0,.15);
+    overflow:hidden;
+    transform:scale(0.8) translateY(40px);
+    transition:all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    opacity:0;
+  }
+  
+  .modal[aria-hidden="false"] .modal-sheet{
+    transform:scale(1) translateY(0);
+    opacity:1;
+    transition-delay:0.1s;
+  }
+
+  .modal-header{
+    background:linear-gradient(135deg, var(--brand), #a0003a);
+    color:white;
+    padding:25px 30px;
+    position:relative;
+  }
+
+  .modal-close{
+    position:absolute;
+    top:15px;
+    right:20px;
+  }
+  .close-btn{
+    background:rgba(255,255,255,.2);
+    border:none;
+    cursor:pointer;
+    width:35px;
+    height:35px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:18px;
+    color:white;
+    transition:all 0.2s ease;
+  }
+  .close-btn:hover{
+    background:rgba(255,255,255,.3);
+    transform:scale(1.1);
+  }
+
+  .modal-body{
+    padding:30px;
+    overflow-y:auto;
+    max-height:60vh;
+  }
+
+  .modal h2{
+    margin:0 0 15px;
+    font-size:28px;
+    font-weight:700;
+  }
+  .modal p{
+    margin:0 0 16px;
+    line-height:1.7;
+    color:#555;
+    font-size:16px;
+  }
+  .modal p:last-child{margin-bottom:0}
+</style>
+</head>
+<body>
+  <div class="topline"></div>
+
+  <div class="masthead">
+    <div class="wrap">
+      <!-- Partie gauche -->
+      <div class="header-left">
+        <div class="brand-logo">
+          <img alt="BEMTECH Logo" src="logob.png">
+        </div>
+        <span class="brand-divider" aria-hidden="true"></span>
+        <div class="brand-title">Alumni</div>
+      </div>
+
+      <!-- Partie droite -->
+      <div class="header-right">
+        <nav class="nav-block" aria-label="Primary">
+          <div class="nav-top">
+            <a href="index.html#join" id="membershipBtn">Membership</a>
+            <a href="actualite.html" class="restricted-link" data-page="actualites">Actualités &amp; Recompenses</a>
+            <a href="vie_school.html" class="restricted-link" data-page="vie-ecole">Vie a l'ecole</a>
+            <a href="after.html" class="restricted-link active" data-page="apres-ecole">Apres l'ecole</a>
+            <a href="contact.html">Contact</a>
+          </div>
+          <div class="nav-bottom">
+            <!-- Notre Communaute -->
+            <div class="dropdown">
+              <a href="#">Notre Communauté</a>
+              <ul class="submenu">
+                <li><a href="reseau.html" class="restricted-link" data-page="reseau">Reseau</a></li>
+                <li><a href="Qui.html">Qui sommes-nous ??</a></li>
+                <li><a href="FAQ.html">FAQ</a></li>
+              </ul>
+            </div>
+            <div class="dropdown">
+              <a href="#">Carrières &amp; Ressources</a>
+              <ul class="submenu">
+                <li><a href="opportunite.html" class="restricted-link" data-page="opportunites">Opportunités</a></li>
+                <li><a href="mentorat.html" class="restricted-link" data-page="mentorat">Mentorat / Developpement professionnel</a></li>
+                <li><a href="projet.html" class="restricted-link" data-page="projet">Projet / Realisation</a></li>
+              </ul>
+            </div>
+            <!-- Evenement -->
+            <div class="dropdown">
+              <a href="#">Événement</a>
+              <ul class="submenu">
+                <li><a href="calendrier.html" class="restricted-link" data-page="calendrier">Calendrier</a></li>
+                <li><a href="reunion.html" class="restricted-link" data-page="retrouvaille">Reunion & Retrouvaille</a></li>
+                <li><a href="evenements_etudiants.html" class="restricted-link" data-page="evenements-etudiants">Événements Étudiants</a></li>
+                <li><a href="journee.html" class="restricted-link" data-page="journee-culturelle">Seminaire</a></li>
+              </ul>
+            </div>
+
+            <!-- Benevole -->
+            <div class="dropdown">
+              <a href="#">Humanitaire</a>
+              <ul class="submenu">
+                <li><a href="don_annuel.html" class="restricted-link" data-page="don-annuel">Don annuel</a></li>
+                <li><a href="retrouvaille.html" class="restricted-link" data-page="conseil">Aide et Solidarité</a></li>
+                <li><a href="conseil.html" class="restricted-link" data-page="conseil">Benevolat</a></li>
+              </ul>
+            </div>
+            
+            <a href="Galerie.html">Galerie</a>
+            <button id="authBtn" class="auth-btn">Connexion</button>
+          </div>
+        </nav>
+
+        <div class="logo-section-2">
+          <img src="logor.png" alt="Logo">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main class="page">
+    <h1>Après l’école</h1>
+    <div class="heading-rule"></div><br>
+
+    <section class="grid">
+      <!-- Carte 1 -->
+      <article class="card">
+        <div class="media">
+          <img src="a.jpg" alt="Suivi des carrières">
+        </div>
+        <h3>Suivi de carrières</h3>
+        <button class="btn" data-open="modal1">
+          Lire la suite <span class="chev>">›</span>
+        </button>
+        <div class="bottom-rule"></div>
+      </article>
+
+      <!-- Carte 2 -->
+      <article class="card">
+        <div class="media">
+          <img src="s.jpg" alt="Nos Alumni">
+        </div>
+        <h3>Nos Alumni</h3>
+        <button class="btn" data-open="modal2">
+          Lire la suite <span class="chev>">›</span>
+        </button>
+        <div class="bottom-rule"></div>
+      </article>
+
+      <!-- Carte 3 -->
+      <article class="card">
+        <div class="media">
+          <img src="o.jpg" alt="Les opportunités après l’EIDD">
+        </div>
+        <h3>Les opportunités après Bem Tech</h3>
+        <button class="btn" data-open="modal3">
+          Lire la suite <span class="chev>">›</span>
+        </button>
+        <div class="bottom-rule"></div>
+      </article>
+    </section>
+  </main><br><br><br>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <!-- Colonne 1 : Logo / Description -->
+      <div class="footer-about">
+        <h3>BemTech Alumni</h3>
+        <p>
+          Connecter les anciens, inspirer la communauté et bâtir un futur meilleur ensemble.
+        </p>
+      </div>
+
+      <div class="footer-links">
+        <h4>Liens rapides</h4>
+        <ul>
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="Qui.html">Association</a></li>
+          <li><a href="calendrier.html">Événements</a></li>
+          <li><a href="opportunite.html">Carrières</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-social">
+        <h4>Suivez-nous</h4>
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#"><i class="fab fa-youtube"></i></a>
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-tiktok"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bas du footer -->
+    <div class="footer-bottom">
+      <p>&copy; 2025 BemTech Alumni – Tous droits réservés.</p>
+    </div>
+  </footer>
+
+  <!-- ====== POPUPS MODERNES ====== -->
+  <div id="modal1" class="modal" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="modal-sheet">
+      <div class="modal-header">
+        <h2>Suivi des carrières</h2>
+        <div class="modal-close">
+          <button class="close-btn" data-close>&times;</button>
+        </div>
+      </div>
+      <div class="modal-body">
+        <p>Notre programme de suivi de carrières accompagne nos alumni tout au long de leur parcours professionnel. Nous offrons un soutien personnalisé pour vous aider à atteindre vos objectifs de carrière.</p>
+        <p><strong>Services inclus :</strong></p>
+        <p>• Conseils en orientation professionnelle<br>
+        • Révision de CV et lettres de motivation<br>
+        • Préparation aux entretiens<br>
+        • Mise en relation avec des mentors<br>
+        • Suivi personnalisé </p>
+        <p>Rejoignez nos alumni qui ont bénéficié de notre accompagnement pour développer leur carrière avec succès.</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="modal2" class="modal" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="modal-sheet">
+      <div class="modal-header">
+        <h2>Nos Alumni</h2>
+        <div class="modal-close">
+          <button class="close-btn" data-close>&times;</button>
+        </div>
+      </div>
+      <div class="modal-body">
+        <p>Découvrez les parcours inspirants de nos anciens étudiants qui excellent dans leurs domaines respectifs à travers le monde.</p>
+        <p>✨ <strong>Un réseau solidaire :</strong> entraide, mentorat et partage d'expériences pour accompagner les jeunes diplômés dans leurs premiers pas professionnels.</p>
+        <p>🌍 <strong>Une communauté mondiale :</strong> des anciens présents dans différents secteurs et pays, offrant des perspectives variées.</p>
+        <p>🚀 <strong>Un levier de réussite :</strong> grâce aux Alumni, les étudiants accèdent à des conseils précieux, des stages et des opportunités d'embauche.</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="modal3" class="modal" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="modal-sheet">
+      <div class="modal-header">
+        <h2>Les opportunités après BEM TECH</h2>
+        <div class="modal-close">
+          <button class="close-btn" data-close>&times;</button>
+        </div>
+      </div>
+      <div class="modal-body">
+        <p>🌟 <strong>Les opportunités après BEM TECH</strong></p>
+        <p>Après leur formation, les étudiants bénéficient d'un éventail d'opportunités qui leur ouvrent de nombreuses portes.</p>
+        <p>💼 <strong>Insertion professionnelle :</strong> un accompagnement personnalisé pour décrocher des emplois à la hauteur des ambitions des diplômés.</p>
+        <p>🎓 <strong>Poursuite d'études :</strong> des partenariats académiques et des doubles diplômes permettent de continuer le parcours dans des institutions de renom.</p>
+        <p>🌍 <strong>Entrepreneuriat & innovation :</strong> encouragement et soutien aux étudiants qui souhaitent lancer leur propre startup ou projet innovant.</p>
+        <p>🤝 <strong>Un réseau solide :</strong> les entreprises partenaires et les Alumni renforcent les chances de succès après l'école.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ouvrir
+    document.querySelectorAll('[data-open]').forEach(btn=>{
+      btn.addEventListener('click', e=>{
+        const id = btn.getAttribute('data-open');
+        const m = document.getElementById(id);
+        if(m){ m.setAttribute('aria-hidden','false'); }
+      });
+    });
+    // fermer (croix)
+    document.querySelectorAll('[data-close]').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        btn.closest('.modal').setAttribute('aria-hidden','true');
+      });
+    });
+    // fermer en cliquant à l’extérieur
+    document.querySelectorAll('.modal').forEach(m=>{
+      m.addEventListener('click', (e)=>{
+        if(e.target === m){ m.setAttribute('aria-hidden','true'); }
+      });
+    });
+    // ESC pour fermer
+    window.addEventListener('keydown', (e)=>{
+      if(e.key === 'Escape'){
+        document.querySelectorAll('.modal[aria-hidden="false"]').forEach(m=>m.setAttribute('aria-hidden','true'));
+      }
+    });
+  </script>
+
+  <script src="auth.js"></script>
+</body>
+</html>

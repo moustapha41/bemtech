@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Alumni Header – Replica</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Inter:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="topline"></div>
+
+  <div class="masthead">
+    <div class="wrap">
+
+      <!-- Partie gauche -->
+      <div class="header-left">
+        <div class="brand-logo">
+          <img alt="BEMTECH Logo" src="logob.png">
+        </div>
+        <span class="brand-divider" aria-hidden="true"></span>
+        <div class="brand-title">Alumni</div>
+      </div>
+
+      <!-- Partie droite -->
+      <div class="header-right">
+        <nav class="nav-block" aria-label="Primary">
+          <div class="nav-top">
+            <a href="#join" id="membershipBtn">Membership</a>
+            <a href="actualite.html" class="restricted-link" data-page="actualites">Actualités &amp; Recompenses</a>
+            <a href="vie_school.html" class="restricted-link" data-page="vie-ecole">Vie a l'ecole</a>
+            <a href="after.html" class="restricted-link" data-page="apres-ecole">Apres l'ecole</a>
+            <a href="contact.html">Contactez-nous</a>
+          </div>
+          <div class="nav-bottom">
+            <!-- Notre Communaute -->
+            <div class="dropdown">
+              <a href="#">Notre Communauté</a>
+              <ul class="submenu">
+                <li><a href="reseau.html" class="restricted-link" data-page="reseau">Reseau</a></li>
+                <li><a href="Qui.html">Qui sommes-nous ??</a></li>
+                <li><a href="FAQ.html">FAQ</a></li>
+              </ul>
+            </div>
+            <div class="dropdown">
+              <a href="#">Carrières &amp; Ressources</a>
+              <ul class="submenu">
+                <li><a href="opportunite.html" class="restricted-link" data-page="opportunites">Opportunités</a></li>
+                <li><a href="mentorat.html" class="restricted-link" data-page="mentorat">Mentorat / Developpement professionnel</a></li>
+                <li><a href="projet.html" class="restricted-link" data-page="projet">Projet / Realisation</a></li>
+              </ul>
+            </div>
+            <!-- Evenement -->
+            <div class="dropdown">
+              <a href="#">Événement</a>
+              <ul class="submenu">
+                <li><a href="calendrier.html" class="restricted-link" data-page="calendrier">Calendrier</a></li>
+                <li><a href="reunion.html" class="restricted-link" data-page="retrouvaille">Reunion & Retrouvaille</a></li>
+                <li><a href="evenements_etudiants.html" class="restricted-link" data-page="evenements-etudiants">Événements Étudiants</a></li>
+                <li><a href="journee.html" class="restricted-link" data-page="journee-culturelle">Seminaire</a></li>
+              </ul>
+            </div>
+
+            <!-- Benevole -->
+            <div class="dropdown">
+              <a href="#">Humanitaire</a>
+              <ul class="submenu">
+                <li><a href="don_annuel.html" class="restricted-link" data-page="don-annuel">Don annuel</a></li>
+                <li><a href="retrouvaille.html" class="restricted-link" data-page="conseil">Aide et Solidarité</a></li>
+                <li><a href="conseil.html" class="restricted-link" data-page="conseil">Benevolat</a></li>
+              </ul>
+            </div>
+            
+            <a href="Galerie.html">Galerie</a>
+            <button id="authBtn" class="auth-btn">Connexion</button>
+          </div>
+        </nav>
+
+        <div class="logo-section-2">
+          <img src="logor.png" alt="Logo">
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Login Modal -->
+  <div id="loginModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <form class="login-form" id="loginForm">
+        <h2>Connexion</h2>
+        <div class="form-group">
+          <label for="loginEmail">Email:</label>
+          <input type="email" id="loginEmail" name="email" required>
+        </div>
+        <div class="form-group">
+          <label for="loginPassword">Mot de passe:</label>
+          <input type="password" id="loginPassword" name="password" required>
+        </div>
+        <button type="submit" class="login-btn">Se connecter</button>
+        <p class="login-help">Pas encore membre? <a href="#join">Rejoignez la communauté</a></p>
+      </form>
+    </div>
+  </div>
+
+  <!-- Registration Modal -->
+  <div id="registerModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <form class="login-form" id="registerForm">
+        <h2>Créer un compte</h2>
+        <div class="form-group">
+          <label for="regNom">Nom complet:</label>
+          <input type="text" id="regNom" name="nom" required>
+        </div>
+        <div class="form-group">
+          <label for="regEmail">Email:</label>
+          <input type="email" id="regEmail" name="email" required>
+        </div>
+        <div class="form-group">
+          <label for="regPassword">Mot de passe:</label>
+          <input type="password" id="regPassword" name="password" required minlength="6">
+        </div>
+        <div class="form-group">
+          <label for="regPromo">Promotion:</label>
+          <select id="regPromo" name="promo" required>
+            <option value="">Sélectionnez…</option>
+            <option>2025</option>
+            <option>2024</option>
+            <option>2023</option>
+            <option>2022</option>
+            <option>2021</option>
+            <option>2020</option>
+            <option>Autre</option>
+          </select>
+        </div>
+        <button type="submit" class="login-btn">Créer le compte</button>
+        <p class="login-help">Déjà membre? <a href="#" id="showLoginFromReg">Se connecter</a></p>
+      </form>
+    </div>
+  </div>
+
+  <!-- Contact Modal -->
+  <div id="contactModal" class="modal">
+    <div class="modal-content contact-modal">
+      <span class="close">&times;</span>
+      <div class="contact-header">
+        <i class="fas fa-envelope"></i>
+        <h2>Contactez-nous</h2>
+        <p>Nous sommes là pour vous aider ! N'hésitez pas à nous contacter.</p>
+      </div>
+      
+      <div class="contact-info">
+        <div class="contact-item">
+          <i class="fas fa-phone"></i>
+          <div>
+            <h4>Téléphone</h4>
+            <p>+221 33 123 45 67</p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <i class="fas fa-envelope"></i>
+          <div>
+            <h4>Email</h4>
+            <p>contact@bemtech-alumni.com</p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <i class="fas fa-map-marker-alt"></i>
+          <div>
+            <h4>Adresse</h4>
+            <p>Dakar, Sénégal</p>
+          </div>
+        </div>
+      </div>
+
+      <form class="contact-form" id="contactForm">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="contactName">Nom complet *</label>
+            <input type="text" id="contactName" name="name" required>
+          </div>
+          <div class="form-group">
+            <label for="contactEmail">Email *</label>
+            <input type="email" id="contactEmail" name="email" required>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="contactSubject">Sujet *</label>
+          <select id="contactSubject" name="subject" required>
+            <option value="">Sélectionnez un sujet...</option>
+            <option value="adhesion">Adhésion au réseau</option>
+            <option value="evenement">Événements</option>
+            <option value="mentorat">Mentorat</option>
+            <option value="partenariat">Partenariat</option>
+            <option value="technique">Support technique</option>
+            <option value="autre">Autre</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="contactMessage">Message *</label>
+          <textarea id="contactMessage" name="message" rows="5" placeholder="Décrivez votre demande..." required></textarea>
+        </div>
+        
+        <div class="form-actions">
+          <button type="button" class="btn-secondary" onclick="closeContactModal()">Annuler</button>
+          <button type="submit" class="btn-primary">
+            <i class="fas fa-paper-plane"></i>
+            Envoyer le message
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+  <!-- Hero Section with Visual Cards -->
+  <section class="hero-section">
+    <div class="hero-container">
+      <div class="hero-content">
+        <div class="hero-image">
+          <img src="Sakoura-27.jpg" alt="University Campus" />
+        </div>
+      </div>
+      
+      <div class="hero-visual">
+        <div class="visual-card card-1">
+          <div class="card-content">
+            <i class="fas fa-trophy"></i>
+            <h4>Leaders internationaux</h4>
+            <p>Alumni sur trois continents</p>
+          </div>
+        </div>
+        <div class="visual-card card-2">
+          <div class="card-content">
+            <i class="fas fa-rocket"></i>
+            <h4>Innovations</h4>
+            <p>Pionniers de la Tech</p>
+          </div>
+        </div>
+        <div class="visual-card card-3">
+          <div class="card-content">
+            <i class="fas fa-heart"></i>
+            <h4>Acteurs de changement</h4>
+            <p>Visionnaires</p>
+          </div>
+        </div>
+      </div>
+    </div><br><br>
+ <div class="hero-message" id="timedMessage">
+  La communauté Bem Tech réunit des anciens élèves et amis aux parcours variés. <br>
+ Rejoignez-nous pour réseauter, assister à des événements et rester connectés.
+</div>
+<br><br><br><br><br>
+    <div class="scroll-indicator">
+      <div class="scroll-text">Discover More</div>
+      <div class="scroll-arrow"></div>
+    </div>
+  </section>
+
+  <canvas id="confetti-canvas" style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;"></canvas>
+
+<br><br><br>
+<section class="quick-links">
+  <div class="quick-container">
+    
+    <div class="quick-item">
+      <i class="fas fa-briefcase"></i>
+      <h4>Explorez la communauté</h4>
+      <a href="reseau.html" class="restricted-link" data-page="reseau">→</a>
+    </div>
+
+    <div class="quick-item">
+      <i class="fas fa-calendar-alt"></i>
+      <h4>Événements</h4>
+      <a href="calendrier.html" class="restricted-link" data-page="calendrier">→</a>
+    </div>
+    <div class="quick-item">
+      <i class="fas fa-chalkboard-teacher"></i>
+      <h4>Réunion & retrouvailles</h4>
+      <a href="reunion.html" class="restricted-link" data-page="retrouvaille">→</a>
+    </div>
+    <div class="quick-item">
+      <i class="fas fa-handshake"></i>
+      <h4>Partenariats</h4>
+      <a href="actualite.html" class="restricted-link" data-page="actualites">→</a>
+    </div>
+    <div class="quick-item">
+      <i class="fas fa-users"></i>
+      <h4>Trouver son bureau Alumni</h4>
+      <a href="reseau.html" class="restricted-link" data-page="reseau">→</a>
+    </div>
+  </div>
+</section>
+<br><br><br>
+
+<!-- Networks Section -->
+<section class="networks-section">
+  <div class="networks-container">
+    <div class="networks-image">
+      <img src="468961362_18026728211571239_8595113573541418585_n.jpg" alt="Alumni Networking">
+    </div>
+    <div class="networks-text">
+      <h2>Avantages du réseau</h2>
+      <p>
+        Explorez nos réseaux pour rencontrer d'autres anciens élèves, parents et amis de BEM TECH, 
+        connectez-vous autour d'intérêts communs ou d'expériences partagées, et trouvez des professionnels dans votre secteur.
+      </p><br><br>
+      <a href="#" class="connect-btn">Adhesion</a>
+    </div>
+  </div>
+</section>
+
+<section id="join">
+<div class="container">
+<h2>Rejoindre la communauté</h2>
+<div class="card">
+<form action="#" method="post" id="joinForm">
+<div class="grid" style="grid-template-columns:1fr 1fr">
+<div>
+<label for="nom">Nom complet</label>
+<input id="nom" name="nom" placeholder="Ex. Awa Mbaye" required />
+</div>
+<div>
+<label for="promo">Promotion</label>
+<select id="promo" name="promo" required>
+<option value="">Sélectionnez…</option>
+<option>2025</option>
+<option>2024</option>
+<option>2023</option>
+<option>2022</option>
+<option>Autre</option>
+</select>
+</div>
+</div>
+<div class="grid" style="grid-template-columns:1fr 1fr">
+<div>
+<label for="email">Email</label>
+<input id="email" type="email" name="email" placeholder="prenom.nom@exemple.com" required />
+</div>
+<div>
+<label for="linkedin">Profil LinkedIn (optionnel)</label>
+<input id="linkedin" name="linkedin" placeholder="https://linkedin.com/in/…" />
+</div>
+</div>
+<div>
+<label for="motivation">Message (optionnel)</label>
+<textarea id="motivation" name="motivation" rows="4" placeholder="Dites-nous ce que vous attendez du réseau…"></textarea>
+</div>
+<div style="display:flex; gap:10px; align-items:center; justify-content:flex-end; margin-top:8px">
+<button class="btn ghost" type="reset">Réinitialiser</button>
+<button class="btn primary" type="submit">Envoyer la demande</button>
+</div>
+</form>
+</div>
+</section>
+
+<br><br>
+<footer class="site-footer">
+  <div class="footer-container">
+    <!-- Colonne 1 : Logo / Description -->
+    <div class="footer-about">
+      <h3>Bem Tech Alumni</h3>
+      <p>
+        Connecter les anciens, inspirer la communauté et bâtir un futur meilleur ensemble.
+      </p>
+    </div>
+
+   
+    <div class="footer-links">
+      <h4>Liens rapides</h4>
+      <ul>
+        <li><a href="index.html">Accueil</a></li>
+        <li><a href="reseau.html" class="restricted-link" data-page="reseau">Association</a></li>
+        <li><a href="calendrier.html" class="restricted-link" data-page="calendrier">Événements</a></li>
+        <li><a href="opportunite.html" class="restricted-link" data-page="opportunites">Carrières</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-contact">
+      <h4>Contactez-nous</h4>
+      <div class="contact-info-footer">
+        <div class="contact-item-footer">
+          <i class="fas fa-phone"></i>
+          <span>+221 33 123 45 67</span>
+        </div>
+        <div class="contact-item-footer">
+          <i class="fas fa-envelope"></i>
+          <span>contact@bemtech-alumni.com</span>
+        </div>
+        <div class="contact-item-footer">
+          <i class="fas fa-map-marker-alt"></i>
+          <span>Dakar, Sénégal</span>
+        </div>
+      </div>
+      <a href="contact.html" class="footer-contact-btn">
+        <i class="fas fa-paper-plane"></i>
+        Envoyer un message
+      </a>
+    </div>
+
+    <div class="footer-social">
+      <h4>Suivez-nous</h4>
+      <div class="social-icons">
+        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+        <a href="#"><i class="fab fa-youtube"></i></a>
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-tiktok"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bas du footer -->
+  <div class="footer-bottom">
+    <p>&copy; 2025 Bem Tech Alumni – Tous droits réservés.</p>
+  </div>
+</footer>
+
+<script src="auth.js"></script>
+<script src="animations.js"></script>
+</body>
+</html>

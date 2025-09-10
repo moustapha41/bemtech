@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Séminaires & Conférences – BemTech Alumni</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Inter:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="topline"></div>
+
+  <div class="masthead">
+    <div class="wrap">
+
+      <!-- Partie gauche -->
+      <div class="header-left">
+        <div class="brand-logo">
+          <img alt="BEMTECH Logo" src="logob.png">
+        </div>
+        <span class="brand-divider" aria-hidden="true"></span>
+        <div class="brand-title">Alumni</div>
+      </div>
+
+      <!-- Partie droite -->
+      <div class="header-right">
+        <nav class="nav-block" aria-label="Primary">
+          <div class="nav-top">
+            <a href="index.html#join" id="membershipBtn">Membership</a>
+            <a href="actualite.html" class="restricted-link" data-page="actualites">Actualités &amp; Recompenses</a>
+            <a href="vie_school.html" class="restricted-link" data-page="vie-ecole">Vie a l'ecole</a>
+            <a href="after.html" class="restricted-link" data-page="apres-ecole">Apres l'ecole</a>
+            <a href="contact.html">Contactez-nous</a>
+          </div>
+          <div class="nav-bottom">
+            <!-- Notre Communaute -->
+            <div class="dropdown">
+              <a href="#">Notre Communauté</a>
+              <ul class="submenu">
+                <li><a href="reseau.html" class="restricted-link" data-page="reseau">Reseau</a></li>
+                <li><a href="Qui.html">Qui sommes-nous ??</a></li>
+                <li><a href="FAQ.html">FAQ</a></li>
+              </ul>
+            </div>
+            <div class="dropdown">
+              <a href="#">Carrières &amp; Ressources</a>
+              <ul class="submenu">
+                <li><a href="opportunite.html" class="restricted-link" data-page="opportunites">Opportunités</a></li>
+                <li><a href="mentorat.html" class="restricted-link" data-page="mentorat">Mentorat / Developpement professionnel</a></li>
+                <li><a href="projet.html" class="restricted-link" data-page="projet">Projet / Realisation</a></li>
+              </ul>
+            </div>
+            <!-- Evenement -->
+            <div class="dropdown">
+              <a href="#" style="color: var(--washu-red);">Événement</a>
+              <ul class="submenu">
+                <li><a href="calendrier.html" class="restricted-link" data-page="calendrier">Calendrier</a></li>
+                <li><a href="reunion.html" class="restricted-link" data-page="retrouvaille">Reunion & Retrouvaille</a></li>
+                <li><a href="evenements_etudiants.html" class="restricted-link" data-page="evenements-etudiants">Événements Étudiants</a></li>
+                <li><a href="journee.html" class="restricted-link" data-page="journee-culturelle" style="color: var(--washu-red); font-weight: 700;">Seminaire</a></li>
+              </ul>
+            </div>
+
+            <!-- Benevole -->
+            <div class="dropdown">
+              <a href="#">Humanitaire</a>
+              <ul class="submenu">
+                <li><a href="don_annuel.html" class="restricted-link" data-page="don-annuel">Don annuel</a></li>
+                <li><a href="retrouvaille.html" class="restricted-link" data-page="conseil">Aide et Solidarité</a></li>
+                <li><a href="conseil.html" class="restricted-link" data-page="conseil">Benevolat</a></li>
+              </ul>
+            </div>
+            
+            <a href="Galerie.html">Galerie</a>
+            <button id="authBtn" class="auth-btn">Connexion</button>
+          </div>
+        </nav>
+
+        <div class="logo-section-2">
+          <img src="logor.png" alt="Logo">
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Login Modal -->
+  <div id="loginModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <form class="login-form" id="loginForm">
+        <h2>Connexion</h2>
+        <div class="form-group">
+          <label for="loginEmail">Email:</label>
+          <input type="email" id="loginEmail" name="email" required>
+        </div>
+        <div class="form-group">
+          <label for="loginPassword">Mot de passe:</label>
+          <input type="password" id="loginPassword" name="password" required>
+        </div>
+        <button type="submit" class="login-btn">Se connecter</button>
+        <p class="login-help">Pas encore membre? <a href="index.html#join">Rejoignez la communauté</a></p>
+      </form>
+    </div>
+  </div>
+
+  <!-- Registration Modal -->
+  <div id="registerModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <form class="login-form" id="registerForm">
+        <h2>Créer un compte</h2>
+        <div class="form-group">
+          <label for="regNom">Nom complet:</label>
+          <input type="text" id="regNom" name="nom" required>
+        </div>
+        <div class="form-group">
+          <label for="regEmail">Email:</label>
+          <input type="email" id="regEmail" name="email" required>
+        </div>
+        <div class="form-group">
+          <label for="regPassword">Mot de passe:</label>
+          <input type="password" id="regPassword" name="password" required minlength="6">
+        </div>
+        <div class="form-group">
+          <label for="regPromo">Promotion:</label>
+          <select id="regPromo" name="promo" required>
+            <option value="">Sélectionnez…</option>
+            <option>2025</option>
+            <option>2024</option>
+            <option>2023</option>
+            <option>2022</option>
+            <option>2021</option>
+            <option>2020</option>
+            <option>Autre</option>
+          </select>
+        </div>
+        <button type="submit" class="login-btn">Créer le compte</button>
+        <p class="login-help">Déjà membre? <a href="#" id="showLoginFromReg">Se connecter</a></p>
+      </form>
+    </div>
+  </div>
+
+  <!-- Hero Section Événements -->
+  <section style="background: linear-gradient(135deg, #1a202c 0%, #2d3748 50%, #4a5568 100%); padding: 120px 0; position: relative; overflow: hidden;">
+    <!-- Éléments décoratifs -->
+    <div style="position: absolute; top: 20%; left: 10%; width: 100px; height: 100px; border-radius: 50%; background: rgba(102, 126, 234, 0.1); animation: float 6s ease-in-out infinite;"></div>
+    <div style="position: absolute; top: 60%; right: 15%; width: 80px; height: 80px; border-radius: 50%; background: rgba(118, 75, 162, 0.1); animation: float 8s ease-in-out infinite reverse;"></div>
+    
+    <div style="max-width: var(--container); margin: 0 auto; padding: 0 16px; text-align: center; position: relative; z-index: 2;">
+      <div style="background: rgba(255,255,255,0.05); backdrop-filter: blur(10px); border-radius: 20px; padding: 60px 40px; border: 1px solid rgba(255,255,255,0.1);">
+        <h1 style="font-size: 3.5rem; color: white; margin-bottom: 20px; font-weight: 700; text-shadow: 0 4px 20px rgba(0,0,0,0.3);">
+          Événements <span style="color: #667eea;">BEM TECH</span>
+        </h1>
+        <p style="font-size: 1.3rem; color: rgba(255,255,255,0.9); margin-bottom: 40px; max-width: 600px; margin-left: auto; margin-right: auto; line-height: 1.6;">
+          Découvrez les moments forts et expériences marquantes de la communauté BemTech
+        </p>
+        
+        <div style="display: flex; justify-content: center; gap: 40px; margin-top: 50px; flex-wrap: wrap;">
+          <div style="text-align: center; padding: 20px;">
+            <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);">
+              <i class="fas fa-calendar-alt" style="color: white; font-size: 2rem;"></i>
+            </div>
+            <h3 style="color: white; font-size: 2rem; margin: 0; font-weight: 600;">25+</h3>
+            <p style="color: rgba(255,255,255,0.8); margin: 5px 0 0 0;">Événements annuels</p>
+          </div>
+          
+          <div style="text-align: center; padding: 20px;">
+            <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);">
+              <i class="fas fa-users" style="color: white; font-size: 2rem;"></i>
+            </div>
+            <h3 style="color: white; font-size: 2rem; margin: 0; font-weight: 600;">150+</h3>
+            <p style="color: rgba(255,255,255,0.8); margin: 5px 0 0 0;">Participants</p>
+          </div>
+          
+          <div style="text-align: center; padding: 20px;">
+            <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);">
+              <i class="fas fa-trophy" style="color: white; font-size: 2rem;"></i>
+            </div>
+            <h3 style="color: white; font-size: 2rem; margin: 0; font-weight: 600;">4+</h3>
+            <p style="color: rgba(255,255,255,0.8); margin: 5px 0 0 0;">Années d'expérience</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <style>
+      @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-20px); }
+      }
+    </style>
+  </section>
+
+  <!-- Section Événements -->
+  <section class="alumni-search">
+    <div class="search-container">
+      <h2>Moments d'Exception</h2>
+      <p>Explorez la diversité des rencontres académiques et professionnelles de BEM TECH</p>
+    </div>
+  </section>
+
+  <!-- Galerie photos -->
+  <section class="success-stories" style="background: #fff; padding: 40px 0;">
+    <div class="stories-grid">
+      
+      <div class="story-card">
+        <div style="text-align: center; margin-bottom: 15px;">
+          <img src="5.jpg" alt="Conférence académique" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px;">
+        </div>
+        <div class="story-content">
+          <h4>Conférences Académiques</h4>
+          <div class="story-title">Présentation de recherches</div>
+          <p class="story-text">
+            Sessions de présentation et d'échanges académiques avec nos experts et chercheurs.
+          </p>
+        </div>
+      </div>
+
+      <div class="story-card">
+        <div style="text-align: center; margin-bottom: 15px;">
+          <img src="2.jpg" alt="Salon orientation" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px;">
+        </div>
+        <div class="story-content">
+          <h4>Salon de l'Orientation</h4>
+          <div class="story-title">Guidance professionnelle</div>
+          <p class="story-text">
+            Accompagnement des étudiants dans leurs choix de carrière et orientation professionnelle.
+          </p>
+        </div>
+      </div>
+
+      <div class="story-card">
+        <div style="text-align: center; margin-bottom: 15px;">
+          <img src="3.jpg" alt="Forum débat" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px;">
+        </div>
+        <div class="story-content">
+          <h4>Forums</h4>
+          <div class="story-title">Débats et échanges</div>
+          <p class="story-text">
+            Espaces de discussion et de débat sur les enjeux actuels de notre secteur.
+          </p>
+        </div>
+      </div>
+
+      <div class="story-card">
+        <div style="text-align: center; margin-bottom: 15px;">
+          <img src="4.jpg" alt="Salon innovation" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px;">
+        </div>
+        <div class="story-content">
+          <h4>Salon de l'Innovation</h4>
+          <div class="story-title">Technologies émergentes</div>
+          <p class="story-text">
+            Découverte des dernières innovations technologiques et rencontres avec les startups.
+          </p>
+        </div>
+      </div>
+
+      <div class="story-card">
+        <div style="text-align: center; margin-bottom: 15px;">
+          <img src="1.jpg" alt="Salon institutionnel" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px;">
+        </div>
+        <div class="story-content">
+          <h4>Salons Institutionnels</h4>
+          <div class="story-title">Partenariats officiels</div>
+          <p class="story-text">
+            Événements officiels avec nos partenaires institutionnels et signature d'accords.
+          </p>
+        </div>
+      </div>
+
+      <div class="story-card">
+        <div style="text-align: center; margin-bottom: 15px;">
+          <img src="6.jpg" alt="Séminaire partenaires" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px;">
+        </div>
+        <div class="story-content">
+          <h4>Séminaires avec Partenaires</h4>
+          <div class="story-title">Formation collaborative</div>
+          <p class="story-text">
+            Sessions de formation et workshops en collaboration avec nos partenaires industriels.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+  <div class="test">
+    <h1>Testimonials</h1>
+  </div>
+
+  <div class="testimonial-container">
+    <img src="WhatsApp Image 2025-09-01 at 13.45.28.jpeg" alt="Photo alumni">
+    <div class="testimonial-content">
+      <p class="testimonial-name">Mame Coumba Massasi Ndoye</p>
+      <p class="testimonial-text">
+        "Franchement, les conseils partagés pendant la journée Women and Youth Day – Girls in Science étaient tellement pertinents que j’ai eu l’impression qu’on me parlait directement 😅. Même si certaines intervenantes venaient de domaines très éloignés du mien, j’ai quand même réussi à capter des astuces utiles pour avancer dans mon parcours. Comme quoi, l’inspiration n’a pas de frontières !"
+      </p>
+    </div>
+  </div>
+  <style>
+        .test {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      text-align: center;
+      padding: 80px 20px;
+    }
+
+    .test h1 {
+      margin: 0;
+      font-size: 2rem;
+    }
+
+    .testimonial-container {
+      max-width: 900px;
+      margin: -60px auto 40px;
+      background: white;
+      border-radius: 10px;
+      padding: 30px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+    }
+
+    .testimonial-container img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .testimonial-content {
+      flex: 1;
+    }
+
+    .testimonial-name {
+      font-weight: bold;
+      color: #003366;
+      margin: 0 0 10px;
+      font-size: 1.1rem;
+    }
+
+    .testimonial-text {
+      font-size: 0.95rem;
+      color: #555;
+      line-height: 1.5;
+    }
+  </style>
+  <!-- Call to Action -->
+  <section class="network-cta">
+    <div class="cta-content">
+      <h2>Explorez nos événements</h2>
+      <p>Ne manquez pas nos prochains salons et conférences. Inscrivez-vous dès maintenant pour rester informé.</p>
+      <div class="cta-buttons">
+        <a href="reunion.html" class="btn-primary">Voir plus événements</a>
+        <a href="calendrier.html" class="btn-secondary">calendrier</a>
+      </div>
+    </div>
+  </section><br>
+  <footer class="site-footer">
+    <div class="footer-container">
+      <!-- Colonne 1 : Logo / Description -->
+      <div class="footer-about">
+        <h3>BemTech Alumni</h3>
+        <p>
+          Connecter les anciens, inspirer la communauté et bâtir un meilleur future ensemble.
+        </p>
+      </div>
+
+     
+      <div class="footer-links">
+        <h4>Liens rapides</h4>
+        <ul>
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="reseau.html">Association</a></li>
+          <li><a href="calendrier.html">Événements</a></li>
+          <li><a href="opportunite.html">Carrières</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-social">
+        <h4>Suivez-nous</h4>
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#"><i class="fab fa-youtube"></i></a>
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-tiktok"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bas du footer -->
+    <div class="footer-bottom">
+      <p>&copy; 2025 BEM TECH Alumni – Tous droits réservés.</p>
+    </div>
+  </footer>
+
+<script src="auth.js"></script>
+<script src="animations.js"></script>
+</body>
+</html>

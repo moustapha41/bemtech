@@ -1,0 +1,1695 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Don Annuel – BemTech Alumni</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Inter:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<link rel="stylesheet" href="styles.css">
+<style>
+  .donation-hero {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 100px 0;
+    color: white;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .donation-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1.5" fill="%23ffffff" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23dots)"/></svg>');
+  }
+
+  .donation-hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100px;
+    background: linear-gradient(to top, rgba(255,255,255,0.1) 0%, transparent 100%);
+  }
+
+  .donation-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .donation-hero h1 {
+    font-family: "Merriweather", Georgia, serif;
+    font-size: 3.2rem;
+    font-weight: 700;
+    margin-bottom: 25px;
+    color: white;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    position: relative;
+    z-index: 3;
+  }
+
+  .donation-hero .subtitle {
+    font-size: 1.3rem;
+    color: rgba(255,255,255,0.95);
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.6;
+    font-weight: 300;
+    position: relative;
+    z-index: 3;
+  }
+
+  .donation-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 80px 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px 80px;
+    align-items: start;
+  }
+
+  .donation-section {
+    background: white;
+    border-radius: 20px;
+    padding: 50px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+    border: 1px solid rgba(114, 188, 244, 0.15);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    transform: translateY(0);
+  }
+
+  .donation-section:nth-child(1) {
+    grid-column: 1 / 2;
+    transform: translateY(-20px);
+  }
+
+  .donation-section:nth-child(2) {
+    grid-column: 2 / 3;
+    transform: translateY(40px);
+  }
+
+  .donation-section:nth-child(3) {
+    grid-column: 1 / 2;
+    transform: translateY(20px);
+  }
+
+  .donation-section:nth-child(4) {
+    grid-column: 2 / 3;
+    transform: translateY(-40px);
+  }
+
+  .donation-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    transform: scaleX(0);
+    transition: transform 0.4s ease;
+  }
+
+  .donation-section:hover {
+    transform: translateY(-15px) scale(1.02);
+    box-shadow: 0 25px 60px rgba(102, 126, 234, 0.2);
+    border-color: rgba(114, 188, 244, 0.4);
+  }
+
+  .donation-section:nth-child(1):hover {
+    transform: translateY(-35px) scale(1.02);
+  }
+
+  .donation-section:nth-child(2):hover {
+    transform: translateY(25px) scale(1.02);
+  }
+
+  .donation-section:nth-child(3):hover {
+    transform: translateY(5px) scale(1.02);
+  }
+
+  .donation-section:nth-child(4):hover {
+    transform: translateY(-55px) scale(1.02);
+  }
+
+  .donation-section:hover::before {
+    transform: scaleX(1);
+  }
+
+  .section-title {
+    font-family: "Merriweather", Georgia, serif;
+    font-size: 2rem;
+    color: #2c3e50;
+    margin-bottom: 30px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    position: relative;
+  }
+
+  .section-title .icon {
+    font-size: 2.2rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+  }
+
+  .section-text {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: #555;
+    margin-bottom: 30px;
+  }
+
+  .benefits-list {
+    list-style: none;
+    padding: 0;
+    margin: 30px 0;
+  }
+
+  .benefits-list li {
+    padding: 15px 0;
+    font-size: 1.1rem;
+    color: #555;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  .benefits-list li:last-child {
+    border-bottom: none;
+  }
+
+  .benefits-list li .emoji {
+    font-size: 1.5rem;
+    min-width: 30px;
+  }
+
+  .donation-steps {
+    background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+    border-radius: 12px;
+    padding: 35px;
+    margin-top: 30px;
+    border: 1px solid #e9ecef;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+    position: relative;
+  }
+
+  .donation-steps::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+    border-radius: 0 2px 2px 0;
+  }
+
+  .steps-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .steps-list li {
+    padding: 15px 0;
+    font-size: 1.1rem;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-weight: 500;
+  }
+
+  .steps-list li .step-number {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.9rem;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+    position: relative;
+  }
+
+  .steps-list li .step-number::after {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    z-index: -1;
+    opacity: 0.2;
+  }
+
+  .donation-cta {
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    color: white;
+    text-align: center;
+    padding: 60px 40px;
+    border-radius: 20px;
+    margin: 80px auto 0;
+    position: relative;
+    overflow: hidden;
+    max-width: 900px;
+    grid-column: 1 / -1;
+  }
+
+  .donation-cta::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+    animation: shimmer 3s ease-in-out infinite;
+  }
+
+  @keyframes shimmer {
+    0%, 100% { transform: translateX(-100%) translateY(-100%) rotate(0deg); }
+    50% { transform: translateX(0%) translateY(0%) rotate(180deg); }
+  }
+
+  .donation-cta h2 {
+    font-family: "Merriweather", Georgia, serif;
+    font-size: 2rem;
+    margin-bottom: 20px;
+    font-weight: 400;
+  }
+
+  .donation-cta p {
+    font-size: 1.2rem;
+    opacity: 0.95;
+    margin-bottom: 30px;
+  }
+
+  .donation-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 15px 40px;
+    border: none;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+    position: relative;
+    z-index: 2;
+    overflow: hidden;
+  }
+
+  .donation-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s ease;
+  }
+
+  .donation-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(102, 126, 234, 0.5);
+  }
+
+  .donation-btn:hover::before {
+    left: 100%;
+  }
+
+  footer {
+    background: black;
+    text-align: center;
+    padding: 30px 20px;
+    margin-top: 60px;
+    border-top: 1px solid white;
+    color: white;
+  }
+
+  footer p {
+    margin: 0;
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+
+
+  @media (max-width: 768px) {
+    .donation-hero {
+      padding: 70px 0;
+    }
+    
+    .donation-hero h1 {
+      font-size: 2.5rem;
+    }
+    
+    .donation-content {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+
+    .donation-section {
+      padding: 30px 25px;
+      transform: none !important;
+      grid-column: 1 !important;
+    }
+
+    .donation-section:hover {
+      transform: translateY(-10px) !important;
+    }
+    
+    .section-title {
+      font-size: 1.8rem;
+    }
+    
+    .donation-cta {
+      padding: 40px 25px;
+      margin: 40px auto 0;
+      grid-column: 1;
+    }
+    
+    .donation-cta h2 {
+      font-size: 2rem;
+    }
+  }
+</style>
+</head>
+<body>
+  <div class="topline"></div>
+
+  <div class="masthead">
+    <div class="wrap">
+      <!-- Partie gauche -->
+      <div class="header-left">
+        <div class="brand-logo">
+          <img alt="BEMTECH Logo" src="logob.png">
+        </div>
+        <span class="brand-divider" aria-hidden="true"></span>
+        <div class="brand-title">Alumni</div>
+      </div>
+
+      <!-- Partie droite -->
+      <div class="header-right">
+        <nav class="nav-block" aria-label="Primary">
+          <div class="nav-top">
+            <a href="index.html#join" id="membershipBtn">Membership</a>
+            <a href="actualite.html" class="restricted-link" data-page="actualites">Actualités &amp; Recompenses</a>
+            <a href="vie_school.html" class="restricted-link" data-page="vie-ecole">Vie a l'ecole</a>
+            <a href="after.html" class="restricted-link" data-page="apres-ecole">Apres l'ecole</a>
+            <a href="contact.html">Contact</a>
+          </div>
+          <div class="nav-bottom">
+            <!-- Notre Communaute -->
+            <div class="dropdown">
+              <a href="#">Notre Communauté</a>
+              <ul class="submenu">
+                <li><a href="reseau.html" class="restricted-link" data-page="reseau">Reseau</a></li>
+                <li><a href="Qui.html">Qui sommes-nous ??</a></li>
+                <li><a href="FAQ.html">FAQ</a></li>
+              </ul>
+            </div>
+            <div class="dropdown">
+              <a href="#">Carrières &amp; Ressources</a>
+              <ul class="submenu">
+                <li><a href="opportunite.html" class="restricted-link" data-page="opportunites">Opportunités</a></li>
+                <li><a href="mentorat.html" class="restricted-link" data-page="mentorat">Mentorat / Developpement professionnel</a></li>
+                <li><a href="projet.html" class="restricted-link" data-page="projet">Projet / Realisation</a></li>
+              </ul>
+            </div>
+            <!-- Evenement -->
+            <div class="dropdown">
+              <a href="#">Événement</a>
+              <ul class="submenu">
+                <li><a href="calendrier.html" class="restricted-link" data-page="calendrier">Calendrier</a></li>
+                <li><a href="reunion.html" class="restricted-link" data-page="retrouvaille">Reunion &amp; Retrouvaille</a></li>
+                <li><a href="evenements_etudiants.html" class="restricted-link" data-page="evenements-etudiants">Événements Étudiants</a></li>
+                <li><a href="journee.html" class="restricted-link" data-page="journee-culturelle">Seminaire</a></li>
+              </ul>
+            </div>
+
+            <!-- Benevole -->
+            <div class="dropdown">
+              <a href="#">Humanitaire</a>
+              <ul class="submenu">
+                <li><a href="don_annuel.html" class="restricted-link active" data-page="don-annuel">Don annuel</a></li>
+                <li><a href="retrouvaille.html" class="restricted-link" data-page="conseil">Aide et Solidarité</a></li>
+                <li><a href="conseil.html" class="restricted-link" data-page="conseil">Benevolat</a></li>
+              </ul>
+            </div>
+            
+            <a href="Galerie.html">Galerie</a>
+            <button id="authBtn" class="auth-btn">Connexion</button>
+          </div>
+        </nav>
+
+        <div class="logo-section-2">
+          <img src="logor.png" alt="Logo">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hero Section -->
+  <section class="donation-hero">
+    <div class="donation-container">
+      <h1>Don annuel – Réseau Alumni BEM TECH 🎓💙</h1>
+      <p class="subtitle">Ensemble, construisons l'avenir de notre communauté et soutenons les générations futures</p>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <div class="donation-content">
+    
+    <!-- Présentation -->
+    <div class="donation-section">
+      <h2 class="section-title">
+        <span class="icon">✨</span>
+        Présentation
+      </h2>
+      <p class="section-text">
+        Le réseau alumni de BEM TECH s'engage à maintenir des liens solides entre tous ses diplômés et à soutenir la réussite des générations futures.
+        À travers différentes initiatives – événements, mentorat, bourses et projets étudiants – nous œuvrons chaque jour pour renforcer l'impact de notre communauté, en Afrique comme à l'international.
+      </p>
+      <p class="section-text">
+        Le don annuel est l'un des leviers essentiels qui nous permettent de faire vivre ce réseau. Grâce à votre contribution, nous pouvons continuer à offrir des opportunités uniques, à accompagner les talents et à faire briller BEM TECH au-delà de nos frontières.
+      </p>
+    </div>
+
+    <!-- Soutenez la communauté -->
+    <div class="donation-section">
+      <h2 class="section-title">
+        <span class="icon">🎁</span>
+        Soutenez la communauté BEM TECH !
+      </h2>
+      <p class="section-text">
+        Chaque année, le don annuel permet de renforcer les liens entre les diplômés et de faire grandir la famille BEM TECH.
+      </p>
+      <p class="section-text">
+        <strong>Votre contribution, quel qu'en soit le montant, sert à :</strong>
+      </p>
+      <ul class="benefits-list">
+        <li>
+          <span class="emoji">🎓</span>
+          Financer des bourses d'études pour les étudiants en difficulté
+        </li>
+        <li>
+          <span class="emoji">🎉</span>
+          Soutenir l'organisation des événements alumni en Afrique, en Europe et en Amérique
+        </li>
+        <li>
+          <span class="emoji">🤝</span>
+          Développer de nouveaux programmes de mentorat et de networking
+        </li>
+        <li>
+          <span class="emoji">🌍</span>
+          Promouvoir le rayonnement international de notre école et de ses diplômés
+        </li>
+      </ul>
+    </div>
+
+    <!-- Pourquoi donner -->
+    <div class="donation-section">
+      <h2 class="section-title">
+        <span class="icon">💡</span>
+        Pourquoi donner ?
+      </h2>
+      <p class="section-text">
+        <strong>En participant au don annuel, vous :</strong>
+      </p>
+      <ul class="benefits-list">
+        <li>
+          <span class="emoji">🚀</span>
+          Investissez dans l'avenir des étudiants et jeunes diplômés
+        </li>
+        <li>
+          <span class="emoji">🤝</span>
+          Renforcez le réseau des anciens de BEM TECH
+        </li>
+        <li>
+          <span class="emoji">🌟</span>
+          Participez activement au développement et à la notoriété de notre école
+        </li>
+      </ul>
+    </div>
+
+    <!-- Comment faire un don -->
+    <div class="donation-section">
+      <h2 class="section-title">
+        <span class="icon">💳</span>
+        Comment faire un don ?
+      </h2>
+      <div class="donation-steps">
+        <ol class="steps-list">
+          <li>
+            <span class="step-number">1</span>
+            Connectez-vous à votre espace alumni
+          </li>
+          <li>
+            <span class="step-number">2</span>
+            Accédez à la rubrique "Don annuel"
+          </li>
+          <li>
+            <span class="step-number">3</span>
+            Choisissez le montant de votre contribution
+          </li>
+          <li>
+            <span class="step-number">4</span>
+            Effectuez votre paiement en ligne de manière simple et sécurisée
+          </li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- Call to Action -->
+    <div class="donation-cta">
+      <h2>Faites un don dès aujourd'hui</h2>
+      <p>Chaque geste compte, et ensemble, nous faisons de BEM TECH une communauté plus forte, solidaire et ambitieuse. 💙✨</p>
+        <button class="donation-btn" onclick="showGiftForm()">
+          <i class="fas fa-heart"></i>
+          Faire un don maintenant
+        </button>
+    </div>
+
+  </div>
+
+ <!-- Gift Form Section -->
+ <section class="gift-form-section slide-panel" id="giftForm" style="display: none;">
+  <div class="container">
+    <div class="form-container">
+      <h2 onclick="goBackToSelection()">🎉 Finaliser votre cadeau</h2>
+      
+      <!-- Annual Donation Notice -->
+      <div class="annual-notice">
+        <div class="notice-icon">
+          <i class="fas fa-calendar-alt"></i>
+        </div>
+        <div class="notice-content">
+          <h3>Ce don est annuel</h3>
+          <p>En confirmant, vous vous engagez à soutenir la communauté une fois par an.</p>
+        </div>
+      </div>
+
+      <!-- Selected Gift Display -->
+      <div class="selected-gift-display">
+        <div class="selected-gift-info">
+          <div class="gift-icon">
+            <i class="fas fa-gift"></i>
+          </div>
+          <div class="gift-details">
+            <h3 id="selectedGiftName">Cadeau sélectionné</h3>
+            <p id="selectedGiftDesc">Description du cadeau</p>
+            <div class="gift-amount" id="selectedGiftPrice">0 FCFA</div>
+          </div>
+        </div>
+      </div>
+
+      <form id="giftOrderForm">
+        
+
+        <!-- Montant du don -->
+        <div class="form-section">
+          <h3><i class="fas fa-money-bill-wave"></i> Montant du don</h3>
+          <div class="form-group">
+            <label for="donationAmount">Montant de votre don annuel *</label>
+            <div class="amount-input-wrapper">
+              <input type="number" id="donationAmount" name="donationAmount" required min="1000" placeholder="Ex: 25000">
+              <span class="currency">FCFA</span>
+            </div>
+            <small class="help-text">Montant minimum : 1 000 FCFA</small>
+          </div>
+        </div>
+
+        <!-- Informations de l'expéditeur -->
+        <div class="form-section">
+          <h3><i class="fas fa-user-edit"></i> Informations</h3>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="senderName">Votre nom *</label>
+              <input type="text" id="senderName" name="senderName" required>
+            </div>
+            <div class="form-group">
+              <label for="senderEmail">Votre email *</label>
+              <input type="email" id="senderEmail" name="senderEmail" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="senderPhone">Votre téléphone *</label>
+            <input type="tel" id="senderPhone" name="senderPhone" required placeholder="+221 XX XXX XX XX">
+          </div>
+        </div>
+
+        <!-- Méthode de paiement -->
+        <div class="form-section">
+          <h3><i class="fas fa-credit-card"></i> Méthode de paiement</h3>
+          <div class="payment-methods">
+            
+            <!-- Mobile Money -->
+            <div class="payment-option" data-method="mobile-money">
+              <div class="payment-header">
+                <input type="radio" name="paymentMethod" value="mobile-money" id="mobileMoney" required>
+                <label for="mobileMoney">
+                  <div class="payment-icon">
+                    <i class="fas fa-mobile-alt"></i>
+                  </div>
+                  <div class="payment-info">
+                    <h4>Mobile Money</h4>
+                    <p>Orange Money, Free Money, Wave</p>
+                  </div>
+                </label>
+              </div>
+              <div class="payment-details" style="display: none;">
+                <div class="form-group">
+                  <label for="mobileOperator">Opérateur *</label>
+                  <select id="mobileOperator" name="mobileOperator">
+                    <option value="">Choisissez votre opérateur</option>
+                    <option value="orange">Orange Money</option>
+                    <option value="free">Free Money</option>
+                    <option value="wave">Wave</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="mobileNumber">Numéro de téléphone *</label>
+                  <input type="tel" id="mobileNumber" name="mobileNumber" placeholder="+221 XX XXX XX XX">
+                </div>
+              </div>
+            </div>
+
+            <!-- Carte Bancaire -->
+            <div class="payment-option" data-method="card">
+              <div class="payment-header">
+                <input type="radio" name="paymentMethod" value="card" id="cardPayment">
+                <label for="cardPayment">
+                  <div class="payment-icon">
+                    <i class="fas fa-credit-card"></i>
+                  </div>
+                  <div class="payment-info">
+                    <h4>Carte Bancaire</h4>
+                    <p>Visa, Mastercard</p>
+                  </div>
+                </label>
+              </div>
+              <div class="payment-details" style="display: none;">
+                <div class="form-group">
+                  <label for="cardNumber">Numéro de carte *</label>
+                  <input type="text" id="cardNumber" name="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19">
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="expiryDate">Date d'expiration *</label>
+                    <input type="text" id="expiryDate" name="expiryDate" placeholder="MM/AA" maxlength="5">
+                  </div>
+                  <div class="form-group">
+                    <label for="cvv">CVV *</label>
+                    <input type="text" id="cvv" name="cvv" placeholder="123" maxlength="3">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="cardName">Nom sur la carte *</label>
+                  <input type="text" id="cardName" name="cardName" placeholder="Nom comme sur la carte">
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Récapitulatif et validation -->
+        <div class="form-section">
+          <div class="order-summary">
+            <h3><i class="fas fa-receipt"></i> Récapitulatif</h3>
+            <div class="summary-line">
+              <span>Type de don:</span>
+              <span id="summaryGiftName">-</span>
+            </div>
+            <div class="summary-line">
+              <span>Fréquence:</span>
+              <span>Annuel</span>
+            </div>
+            <div class="summary-line total">
+              <span>Montant à payer:</span>
+              <span id="summaryTotal">0 FCFA</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Boutons d'action -->
+        <div class="form-actions">
+          <button type="button" class="btn-secondary" onclick="goBackToSelection()">
+            <i class="fas fa-arrow-left"></i> Retour
+          </button>
+          <button type="submit" class="btn-primary">
+            <i class="fas fa-heart"></i> Offrir ce cadeau
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- Success Message -->
+<div id="successModal" class="success-modal" style="display: none;">
+  <div class="success-content">
+    <div class="success-icon">
+      <i class="fas fa-check-circle"></i>
+    </div>
+    <h3>succès! 🎉</h3>
+    <p>Nous vous exprimons toute notre gratitude pour ce geste envers la communauté Alumni de BEM TECH 💙<</p>
+    <button onclick="closeSuccessModal()" class="btn-primary">Parfait!</button>
+  </div>
+</div>
+  <script src="auth.js"></script>
+  <script src="animations.js"></script>
+
+  <!-- Gift Page JavaScript -->
+  <script>
+    let selectedGift = null;
+
+    // Gift selection functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      const giftCards = document.querySelectorAll('.gift-card');
+      const giftForm = document.getElementById('giftForm');
+      const giftSelection = document.querySelector('.gift-selection');
+
+      // Gift card selection
+      giftCards.forEach(card => {
+        const selectBtn = card.querySelector('.select-gift-btn');
+        selectBtn.addEventListener('click', () => {
+          const giftType = card.dataset.gift;
+          const giftPrice = card.dataset.price;
+          const giftName = card.querySelector('h3').textContent;
+          const giftDesc = card.querySelector('p').textContent;
+
+          selectedGift = {
+            type: giftType,
+            price: parseInt(giftPrice),
+            name: giftName,
+            description: giftDesc
+          };
+
+          showGiftForm();
+        });
+      });
+
+      // Payment method selection
+      const paymentOptions = document.querySelectorAll('.payment-option');
+      paymentOptions.forEach(option => {
+        const radio = option.querySelector('input[type="radio"]');
+        const details = option.querySelector('.payment-details');
+
+        radio.addEventListener('change', () => {
+          // Hide all payment details
+          paymentOptions.forEach(opt => {
+            opt.querySelector('.payment-details').style.display = 'none';
+            opt.classList.remove('selected');
+          });
+
+          // Show selected payment details
+          if (radio.checked) {
+            details.style.display = 'block';
+            option.classList.add('selected');
+          }
+        });
+      });
+
+      // Form submission
+      const giftOrderForm = document.getElementById('giftOrderForm');
+      giftOrderForm.addEventListener('submit', handleFormSubmission);
+
+      // Real-time form updates - removed recipient fields
+
+      // Donation amount updates
+      const donationAmountInput = document.getElementById('donationAmount');
+      if (donationAmountInput) {
+        donationAmountInput.addEventListener('input', updateDonationSummary);
+      }
+
+      // Card number formatting
+      const cardNumberInput = document.getElementById('cardNumber');
+      if (cardNumberInput) {
+        cardNumberInput.addEventListener('input', formatCardNumber);
+      }
+
+      // Expiry date formatting
+      const expiryDateInput = document.getElementById('expiryDate');
+      if (expiryDateInput) {
+        expiryDateInput.addEventListener('input', formatExpiryDate);
+      }
+    });
+
+    function showGiftForm() {
+      const giftForm = document.getElementById('giftForm');
+
+      // Set default gift values since there's no selection
+      selectedGift = {
+        type: 'donation',
+        price: 0,
+        name: 'Don libre',
+        description: 'Montant libre pour soutenir la communauté BemTech Alumni'
+      };
+
+      // Update selected gift display
+      document.getElementById('selectedGiftName').textContent = selectedGift.name;
+      document.getElementById('selectedGiftDesc').textContent = selectedGift.description;
+      document.getElementById('selectedGiftPrice').textContent = 'Montant libre';
+
+      // Update summary
+      document.getElementById('summaryGiftName').textContent = selectedGift.name;
+      document.getElementById('summaryTotal').textContent = 'Montant libre';
+
+      // Show form with slide-in animation
+      giftForm.style.display = 'block';
+      setTimeout(() => {
+        giftForm.classList.add('active');
+      }, 10);
+    }
+
+    // Update summary when donation amount changes
+    function updateDonationSummary() {
+      const donationAmount = document.getElementById('donationAmount').value;
+      const summaryTotal = document.getElementById('summaryTotal');
+      
+      if (donationAmount && donationAmount >= 1000) {
+        summaryTotal.textContent = formatPrice(parseInt(donationAmount));
+      } else {
+        summaryTotal.textContent = 'Montant libre';
+      }
+    }
+
+    function goBackToSelection() {
+      const giftForm = document.getElementById('giftForm');
+      
+      // Hide form with slide-out animation
+      giftForm.classList.remove('active');
+      setTimeout(() => {
+        giftForm.style.display = 'none';
+      }, 400);
+    }
+
+    function updateSummary() {
+      // Function simplified since recipient fields were removed
+    }
+
+    function formatPrice(price) {
+      return new Intl.NumberFormat('fr-FR').format(price) + ' FCFA';
+    }
+
+    function formatCardNumber(e) {
+      let value = e.target.value.replace(/\s/g, '').replace(/[^0-9]/gi, '');
+      let formattedValue = value.match(/.{1,4}/g)?.join(' ') || value;
+      e.target.value = formattedValue;
+    }
+
+    function formatExpiryDate(e) {
+      let value = e.target.value.replace(/\D/g, '');
+      if (value.length >= 2) {
+        value = value.substring(0, 2) + '/' + value.substring(2, 4);
+      }
+      e.target.value = value;
+    }
+
+    function handleFormSubmission(e) {
+      e.preventDefault();
+
+      // Basic validation
+      const form = e.target;
+      const formData = new FormData(form);
+      
+      // Check required fields
+      const requiredFields = form.querySelectorAll('[required]');
+      let isValid = true;
+
+      requiredFields.forEach(field => {
+        if (!field.value.trim()) {
+          field.style.borderColor = '#e74c3c';
+          isValid = false;
+        } else {
+          field.style.borderColor = '';
+        }
+      });
+
+      // Validate payment method specific fields
+      const selectedPaymentMethod = document.querySelector('input[name="paymentMethod"]:checked');
+      if (!selectedPaymentMethod) {
+        alert('Veuillez sélectionner un moyen de paiement.');
+        return;
+      }
+
+      const paymentDetails = selectedPaymentMethod.closest('.payment-option').querySelector('.payment-details');
+      const paymentRequiredFields = paymentDetails.querySelectorAll('input[required], select[required]');
+      
+      paymentRequiredFields.forEach(field => {
+        if (!field.value.trim()) {
+          field.style.borderColor = '#e74c3c';
+          isValid = false;
+        } else {
+          field.style.borderColor = '';
+        }
+      });
+
+      if (!isValid) {
+        alert('Veuillez remplir tous les champs obligatoires.');
+        return;
+      }
+
+      // Simulate payment processing
+      const submitBtn = form.querySelector('button[type="submit"]');
+      const originalText = submitBtn.innerHTML;
+      
+      submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Traitement...';
+      submitBtn.disabled = true;
+
+      // Simulate API call
+      setTimeout(() => {
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
+        
+        // Show success modal
+        showSuccessModal();
+        
+        // Reset form
+        form.reset();
+        goBackToSelection();
+      }, 2000);
+    }
+
+    function showSuccessModal() {
+      const modal = document.getElementById('successModal');
+      modal.style.display = 'flex';
+    }
+
+    function closeSuccessModal() {
+      const modal = document.getElementById('successModal');
+      modal.style.display = 'none';
+    }
+
+    // Close modal when clicking outside
+    document.getElementById('successModal').addEventListener('click', function(e) {
+      if (e.target === this) {
+        closeSuccessModal();
+      }
+    });
+  </script>
+  <style>
+    /* Gift Page Styles */
+    .gift-hero {
+      background: 
+        linear-gradient(135deg, #0c1445 0%, #1e2a78 25%, #101a4a 50%, #3f51b5 75%, #5c6bc0 100%),
+        radial-gradient(ellipse at 30% 20%, rgba(63, 81, 181, 0.3), transparent 70%),
+        radial-gradient(ellipse at 70% 80%, rgba(92, 107, 192, 0.2), transparent 70%);
+      color: white;
+      padding: 120px 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      min-height: 60vh;
+    }
+
+    .stars {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        radial-gradient(2px 2px at 25% 25%, rgba(255, 255, 255, 0.9), transparent),
+        radial-gradient(1px 1px at 75% 15%, rgba(255, 255, 255, 0.7), transparent),
+        radial-gradient(1px 1px at 15% 75%, rgba(255, 255, 255, 0.8), transparent),
+        radial-gradient(2px 2px at 85% 85%, rgba(255, 255, 255, 0.6), transparent),
+        radial-gradient(1px 1px at 45% 45%, rgba(255, 255, 255, 0.9), transparent),
+        radial-gradient(1px 1px at 65% 25%, rgba(255, 255, 255, 0.5), transparent);
+      background-size: 200px 200px, 150px 150px, 180px 180px, 220px 220px, 160px 160px, 190px 190px;
+      animation: nightTwinkle 6s ease-in-out infinite;
+    }
+
+    .stars::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(ellipse 300px 100px at 20% 30%, rgba(92, 107, 192, 0.15), transparent),
+        radial-gradient(ellipse 200px 80px at 80% 70%, rgba(63, 81, 181, 0.2), transparent);
+      animation: nightClouds 18s ease-in-out infinite alternate;
+    }
+
+    .stars::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        linear-gradient(0deg, transparent 0%, rgba(92, 107, 192, 0.05) 50%, transparent 100%),
+        linear-gradient(90deg, transparent 0%, rgba(63, 81, 181, 0.05) 50%, transparent 100%);
+      background-size: 100% 200px, 200px 100%;
+      animation: nightGlow 12s linear infinite;
+    }
+
+    @keyframes nightTwinkle {
+      0%, 100% { opacity: 0.8; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.2); }
+    }
+
+    @keyframes nightClouds {
+      0% { transform: translateX(-10px) translateY(-5px); opacity: 0.3; }
+      100% { transform: translateX(10px) translateY(5px); opacity: 0.6; }
+    }
+
+    @keyframes nightGlow {
+      0% { transform: translate(0, 0); }
+      25% { transform: translate(20px, -10px); }
+      50% { transform: translate(-10px, 20px); }
+      75% { transform: translate(-20px, -15px); }
+      100% { transform: translate(0, 0); }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 10;
+      text-shadow: 0 0 25px rgba(92, 107, 192, 0.8);
+    }
+
+    .hero-content h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      font-weight: 700;
+      color: white;
+    }
+
+    .hero-content p {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+      opacity: 0.9;
+      color: white;
+    }
+
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+      margin-top: 2rem;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-number {
+      display: block;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #ffd700;
+    }
+
+    .stat-label {
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
+
+    /* Gift Selection */
+    .gift-selection {
+      padding: 80px 0;
+      background: #f8f9fa;
+    }
+
+    .gift-selection h2 {
+      text-align: center;
+      font-size: 2.5rem;
+      margin-bottom: 3rem;
+      color: #2c3e50;
+    }
+
+    .gifts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .gift-card {
+      background: white;
+      border-radius: 15px;
+      padding: 2rem;
+      text-align: center;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+    }
+
+    .gift-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+      border-color: #667eea;
+    }
+
+    .gift-image {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+    }
+
+    .gift-image i {
+      font-size: 2rem;
+      color: white;
+    }
+
+    .gift-card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: #2c3e50;
+    }
+
+    .gift-card p {
+      color: #7f8c8d;
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+    }
+
+    .gift-price {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #27ae60;
+      margin-bottom: 1.5rem;
+    }
+
+    .select-gift-btn {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 25px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      width: 100%;
+    }
+
+    .select-gift-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    }
+
+    /* Gift Form */
+    .gift-form-section {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 100%;
+      max-width: 500px;
+      height: 100vh;
+      background: white;
+      z-index: 1000;
+      overflow-y: auto;
+      transition: right 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      box-shadow: -5px 0 25px rgba(0,0,0,0.15);
+    }
+
+    .gift-form-section.active {
+      right: 0;
+    }
+
+    .gift-form-section .container {
+      padding: 0;
+      max-width: none;
+    }
+
+    .form-container {
+      width: 100%;
+      height: 100%;
+      background: white;
+      border-radius: 0;
+      box-shadow: none;
+      overflow: hidden;
+    }
+
+    .form-container h2 {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      padding: 1.5rem;
+      margin: 0;
+      text-align: center;
+      font-size: 1.5rem;
+      position: relative;
+    }
+
+    .form-container h2::after {
+      content: '×';
+      position: absolute;
+      right: 1.5rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 2rem;
+      cursor: pointer;
+      opacity: 0.8;
+      transition: opacity 0.3s ease;
+    }
+
+    .form-container h2::after:hover {
+      opacity: 1;
+    }
+
+    .selected-gift-display {
+      background: #f8f9fa;
+      padding: 2rem;
+      border-bottom: 1px solid #e9ecef;
+    }
+
+    .selected-gift-info {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .gift-icon {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .gift-icon i {
+      font-size: 1.5rem;
+      color: white;
+    }
+
+    .gift-details h3 {
+      margin: 0 0 0.5rem 0;
+      color: #2c3e50;
+    }
+
+    .gift-details p {
+      margin: 0 0 0.5rem 0;
+      color: #7f8c8d;
+    }
+
+    .gift-amount {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #27ae60;
+    }
+
+    .form-section {
+      padding: 2rem;
+      border-bottom: 1px solid #e9ecef;
+    }
+
+    .form-section:last-child {
+      border-bottom: none;
+    }
+
+    .form-section h3 {
+      margin: 0 0 1.5rem 0;
+      color: #2c3e50;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: #2c3e50;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #e9ecef;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: border-color 0.3s ease;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    /* Payment Methods */
+    .payment-methods {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .payment-option {
+      border: 2px solid #e9ecef;
+      border-radius: 10px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .payment-option.selected {
+      border-color: #667eea;
+      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.1);
+    }
+
+    .payment-header {
+      padding: 1.5rem;
+      cursor: pointer;
+    }
+
+    .payment-header label {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      cursor: pointer;
+      margin: 0;
+    }
+
+    .payment-icon {
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .payment-icon i {
+      font-size: 1.5rem;
+      color: white;
+    }
+
+    .payment-info h4 {
+      margin: 0 0 0.25rem 0;
+      color: #2c3e50;
+    }
+
+    .payment-info p {
+      margin: 0;
+      color: #7f8c8d;
+      font-size: 0.9rem;
+    }
+
+    .payment-details {
+      padding: 0 1.5rem 1.5rem;
+      background: #f8f9fa;
+    }
+
+    /* Order Summary */
+    .order-summary {
+      background: #f8f9fa;
+      padding: 1.5rem;
+      border-radius: 10px;
+    }
+
+    .summary-line {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+      padding: 0.5rem 0;
+    }
+
+    .summary-line.total {
+      border-top: 2px solid #e9ecef;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: #27ae60;
+    }
+
+    /* Form Actions */
+    .form-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: space-between;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+      padding: 15px 30px;
+      border: none;
+      border-radius: 25px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex: 1;
+      justify-content: center;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    }
+
+    .btn-secondary {
+      background: #6c757d;
+      color: white;
+    }
+
+    .btn-secondary:hover {
+      background: #5a6268;
+      transform: translateY(-2px);
+    }
+
+    /* Success Modal */
+    .success-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .success-content {
+      background: white;
+      padding: 3rem;
+      border-radius: 15px;
+      text-align: center;
+      max-width: 400px;
+      margin: 1rem;
+    }
+
+    .success-icon {
+      width: 80px;
+      height: 80px;
+      background: #27ae60;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+    }
+
+    .success-icon i {
+      font-size: 2.5rem;
+      color: white;
+    }
+
+    .success-content h3 {
+      color: #2c3e50;
+      margin-bottom: 1rem;
+    }
+
+    .success-content p {
+      color: #7f8c8d;
+      margin-bottom: 2rem;
+    }
+
+    /* Slide Panel Overlay */
+    .slide-panel-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 999;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.4s ease;
+    }
+
+    .slide-panel-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* Annual Notice Styles */
+    .annual-notice {
+      background: linear-gradient(135deg, #f39c12, #e67e22);
+      color: white;
+      padding: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      border-bottom: 1px solid #e9ecef;
+    }
+
+    .notice-icon {
+      width: 50px;
+      height: 50px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .notice-icon i {
+      font-size: 1.5rem;
+      color: white;
+    }
+
+    .notice-content h3 {
+      margin: 0 0 0.5rem 0;
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+
+    .notice-content p {
+      margin: 0;
+      opacity: 0.9;
+      font-size: 0.95rem;
+    }
+
+    /* Amount Input Styles */
+    .amount-input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .amount-input-wrapper input {
+      padding-right: 60px;
+    }
+
+    .currency {
+      position: absolute;
+      right: 15px;
+      color: #7f8c8d;
+      font-weight: 600;
+      pointer-events: none;
+    }
+
+    .help-text {
+      color: #7f8c8d;
+      font-size: 0.85rem;
+      margin-top: 0.5rem;
+      display: block;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero-stats {
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      .gifts-grid {
+        grid-template-columns: 1fr;
+        padding: 0 1rem;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
+      .form-actions {
+        flex-direction: column;
+      }
+
+      .hero-content h1 {
+        font-size: 2rem;
+      }
+
+      .gift-selection h2 {
+        font-size: 2rem;
+      }
+
+      .gift-form-section {
+        max-width: 100%;
+        width: 100%;
+      }
+
+      .form-container h2 {
+        font-size: 1.2rem;
+        padding: 1rem;
+      }
+
+      .selected-gift-display {
+        padding: 1rem;
+      }
+
+      .form-section {
+        padding: 1rem;
+      }
+    }
+  </style>
+
+</body>
+</html>

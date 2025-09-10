@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Faire un cadeau - BemTech Alumni</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Inter:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="topline"></div>
+
+  <div class="masthead">
+    <div class="wrap">
+      <!-- Partie gauche -->
+      <div class="header-left">
+        <div class="brand-logo">
+          <img alt="BEMTECH Logo" src="logob.png">
+        </div>
+        <span class="brand-divider" aria-hidden="true"></span>
+        <div class="brand-title">Alumni</div>
+      </div>
+
+      <!-- Partie droite -->
+      <div class="header-right">
+        <nav class="nav-block" aria-label="Primary">
+          <div class="nav-top">
+            <a href="index.html#join" id="membershipBtn">Membership</a>
+            <a href="actualite.html" class="restricted-link" data-page="actualites">Actualités &amp; Recompenses</a>
+            <a href="vie_school.html" class="restricted-link" data-page="vie-ecole">Vie a l'ecole</a>
+            <a href="after.html" class="restricted-link" data-page="apres-ecole">Apres l'ecole</a>
+            <a href="contact.html">Contact</a>
+          </div>
+          <div class="nav-bottom">
+            <!-- Notre Communaute -->
+            <div class="dropdown">
+              <a href="#">Notre Communauté</a>
+              <ul class="submenu">
+                <li><a href="reseau.html" class="restricted-link" data-page="reseau">Reseau</a></li>
+                <li><a href="Qui.html">Qui sommes-nous ??</a></li>
+                <li><a href="FAQ.html">FAQ</a></li>
+              </ul>
+            </div>
+            <div class="dropdown">
+              <a href="#">Carrières &amp; Ressources</a>
+              <ul class="submenu">
+                <li><a href="opportunite.html" class="restricted-link" data-page="opportunites">Opportunités</a></li>
+                <li><a href="mentorat.html" class="restricted-link" data-page="mentorat">Mentorat / Developpement professionnel</a></li>
+                <li><a href="projet.html" class="restricted-link" data-page="projet">Projet / Realisation</a></li>
+              </ul>
+            </div>
+            <!-- Evenement -->
+            <div class="dropdown">
+              <a href="#">Événement</a>
+              <ul class="submenu">
+                <li><a href="calendrier.html" class="restricted-link" data-page="calendrier">Calendrier</a></li>
+                <li><a href="reunion.html" class="restricted-link" data-page="retrouvaille">Reunion & Retrouvaille</a></li>
+                <li><a href="evenements_etudiants.html" class="restricted-link" data-page="evenements-etudiants">Événements Étudiants</a></li>
+                <li><a href="journee.html" class="restricted-link" data-page="journee-culturelle">Seminaire</a></li>
+              </ul>
+            </div>
+
+            <!-- Benevole -->
+            <div class="dropdown">
+              <a href="#">Humanitaire</a>
+              <ul class="submenu">
+                <li><a href="don_annuel.html" class="restricted-link" data-page="don-annuel">Don annuel</a></li>
+                <li><a href="retrouvaille.html" class="restricted-link" data-page="conseil">Aide et Solidarité</a></li>
+                <li><a href="conseil.html" class="restricted-link" data-page="conseil">Benevolat</a></li>
+              </ul>
+            </div>
+            
+            <a href="Galerie.html">Galerie</a>
+            <button id="authBtn" class="auth-btn">Connexion</button>
+          </div>
+        </nav>
+
+        <div class="logo-section-2">
+          <img src="logor.png" alt="Logo">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hero Section -->
+  <section class="gift-hero">
+    <div class="stars"></div>
+    <div class="container">
+      <div class="hero-content">
+        <h1>🎁 Faire un cadeau</h1>
+        <p>Offrez un moment de bonheur aux membres de la communauté BemTech Alumni</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gift Selection Section -->
+  <section class="gift-selection">
+    <div class="container">
+      <h2>Choisissez votre cadeau</h2>
+      <div class="gifts-grid">
+        
+        <!-- Cadeau 1 -->
+        <div class="gift-card" data-price="15000" data-gift="heart">
+          <div class="gift-image">
+            <i class="fas fa-heart"></i>
+          </div>
+          <h3>Cadeau de Cœur</h3>
+          <p>Un geste symbolique pour montrer votre affection et reconnaissance</p>
+          <div class="gift-price">10 000 FCFA</div>
+          <button class="select-gift-btn">Choisir ce cadeau</button>
+        </div>
+
+        <!-- Cadeau 2 -->
+        <div class="gift-card" data-price="25000" data-gift="support">
+          <div class="gift-image">
+            <i class="fas fa-hands-helping"></i>
+          </div>
+          <h3>Soutien symbolique</h3>
+          <p>Exprimez votre soutien et encouragement aux membres de la communauté</p>
+          <div class="gift-price">25 000 FCFA</div>
+          <button class="select-gift-btn">Choisir ce cadeau</button>
+        </div>
+
+        <!-- Cadeau 3 -->
+        <div class="gift-card" data-price="50000" data-gift="boost">
+          <div class="gift-image">
+            <i class="fas fa-rocket"></i>
+          </div>
+          <h3>Coup de pouce</h3>
+          <p>Donnez un élan supplémentaire pour aider la communauté à atteindre ses objectifs</p>
+          <div class="gift-price">50 000 FCFA</div>
+          <button class="select-gift-btn">Choisir ce cadeau</button>
+        </div>
+
+        <!-- Cadeau 4 -->
+        <div class="gift-card" data-price="75000" data-gift="excellence">
+          <div class="gift-image">
+            <i class="fas fa-trophy"></i>
+          </div>
+          <h3>Cadeau d'excellence</h3>
+          <p>Récompensez l'excellence et les accomplissements remarquables</p>
+          <div class="gift-price">75 000 FCFA</div>
+          <button class="select-gift-btn">Choisir ce cadeau</button>
+        </div>
+
+        <!-- Cadeau 5 -->
+        <div class="gift-card" data-price="100000" data-gift="gold">
+          <div class="gift-image">
+            <i class="fas fa-crown"></i>
+          </div>
+          <h3>Gold</h3>
+          <p>Une expérience Gold exclusive pour marquer les moments spéciaux</p>
+          <div class="gift-price">100 000 FCFA</div>
+          <button class="select-gift-btn">Choisir ce cadeau</button>
+        </div>
+
+        <!-- Cadeau 6 -->
+        <div class="gift-card" data-price="150000 +" data-gift="premium">
+          <div class="gift-image">
+            <i class="fas fa-gem"></i>
+          </div>
+          <h3>Premium</h3>
+          <p>Le cadeau ultime pour célébrer les plus grandes réussites</p>
+          <div class="gift-price"> +150 000 FCFA</div>
+          <button class="select-gift-btn">Choisir ce cadeau</button>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Gift Form Section -->
+  <section class="gift-form-section" id="giftForm" style="display: none;">
+    <div class="container">
+      <div class="form-container">
+        <h2>🎉 Finaliser votre cadeau</h2>
+        
+        <!-- Selected Gift Display -->
+        <div class="selected-gift-display">
+          <div class="selected-gift-info">
+            <div class="gift-icon">
+              <i class="fas fa-gift"></i>
+            </div>
+            <div class="gift-details">
+              <h3 id="selectedGiftName">Cadeau sélectionné</h3>
+              <p id="selectedGiftDesc">Description du cadeau</p>
+              <div class="gift-amount" id="selectedGiftPrice">0 FCFA</div>
+            </div>
+          </div>
+        </div>
+
+        <form id="giftOrderForm">
+          
+
+          <!-- Informations de l'expéditeur -->
+          <div class="form-section">
+            <h3><i class="fas fa-user-edit"></i> Informations</h3>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="senderName">Votre nom *</label>
+                <input type="text" id="senderName" name="senderName" required>
+              </div>
+              <div class="form-group">
+                <label for="senderEmail">Votre email *</label>
+                <input type="email" id="senderEmail" name="senderEmail" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="senderPhone">Votre téléphone *</label>
+              <input type="tel" id="senderPhone" name="senderPhone" required placeholder="+221 XX XXX XX XX">
+            </div>
+          </div>
+
+          <!-- Méthode de paiement -->
+          <div class="form-section">
+            <h3><i class="fas fa-credit-card"></i> Méthode de paiement</h3>
+            <div class="payment-methods">
+              
+              <!-- Mobile Money -->
+              <div class="payment-option" data-method="mobile-money">
+                <div class="payment-header">
+                  <input type="radio" name="paymentMethod" value="mobile-money" id="mobileMoney" required>
+                  <label for="mobileMoney">
+                    <div class="payment-icon">
+                      <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <div class="payment-info">
+                      <h4>Mobile Money</h4>
+                      <p>Orange Money, Free Money, Wave</p>
+                    </div>
+                  </label>
+                </div>
+                <div class="payment-details" style="display: none;">
+                  <div class="form-group">
+                    <label for="mobileOperator">Opérateur *</label>
+                    <select id="mobileOperator" name="mobileOperator">
+                      <option value="">Choisissez votre opérateur</option>
+                      <option value="orange">Orange Money</option>
+                      <option value="free">Free Money</option>
+                      <option value="wave">Wave</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="mobileNumber">Numéro de téléphone *</label>
+                    <input type="tel" id="mobileNumber" name="mobileNumber" placeholder="+221 XX XXX XX XX">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Carte Bancaire -->
+              <div class="payment-option" data-method="card">
+                <div class="payment-header">
+                  <input type="radio" name="paymentMethod" value="card" id="cardPayment">
+                  <label for="cardPayment">
+                    <div class="payment-icon">
+                      <i class="fas fa-credit-card"></i>
+                    </div>
+                    <div class="payment-info">
+                      <h4>Carte Bancaire</h4>
+                      <p>Visa, Mastercard</p>
+                    </div>
+                  </label>
+                </div>
+                <div class="payment-details" style="display: none;">
+                  <div class="form-group">
+                    <label for="cardNumber">Numéro de carte *</label>
+                    <input type="text" id="cardNumber" name="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19">
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label for="expiryDate">Date d'expiration *</label>
+                      <input type="text" id="expiryDate" name="expiryDate" placeholder="MM/AA" maxlength="5">
+                    </div>
+                    <div class="form-group">
+                      <label for="cvv">CVV *</label>
+                      <input type="text" id="cvv" name="cvv" placeholder="123" maxlength="3">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="cardName">Nom sur la carte *</label>
+                    <input type="text" id="cardName" name="cardName" placeholder="Nom comme sur la carte">
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Récapitulatif et validation -->
+          <div class="form-section">
+            <div class="order-summary">
+              <h3><i class="fas fa-receipt"></i> Récapitulatif</h3>
+              <div class="summary-line">
+                <span>Cadeau sélectionné:</span>
+                <span id="summaryGiftName">-</span>
+              </div>
+              <div class="summary-line total">
+                <span>Total à payer:</span>
+                <span id="summaryTotal">0 FCFA</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Boutons d'action -->
+          <div class="form-actions">
+            <button type="button" class="btn-secondary" onclick="goBackToSelection()">
+              <i class="fas fa-arrow-left"></i> Retour
+            </button>
+            <button type="submit" class="btn-primary">
+              <i class="fas fa-heart"></i> Offrir ce cadeau
+            </button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Success Message -->
+  <div id="successModal" class="success-modal" style="display: none;">
+    <div class="success-content">
+      <div class="success-icon">
+        <i class="fas fa-check-circle"></i>
+      </div>
+      <h3>succès! 🎉</h3>
+      <p>Nous vous exprimons toute notre gratitude pour ce geste envers la communauté Alumni de BEM TECH 💙<</p>
+      <button onclick="closeSuccessModal()" class="btn-primary">Parfait!</button>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <!-- Colonne 1 : Logo / Description -->
+      <div class="footer-about">
+        <h3>BEM TECH Alumni</h3>
+        <p>
+          Connecter les anciens, inspirer la communauté et bâtir un meilleur future ensemble.
+        </p>
+      </div>
+
+      <div class="footer-links">
+        <h4>Liens rapides</h4>
+        <ul>
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="reseau.html">Association</a></li>
+          <li><a href="calendrier.html">Événements</a></li>
+          <li><a href="opportunite.html">Carrières</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-social">
+        <h4>Suivez-nous</h4>
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#"><i class="fab fa-youtube"></i></a>
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-tiktok"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bas du footer -->
+    <div class="footer-bottom">
+      <p>&copy; 2025 BEM TECH Alumni – Tous droits réservés.</p>
+    </div>
+  </footer>
+
+  <script src="auth.js"></script>
+  <script src="animations.js"></script>
+
+  <!-- Gift Page JavaScript -->
+  <script>
+    let selectedGift = null;
+
+    // Gift selection functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      const giftCards = document.querySelectorAll('.gift-card');
+      const giftForm = document.getElementById('giftForm');
+      const giftSelection = document.querySelector('.gift-selection');
+
+      // Gift card selection
+      giftCards.forEach(card => {
+        const selectBtn = card.querySelector('.select-gift-btn');
+        selectBtn.addEventListener('click', () => {
+          const giftType = card.dataset.gift;
+          const giftPrice = card.dataset.price;
+          const giftName = card.querySelector('h3').textContent;
+          const giftDesc = card.querySelector('p').textContent;
+
+          selectedGift = {
+            type: giftType,
+            price: parseInt(giftPrice),
+            name: giftName,
+            description: giftDesc
+          };
+
+          showGiftForm();
+        });
+      });
+
+      // Payment method selection
+      const paymentOptions = document.querySelectorAll('.payment-option');
+      paymentOptions.forEach(option => {
+        const radio = option.querySelector('input[type="radio"]');
+        const details = option.querySelector('.payment-details');
+
+        radio.addEventListener('change', () => {
+          // Hide all payment details
+          paymentOptions.forEach(opt => {
+            opt.querySelector('.payment-details').style.display = 'none';
+            opt.classList.remove('selected');
+          });
+
+          // Show selected payment details
+          if (radio.checked) {
+            details.style.display = 'block';
+            option.classList.add('selected');
+          }
+        });
+      });
+
+      // Form submission
+      const giftOrderForm = document.getElementById('giftOrderForm');
+      giftOrderForm.addEventListener('submit', handleFormSubmission);
+
+      // Real-time form updates - removed recipient fields
+
+      // Card number formatting
+      const cardNumberInput = document.getElementById('cardNumber');
+      if (cardNumberInput) {
+        cardNumberInput.addEventListener('input', formatCardNumber);
+      }
+
+      // Expiry date formatting
+      const expiryDateInput = document.getElementById('expiryDate');
+      if (expiryDateInput) {
+        expiryDateInput.addEventListener('input', formatExpiryDate);
+      }
+    });
+
+    function showGiftForm() {
+      const giftSelection = document.querySelector('.gift-selection');
+      const giftForm = document.getElementById('giftForm');
+
+      // Update selected gift display
+      document.getElementById('selectedGiftName').textContent = selectedGift.name;
+      document.getElementById('selectedGiftDesc').textContent = selectedGift.description;
+      document.getElementById('selectedGiftPrice').textContent = formatPrice(selectedGift.price);
+
+      // Update summary
+      document.getElementById('summaryGiftName').textContent = selectedGift.name;
+      document.getElementById('summaryTotal').textContent = formatPrice(selectedGift.price);
+
+      // Hide selection, show form
+      giftSelection.style.display = 'none';
+      giftForm.style.display = 'block';
+
+      // Scroll to form
+      giftForm.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function goBackToSelection() {
+      const giftSelection = document.querySelector('.gift-selection');
+      const giftForm = document.getElementById('giftForm');
+
+      giftSelection.style.display = 'block';
+      giftForm.style.display = 'none';
+
+      // Scroll back to selection
+      giftSelection.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function updateSummary() {
+      // Function simplified since recipient fields were removed
+    }
+
+    function formatPrice(price) {
+      return new Intl.NumberFormat('fr-FR').format(price) + ' FCFA';
+    }
+
+    function formatCardNumber(e) {
+      let value = e.target.value.replace(/\s/g, '').replace(/[^0-9]/gi, '');
+      let formattedValue = value.match(/.{1,4}/g)?.join(' ') || value;
+      e.target.value = formattedValue;
+    }
+
+    function formatExpiryDate(e) {
+      let value = e.target.value.replace(/\D/g, '');
+      if (value.length >= 2) {
+        value = value.substring(0, 2) + '/' + value.substring(2, 4);
+      }
+      e.target.value = value;
+    }
+
+    function handleFormSubmission(e) {
+      e.preventDefault();
+
+      // Basic validation
+      const form = e.target;
+      const formData = new FormData(form);
+      
+      // Check required fields
+      const requiredFields = form.querySelectorAll('[required]');
+      let isValid = true;
+
+      requiredFields.forEach(field => {
+        if (!field.value.trim()) {
+          field.style.borderColor = '#e74c3c';
+          isValid = false;
+        } else {
+          field.style.borderColor = '';
+        }
+      });
+
+      // Validate payment method specific fields
+      const selectedPaymentMethod = document.querySelector('input[name="paymentMethod"]:checked');
+      if (!selectedPaymentMethod) {
+        alert('Veuillez sélectionner un moyen de paiement.');
+        return;
+      }
+
+      const paymentDetails = selectedPaymentMethod.closest('.payment-option').querySelector('.payment-details');
+      const paymentRequiredFields = paymentDetails.querySelectorAll('input[required], select[required]');
+      
+      paymentRequiredFields.forEach(field => {
+        if (!field.value.trim()) {
+          field.style.borderColor = '#e74c3c';
+          isValid = false;
+        } else {
+          field.style.borderColor = '';
+        }
+      });
+
+      if (!isValid) {
+        alert('Veuillez remplir tous les champs obligatoires.');
+        return;
+      }
+
+      // Simulate payment processing
+      const submitBtn = form.querySelector('button[type="submit"]');
+      const originalText = submitBtn.innerHTML;
+      
+      submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Traitement...';
+      submitBtn.disabled = true;
+
+      // Simulate API call
+      setTimeout(() => {
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
+        
+        // Show success modal
+        showSuccessModal();
+        
+        // Reset form
+        form.reset();
+        goBackToSelection();
+      }, 2000);
+    }
+
+    function showSuccessModal() {
+      const modal = document.getElementById('successModal');
+      modal.style.display = 'flex';
+    }
+
+    function closeSuccessModal() {
+      const modal = document.getElementById('successModal');
+      modal.style.display = 'none';
+    }
+
+    // Close modal when clicking outside
+    document.getElementById('successModal').addEventListener('click', function(e) {
+      if (e.target === this) {
+        closeSuccessModal();
+      }
+    });
+  </script>
+
+  <style>
+    /* Gift Page Styles */
+    .gift-hero {
+      background: 
+        linear-gradient(135deg, #0c1445 0%, #1e2a78 25%, #101a4a 50%, #3f51b5 75%, #5c6bc0 100%),
+        radial-gradient(ellipse at 30% 20%, rgba(63, 81, 181, 0.3), transparent 70%),
+        radial-gradient(ellipse at 70% 80%, rgba(92, 107, 192, 0.2), transparent 70%);
+      color: white;
+      padding: 120px 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      min-height: 60vh;
+    }
+
+    .stars {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        radial-gradient(2px 2px at 25% 25%, rgba(255, 255, 255, 0.9), transparent),
+        radial-gradient(1px 1px at 75% 15%, rgba(255, 255, 255, 0.7), transparent),
+        radial-gradient(1px 1px at 15% 75%, rgba(255, 255, 255, 0.8), transparent),
+        radial-gradient(2px 2px at 85% 85%, rgba(255, 255, 255, 0.6), transparent),
+        radial-gradient(1px 1px at 45% 45%, rgba(255, 255, 255, 0.9), transparent),
+        radial-gradient(1px 1px at 65% 25%, rgba(255, 255, 255, 0.5), transparent);
+      background-size: 200px 200px, 150px 150px, 180px 180px, 220px 220px, 160px 160px, 190px 190px;
+      animation: nightTwinkle 6s ease-in-out infinite;
+    }
+
+    .stars::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(ellipse 300px 100px at 20% 30%, rgba(92, 107, 192, 0.15), transparent),
+        radial-gradient(ellipse 200px 80px at 80% 70%, rgba(63, 81, 181, 0.2), transparent);
+      animation: nightClouds 18s ease-in-out infinite alternate;
+    }
+
+    .stars::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        linear-gradient(0deg, transparent 0%, rgba(92, 107, 192, 0.05) 50%, transparent 100%),
+        linear-gradient(90deg, transparent 0%, rgba(63, 81, 181, 0.05) 50%, transparent 100%);
+      background-size: 100% 200px, 200px 100%;
+      animation: nightGlow 12s linear infinite;
+    }
+
+    @keyframes nightTwinkle {
+      0%, 100% { opacity: 0.8; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.2); }
+    }
+
+    @keyframes nightClouds {
+      0% { transform: translateX(-10px) translateY(-5px); opacity: 0.3; }
+      100% { transform: translateX(10px) translateY(5px); opacity: 0.6; }
+    }
+
+    @keyframes nightGlow {
+      0% { transform: translate(0, 0); }
+      25% { transform: translate(20px, -10px); }
+      50% { transform: translate(-10px, 20px); }
+      75% { transform: translate(-20px, -15px); }
+      100% { transform: translate(0, 0); }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 10;
+      text-shadow: 0 0 25px rgba(92, 107, 192, 0.8);
+    }
+
+    .hero-content h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      font-weight: 700;
+      color: white;
+    }
+
+    .hero-content p {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+      opacity: 0.9;
+      color: white;
+    }
+
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+      margin-top: 2rem;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-number {
+      display: block;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #ffd700;
+    }
+
+    .stat-label {
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
+
+    /* Gift Selection */
+    .gift-selection {
+      padding: 80px 0;
+      background: #f8f9fa;
+    }
+
+    .gift-selection h2 {
+      text-align: center;
+      font-size: 2.5rem;
+      margin-bottom: 3rem;
+      color: #2c3e50;
+    }
+
+    .gifts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .gift-card {
+      background: white;
+      border-radius: 15px;
+      padding: 2rem;
+      text-align: center;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+    }
+
+    .gift-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+      border-color: #667eea;
+    }
+
+    .gift-image {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+    }
+
+    .gift-image i {
+      font-size: 2rem;
+      color: white;
+    }
+
+    .gift-card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: #2c3e50;
+    }
+
+    .gift-card p {
+      color: #7f8c8d;
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+    }
+
+    .gift-price {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #27ae60;
+      margin-bottom: 1.5rem;
+    }
+
+    .select-gift-btn {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 25px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      width: 100%;
+    }
+
+    .select-gift-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    }
+
+    /* Gift Form */
+    .gift-form-section {
+      padding: 80px 0;
+      background: white;
+    }
+
+    .form-container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+
+    .form-container h2 {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      padding: 2rem;
+      margin: 0;
+      text-align: center;
+      font-size: 2rem;
+    }
+
+    .selected-gift-display {
+      background: #f8f9fa;
+      padding: 2rem;
+      border-bottom: 1px solid #e9ecef;
+    }
+
+    .selected-gift-info {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .gift-icon {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .gift-icon i {
+      font-size: 1.5rem;
+      color: white;
+    }
+
+    .gift-details h3 {
+      margin: 0 0 0.5rem 0;
+      color: #2c3e50;
+    }
+
+    .gift-details p {
+      margin: 0 0 0.5rem 0;
+      color: #7f8c8d;
+    }
+
+    .gift-amount {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #27ae60;
+    }
+
+    .form-section {
+      padding: 2rem;
+      border-bottom: 1px solid #e9ecef;
+    }
+
+    .form-section:last-child {
+      border-bottom: none;
+    }
+
+    .form-section h3 {
+      margin: 0 0 1.5rem 0;
+      color: #2c3e50;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: #2c3e50;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #e9ecef;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: border-color 0.3s ease;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    /* Payment Methods */
+    .payment-methods {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .payment-option {
+      border: 2px solid #e9ecef;
+      border-radius: 10px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .payment-option.selected {
+      border-color: #667eea;
+      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.1);
+    }
+
+    .payment-header {
+      padding: 1.5rem;
+      cursor: pointer;
+    }
+
+    .payment-header label {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      cursor: pointer;
+      margin: 0;
+    }
+
+    .payment-icon {
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .payment-icon i {
+      font-size: 1.5rem;
+      color: white;
+    }
+
+    .payment-info h4 {
+      margin: 0 0 0.25rem 0;
+      color: #2c3e50;
+    }
+
+    .payment-info p {
+      margin: 0;
+      color: #7f8c8d;
+      font-size: 0.9rem;
+    }
+
+    .payment-details {
+      padding: 0 1.5rem 1.5rem;
+      background: #f8f9fa;
+    }
+
+    /* Order Summary */
+    .order-summary {
+      background: #f8f9fa;
+      padding: 1.5rem;
+      border-radius: 10px;
+    }
+
+    .summary-line {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+      padding: 0.5rem 0;
+    }
+
+    .summary-line.total {
+      border-top: 2px solid #e9ecef;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: #27ae60;
+    }
+
+    /* Form Actions */
+    .form-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: space-between;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+      padding: 15px 30px;
+      border: none;
+      border-radius: 25px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex: 1;
+      justify-content: center;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    }
+
+    .btn-secondary {
+      background: #6c757d;
+      color: white;
+    }
+
+    .btn-secondary:hover {
+      background: #5a6268;
+      transform: translateY(-2px);
+    }
+
+    /* Success Modal */
+    .success-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .success-content {
+      background: white;
+      padding: 3rem;
+      border-radius: 15px;
+      text-align: center;
+      max-width: 400px;
+      margin: 1rem;
+    }
+
+    .success-icon {
+      width: 80px;
+      height: 80px;
+      background: #27ae60;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+    }
+
+    .success-icon i {
+      font-size: 2.5rem;
+      color: white;
+    }
+
+    .success-content h3 {
+      color: #2c3e50;
+      margin-bottom: 1rem;
+    }
+
+    .success-content p {
+      color: #7f8c8d;
+      margin-bottom: 2rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero-stats {
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      .gifts-grid {
+        grid-template-columns: 1fr;
+        padding: 0 1rem;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
+      .form-actions {
+        flex-direction: column;
+      }
+
+      .hero-content h1 {
+        font-size: 2rem;
+      }
+
+      .gift-selection h2 {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</body>
+</html>

@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Bénévolat - BemTech Alumni</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Inter:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<link rel="stylesheet" href="styles.css">
+<style>
+  .volunteer-hero {
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 50%, #5d6d7e 100%);
+    color: white;
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+    min-height: 65vh;
+    display: flex;
+    align-items: center;
+  }
+
+  .volunteer-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="volunteer-pattern" width="25" height="25" patternUnits="userSpaceOnUse"><circle cx="12.5" cy="12.5" r="1" fill="rgba(52,152,219,0.2)"/><rect x="10" y="10" width="5" height="5" fill="rgba(149,165,166,0.1)" rx="1"/></pattern></defs><rect width="100" height="100" fill="url(#volunteer-pattern)"/></svg>');
+    opacity: 0.4;
+  }
+
+  .hero-wave {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"><path d="M0,60 C300,120 900,0 1200,60 L1200,120 L0,120 Z" fill="white"/></svg>');
+    background-size: cover;
+    animation: wave 6s ease-in-out infinite;
+  }
+
+  .volunteer-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 80px 20px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .hands-icon {
+    font-size: 4rem;
+    color: rgba(255,255,255,0.95);
+    margin-bottom: 20px;
+    animation: gentle-bounce 3s ease-in-out infinite;
+  }
+
+  .volunteer-hero h1 {
+    font-size: 4rem;
+    font-weight: 700;
+    margin-bottom: 25px;
+    text-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    animation: slideUp 1s ease-out 0.2s both;
+  }
+
+  .volunteer-hero p {
+    font-size: 1.4rem;
+    margin-bottom: 40px;
+    opacity: 0.95;
+    line-height: 1.7;
+    max-width: 700px;
+    animation: slideUp 1s ease-out 0.4s both;
+  }
+
+  .volunteer-elements {
+    display: flex;
+    gap: 2rem;
+    margin-top: 30px;
+    justify-content: center;
+    flex-wrap: wrap;
+    animation: slideUp 1s ease-out 0.4s both;
+  }
+
+  .animated-element {
+    background: linear-gradient(135deg, rgba(52, 152, 219, 0.2), rgba(149, 165, 166, 0.15));
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(52, 152, 219, 0.3);
+    border-radius: 20px;
+    padding: 1.5rem 2rem;
+    text-align: center;
+    min-width: 120px;
+    animation: floatUp 3s ease-in-out infinite;
+    transition: all 0.3s ease;
+  }
+
+  .animated-element:nth-child(1) {
+    animation-delay: 0s;
+  }
+
+  .animated-element:nth-child(2) {
+    animation-delay: 0.5s;
+  }
+
+  .animated-element:nth-child(3) {
+    animation-delay: 1s;
+  }
+
+  .animated-element:nth-child(4) {
+    animation-delay: 1.5s;
+  }
+
+  .animated-element:hover {
+    transform: translateY(-10px) scale(1.05);
+    background: rgba(255, 255, 255, 0.25);
+  }
+
+  .element-icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    animation: pulse 2s ease-in-out infinite;
+    display: block;
+  }
+
+  .element-label {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 500;
+    display: block;
+  }
+
+  .volunteer-stats {
+    display: flex;
+    gap: 40px;
+    margin-top: 30px;
+    animation: slideUp 1s ease-out 0.6s both;
+  }
+
+  .stat-bubble {
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 20px;
+    padding: 20px 30px;
+    text-align: center;
+    transition: transform 0.3s ease;
+  }
+
+  .stat-bubble:hover {
+    transform: translateY(-5px);
+  }
+
+  .stat-number {
+    font-size: 2rem;
+    font-weight: 700;
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  .stat-label {
+    font-size: 0.9rem;
+    opacity: 0.9;
+  }
+
+  .volunteer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 80px 20px;
+    background: linear-gradient(135deg, #ecf0f1 0%, #bdc3c7 100%);
+    min-height: 100vh;
+  }
+
+  .volunteer-intro {
+    text-align: center;
+    margin-bottom: 60px;
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(52, 152, 219, 0.1);
+    border-left: 5px solid #3498db;
+  }
+
+  .volunteer-intro h2 {
+    font-size: 2.5rem;
+    color: #2c3e50;
+    margin-bottom: 20px;
+    font-weight: 700;
+  }
+
+  .volunteer-intro p {
+    font-size: 1.2rem;
+    color: #34495e;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  .volunteer-activities {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px;
+    margin-bottom: 80px;
+  }
+
+  .activity-card {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 10px 30px rgba(52, 152, 219, 0.15);
+    transition: all 0.3s ease;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(52, 152, 219, 0.1);
+  }
+
+  .activity-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(52, 152, 219, 0.25);
+    border-color: #3498db;
+  }
+
+  .activity-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: linear-gradient(90deg, #3498db, #2980b9, #5dade2);
+  }
+
+  .activity-icon {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    display: block;
+    filter: grayscale(20%);
+  }
+
+  .activity-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #2c3e50;
+    color: #111;
+    margin-bottom: 15px;
+  }
+
+  .activity-description {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #555;
+  }
+
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes heartbeat {
+    0%, 100% { 
+      transform: scale(1);
+      opacity: 0.8;
+    }
+    50% { 
+      transform: scale(1.05);
+      opacity: 0.6;
+    }
+  }
+
+  @keyframes pulse-heart {
+    0%, 100% { 
+      transform: scale(1);
+      opacity: 0.9;
+    }
+    50% { 
+      transform: scale(1.2);
+      opacity: 0.7;
+    }
+  }
+
+  @keyframes wave {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(-20px); }
+  }
+
+  @keyframes gentle-bounce {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); }
+  }
+
+  @keyframes soft-glow {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 0.8; }
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-15px) rotate(180deg); }
+  }
+
+  @keyframes floatUp {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-15px);
+    }
+  }
+
+  /* Volunteer Modal Styles */
+  .volunteer-selection {
+    text-align: center;
+    padding: 20px;
+  }
+
+  .volunteer-selection h2 {
+    color: #2c3e50;
+    margin-bottom: 10px;
+    font-size: 2rem;
+  }
+
+  .volunteer-selection p {
+    color: #34495e;
+    margin-bottom: 30px;
+    font-size: 1.1rem;
+  }
+
+  .volunteer-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin: 30px 0;
+  }
+
+  .volunteer-option {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    border: 2px solid rgba(52, 152, 219, 0.1);
+    border-radius: 15px;
+    padding: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+  }
+
+  .volunteer-option:hover {
+    border-color: #3498db;
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(52, 152, 219, 0.2);
+  }
+
+  .volunteer-option.selected {
+    border-color: #3498db;
+    background: linear-gradient(135deg, #ebf3fd 0%, #d6eaf8 100%);
+  }
+
+  .option-icon {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+  }
+
+  .volunteer-option h3 {
+    color: #2c3e50;
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+  }
+
+  .volunteer-option p {
+    color: #34495e;
+    font-size: 0.9rem;
+    margin: 0;
+  }
+
+  /* Thank You Modal Styles */
+  .thank-you-content {
+    text-align: center;
+    padding: 40px 20px;
+  }
+
+  .thank-you-icon {
+    font-size: 4rem;
+    margin-bottom: 20px;
+  }
+
+  .thank-you-content h2 {
+    color: #27ae60;
+    margin-bottom: 20px;
+    font-size: 2rem;
+  }
+
+  .thank-you-content p {
+    color: #34495e;
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+    line-height: 1.6;
+  }
+
+  #selectedActivity {
+    color: #3498db;
+    font-weight: 600;
+  }
+
+  /* Enhanced CTA Button Styles */
+  .cta-button {
+    background: linear-gradient(135deg, #3498db 0%, #2980b9 50%, #1f4e79 100%);
+    color: white;
+    border: none;
+    padding: 18px 40px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    box-shadow: 0 8px 25px rgba(52, 152, 219, 0.3);
+    position: relative;
+    overflow: hidden;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 20px;
+  }
+
+  .cta-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: left 0.6s ease;
+  }
+
+  .cta-button:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 15px 35px rgba(52, 152, 219, 0.4);
+    background: linear-gradient(135deg, #2980b9 0%, #1f4e79 50%, #154360 100%);
+  }
+
+  .cta-button:hover::before {
+    left: 100%;
+  }
+
+  .cta-button:active {
+    transform: translateY(-1px) scale(1.02);
+    box-shadow: 0 8px 20px rgba(52, 152, 219, 0.3);
+  }
+
+  .cta-button i {
+    font-size: 1.3rem;
+    animation: heartbeat 2s ease-in-out infinite;
+  }
+
+  @keyframes heartbeat {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.1);
+    }
+  }
+
+
+  @media (max-width: 768px) {
+    .volunteer-hero {
+      min-height: 50vh;
+    }
+    
+    .volunteer-container {
+      padding: 60px 20px;
+    }
+    
+    .volunteer-hero h1 {
+      font-size: 2.8rem;
+    }
+    
+    .volunteer-elements {
+      flex-direction: column;
+      gap: 20px;
+    }
+    
+    .volunteer-activities {
+      grid-template-columns: 1fr;
+    }
+    
+    .activity-card {
+      padding: 30px 25px;
+    }
+    
+    .volunteer-cta {
+      padding: 40px 25px;
+    }
+    
+    .cta-title {
+      font-size: 1.8rem;
+    }
+  }
+</style>
+</head>
+<body>
+  <div class="topline"></div>
+
+  <div class="masthead">
+    <div class="wrap">
+      <!-- Partie gauche -->
+      <div class="header-left">
+        <div class="brand-logo">
+          <img alt="BEMTECH Logo" src="logob.png">
+        </div>
+        <span class="brand-divider" aria-hidden="true"></span>
+        <div class="brand-title">Alumni</div>
+      </div>
+
+      <!-- Partie droite -->
+      <div class="header-right">
+        <nav class="nav-block" aria-label="Primary">
+          <div class="nav-top">
+            <a href="index.html#join" id="membershipBtn">Membership</a>
+            <a href="actualite.html" class="restricted-link" data-page="actualites">Actualités &amp; Recompenses</a>
+            <a href="vie_school.html" class="restricted-link" data-page="vie-ecole">Vie a l'ecole</a>
+            <a href="after.html" class="restricted-link" data-page="apres-ecole">Apres l'ecole</a>
+            <a href="contact.html">Contact</a>
+          </div>
+          <div class="nav-bottom">
+            <!-- Notre Communaute -->
+            <div class="dropdown">
+              <a href="#">Notre Communauté</a>
+              <ul class="submenu">
+                <li><a href="reseau.html" class="restricted-link" data-page="reseau">Reseau</a></li>
+                <li><a href="Qui.html">Qui sommes-nous ??</a></li>
+                <li><a href="FAQ.html">FAQ</a></li>
+              </ul>
+            </div>
+            <div class="dropdown">
+              <a href="#">Carrières &amp; Ressources</a>
+              <ul class="submenu">
+                <li><a href="opportunite.html" class="restricted-link" data-page="opportunites">Opportunités</a></li>
+                <li><a href="mentorat.html" class="restricted-link" data-page="mentorat">Mentorat / Developpement professionnel</a></li>
+                <li><a href="projet.html" class="restricted-link" data-page="projet">Projet / Realisation</a></li>
+              </ul>
+            </div>
+            <!-- Evenement -->
+            <div class="dropdown">
+              <a href="#">Événement</a>
+              <ul class="submenu">
+                <li><a href="calendrier.html" class="restricted-link" data-page="calendrier">Calendrier</a></li>
+                <li><a href="reunion.html" class="restricted-link" data-page="retrouvaille">Reunion & Retrouvaille</a></li>
+                <li><a href="evenements_etudiants.html" class="restricted-link" data-page="evenements-etudiants">Événements Étudiants</a></li>
+                <li><a href="journee.html" class="restricted-link" data-page="journee-culturelle">Seminaire</a></li>
+              </ul>
+            </div>
+
+            <!-- Benevole -->
+            <div class="dropdown">
+              <a href="#">Humanitaire</a>
+              <ul class="submenu">
+                <li><a href="don_annuel.html" class="restricted-link" data-page="don-annuel">Don annuel</a></li>
+                <li><a href="retrouvaille.html" class="restricted-link" data-page="conseil">Aide et Solidarité</a></li>
+                <li><a href="conseil.html" class="restricted-link" data-page="conseil">Benevolat</a></li>
+              </ul>
+            </div>
+            
+            <a href="Galerie.html">Galerie</a>
+            <button id="authBtn" class="auth-btn">Connexion</button>
+          </div>
+        </nav>
+
+        <div class="logo-section-2">
+          <img src="logor.png" alt="Logo">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hero Section -->
+  <section class="volunteer-hero">
+    <div class="volunteer-container">
+      <div class="hands-icon">🤍</div>
+      <h1>Bénévolat</h1>
+      <p>Chez Bemtech Alumni, nous croyons que partager son temps et ses compétences est une richesse pour toute la communauté.</p>
+      <p>Le bénévolat vous permet de :</p>
+      
+      <div class="volunteer-elements">
+        <div class="animated-element">
+          <div class="element-icon">🤝</div>
+          <span class="element-label">Ensemble</span>
+        </div>
+        <div class="animated-element">
+          <div class="element-icon">💡</div>
+          <span class="element-label">Innovation</span>
+        </div>
+        <div class="animated-element">
+          <div class="element-icon">🌟</div>
+          <span class="element-label">Impact</span>
+        </div>
+        <div class="animated-element">
+          <div class="element-icon">🚀</div>
+          <span class="element-label">Croissance</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-wave"></div>
+  </section><br><br>
+
+  <!-- Main Content -->
+  <div class="volunteer-content">
+    
+    <!-- Introduction -->
+    <div class="volunteer-intro">
+      <h2>Nos activités de bénévolat</h2>
+      <p>👉 Chaque membre peut s'impliquer selon ses disponibilités, car même quelques heures par mois font la différence.</p>
+    </div>
+
+    <!-- Activities Grid -->
+    <div class="volunteer-activities">
+      
+      <div class="activity-card">
+        <div class="activity-icon">🎓</div>
+        <h3 class="activity-title">Accompagner les étudiants</h3>
+        <p class="activity-description">
+          Accompagner les étudiants (tutorat, orientation, préparation aux examens).
+        </p>
+      </div>
+
+      <div class="activity-card">
+        <div class="activity-icon">🎪</div>
+        <h3 class="activity-title">Organiser des événements</h3>
+        <p class="activity-description">
+          Participer à l'organisation d'événements (conférences, forums, afterworks).
+        </p>
+      </div>
+
+      <div class="activity-card">
+        <div class="activity-icon">💡</div>
+        <h3 class="activity-title">Projets solidaires</h3>
+        <p class="activity-description">
+          Contribuer à des projets solidaires liés à la technologie, l'éducation et l'entrepreneuriat.
+        </p>
+      </div>
+
+      <div class="activity-card">
+        <div class="activity-icon">🌟</div>
+        <h3 class="activity-title">Transmettre votre expérience</h3>
+        <p class="activity-description">
+          Transmettre votre expérience aux plus jeunes par le mentorat et inspirer les générations futures.
+        </p>
+      </div>
+
+    </div>
+
+    <!-- Call to Action -->
+    <div class="volunteer-cta">
+      <div class="cta-content">
+        <div class="cta-icon">👋</div>
+        <h2 class="cta-title">Rejoignez notre équipe de bénévoles</h2>
+        <p class="cta-text">
+          Chaque membre peut s'impliquer selon ses disponibilités, car même quelques heures par mois font la différence. Ensemble, construisons une communauté forte et solidaire.
+        </p>
+        <button id="volunteerBtn" class="cta-button">
+          <i class="fas fa-heart"></i>
+          Je veux aider
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Volunteer Selection Modal -->
+  <div id="volunteerModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <div class="volunteer-selection">
+        <h2>Choisissez votre type de bénévolat</h2>
+        <p>Dans quel domaine souhaitez-vous nous aider ?</p>
+        
+        <div class="volunteer-options">
+          <div class="volunteer-option" data-activity="etudiants">
+            <div class="option-icon">🎓</div>
+            <h3>Accompagner les étudiants</h3>
+            <p>Tutorat, orientation, préparation aux examens</p>
+          </div>
+          
+          <div class="volunteer-option" data-activity="evenements">
+            <div class="option-icon">🎪</div>
+            <h3>Organiser des événements</h3>
+            <p>Conférences, forums, afterworks</p>
+          </div>
+          
+          <div class="volunteer-option" data-activity="projets">
+            <div class="option-icon">💡</div>
+            <h3>Projets solidaires</h3>
+            <p>Technologie, éducation, entrepreneuriat</p>
+          </div>
+          
+          <div class="volunteer-option" data-activity="experience">
+            <div class="option-icon">🌟</div>
+            <h3>Transmettre votre expérience</h3>
+            <p>Mentorat et inspiration des générations futures</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Thank You Modal -->
+  <div id="thankYouModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <div class="thank-you-content">
+        <div class="thank-you-icon">🙏</div>
+        <h2>Merci pour votre engagement !</h2>
+        <p>Nous avons bien pris note de votre souhait d'aider dans le domaine : <strong id="selectedActivity"></strong></p>
+        <p>Nous vous contacterons en cas de besoin. Votre générosité fait la différence dans notre communauté !</p>
+        <button id="closeThankYou" class="cta-button">Fermer</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Login Modal -->
+  <div id="loginModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <form class="login-form" id="loginForm">
+        <h2>Connexion</h2>
+        <div class="form-group">
+          <label for="loginEmail">Email:</label>
+          <input type="email" id="loginEmail" name="email" required>
+        </div>
+        <div class="form-group">
+          <label for="loginPassword">Mot de passe:</label>
+          <input type="password" id="loginPassword" name="password" required>
+        </div>
+        <button type="submit">Se connecter</button>
+        <p class="signup-link">
+          Pas encore membre ? <a href="#join">Rejoignez-nous</a>
+        </p>
+      </form>
+    </div>
+  </div>
+
+  <!-- Membership Modal -->
+  <div id="membershipModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <form class="membership-form" id="membershipForm">
+        <h2>Demande d'adhésion</h2>
+        <div class="form-group">
+          <label for="memberName">Nom complet:</label>
+          <input type="text" id="memberName" name="name" required>
+        </div>
+        <div class="form-group">
+          <label for="memberEmail">Email:</label>
+          <input type="email" id="memberEmail" name="email" required>
+        </div>
+        <div class="form-group">
+          <label for="memberPhone">Téléphone:</label>
+          <input type="tel" id="memberPhone" name="phone" required>
+        </div>
+        <div class="form-group">
+          <label for="memberPromotion">Promotion:</label>
+          <input type="text" id="memberPromotion" name="promotion" required>
+        </div>
+        <div class="form-group">
+          <label for="memberFiliere">Filière:</label>
+          <input type="text" id="memberFiliere" name="filiere" required>
+        </div>
+        <div class="form-group">
+          <label for="memberCurrentJob">Poste actuel:</label>
+          <input type="text" id="memberCurrentJob" name="currentJob">
+        </div>
+        <div class="form-group">
+          <label for="memberCompany">Entreprise:</label>
+          <input type="text" id="memberCompany" name="company">
+        </div>
+        <button type="submit">Envoyer la demande</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer style="background: #2c3e50; color: white; padding: 40px 0; text-align: center;">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
+        <div>
+          <h4 style="margin-bottom: 10px;">BEM TECH Alumni</h4>
+          <p style="opacity: 0.8; margin: 0;">Ensemble, construisons l'avenir</p>
+        </div>
+        <div style="display: flex; gap: 20px;">
+          <a href="#" style="color: white; text-decoration: none; opacity: 0.8; transition: opacity 0.3s;">
+            <i class="fab fa-facebook"></i>
+          </a>
+          <a href="#" style="color: white; text-decoration: none; opacity: 0.8; transition: opacity 0.3s;">
+            <i class="fab fa-linkedin"></i>
+          </a>
+          <a href="#" style="color: white; text-decoration: none; opacity: 0.8; transition: opacity 0.3s;">
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a href="#" style="color: white; text-decoration: none; opacity: 0.8; transition: opacity 0.3s;">
+            <i class="fab fa-tiktok"></i>
+          </a>
+          <a href="#" style="color: white; text-decoration: none; opacity: 0.8; transition: opacity 0.3s;">
+            <i class="fab fa-youtube"></i>
+          </a>
+        </div>
+      </div>
+      <hr style="margin: 30px 0; border: none; border-top: 1px solid rgba(255,255,255,0.2);">
+      <p style="margin: 0; opacity: 0.6;">&copy; 2025 BEM TECH Alumni. Tous droits réservés.</p>
+    </div>
+  </footer>
+
+  <script src="auth.js"></script>
+  <script>
+    // Animation au scroll
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.animationPlayState = 'running';
+        }
+      });
+    }, observerOptions);
+
+    // Observer les cartes d'activités
+    const activityCards = document.querySelectorAll('.activity-card');
+    activityCards.forEach(card => {
+      card.style.animation = 'fadeInUp 0.8s ease forwards';
+      card.style.animationPlayState = 'paused';
+      observer.observe(card);
+    });
+
+    // Volunteer Modal Logic
+    const volunteerBtn = document.getElementById('volunteerBtn');
+    const volunteerModal = document.getElementById('volunteerModal');
+    const thankYouModal = document.getElementById('thankYouModal');
+    const volunteerOptions = document.querySelectorAll('.volunteer-option');
+    const selectedActivitySpan = document.getElementById('selectedActivity');
+    const closeThankYouBtn = document.getElementById('closeThankYou');
+
+    // Activity names mapping
+    const activityNames = {
+      'etudiants': 'Accompagner les étudiants',
+      'evenements': 'Organiser des événements',
+      'projets': 'Projets solidaires',
+      'experience': 'Transmettre votre expérience'
+    };
+
+    // Open volunteer modal when button is clicked
+    volunteerBtn.addEventListener('click', () => {
+      volunteerModal.style.display = 'block';
+    });
+
+    // Handle volunteer option selection
+    volunteerOptions.forEach(option => {
+      option.addEventListener('click', () => {
+        // Remove previous selection
+        volunteerOptions.forEach(opt => opt.classList.remove('selected'));
+        
+        // Add selection to clicked option
+        option.classList.add('selected');
+        
+        // Get activity type
+        const activityType = option.getAttribute('data-activity');
+        const activityName = activityNames[activityType];
+        
+        // Wait a moment for visual feedback, then show thank you modal
+        setTimeout(() => {
+          volunteerModal.style.display = 'none';
+          selectedActivitySpan.textContent = activityName;
+          thankYouModal.style.display = 'block';
+        }, 500);
+      });
+    });
+
+    // Close thank you modal
+    closeThankYouBtn.addEventListener('click', () => {
+      thankYouModal.style.display = 'none';
+      // Reset selections
+      volunteerOptions.forEach(opt => opt.classList.remove('selected'));
+    });
+
+    // Close modals when clicking outside or on close button
+    window.addEventListener('click', (event) => {
+      if (event.target === volunteerModal) {
+        volunteerModal.style.display = 'none';
+        volunteerOptions.forEach(opt => opt.classList.remove('selected'));
+      }
+      if (event.target === thankYouModal) {
+        thankYouModal.style.display = 'none';
+        volunteerOptions.forEach(opt => opt.classList.remove('selected'));
+      }
+    });
+
+    // Close buttons
+    document.querySelectorAll('.close').forEach(closeBtn => {
+      closeBtn.addEventListener('click', (event) => {
+        const modal = event.target.closest('.modal');
+        if (modal) {
+          modal.style.display = 'none';
+          if (modal === volunteerModal || modal === thankYouModal) {
+            volunteerOptions.forEach(opt => opt.classList.remove('selected'));
+          }
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>

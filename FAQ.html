@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>FAQ – BemTech Alumni</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Inter:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #e3f2fd 0%, #f5f5f5 100%);
+      min-height: 100vh;
+    }
+
+    .faq-container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    .faq-header {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .faq-header h1 {
+      font-size: 2.5rem;
+      color: #1976d2;
+      margin-bottom: 15px;
+      font-weight: 700;
+    }
+
+    .faq-header p {
+      font-size: 1.1rem;
+      color: #666;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .faq-item {
+      background: white;
+      border-radius: 12px;
+      margin-bottom: 15px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .faq-item:hover {
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    }
+
+    .faq-question {
+      padding: 20px 25px;
+      cursor: pointer;
+      background: #f8f9fa;
+      border-left: 4px solid #64b5f6;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      transition: background 0.3s ease;
+    }
+
+    .faq-question:hover {
+      background: #e3f2fd;
+    }
+
+    .faq-question .icon {
+      font-size: 1.5rem;
+      min-width: 30px;
+    }
+
+    .faq-question h3 {
+      margin: 0;
+      font-size: 1.1rem;
+      color: #333;
+      font-weight: 600;
+      flex: 1;
+    }
+
+    .faq-question .toggle {
+      font-size: 1.2rem;
+      color: #64b5f6;
+      transition: transform 0.3s ease;
+    }
+
+    .faq-question.active .toggle {
+      transform: rotate(180deg);
+    }
+
+    .faq-answer {
+      padding: 0 25px;
+      max-height: 0;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .faq-answer.active {
+      padding: 20px 25px;
+      max-height: 500px;
+    }
+
+    .faq-answer p {
+      margin: 0;
+      color: #555;
+      line-height: 1.6;
+    }
+
+    .faq-answer ul {
+      margin: 10px 0;
+      padding-left: 20px;
+    }
+
+    .faq-answer li {
+      margin: 8px 0;
+      color: #555;
+    }
+
+    @media (max-width: 768px) {
+      .faq-header h1 {
+        font-size: 2rem;
+      }
+      
+      .faq-question {
+        padding: 15px 20px;
+      }
+      
+      .faq-answer.active {
+        padding: 15px 20px;
+      }
+    }
+
+    footer {
+      background: black;
+      text-align: center;
+      padding: 30px 20px;
+      margin-top: 60px;
+      border-top: 1px solid white;
+      color: white;
+    }
+
+    footer p {
+      margin: 0;
+      color: #6c757d;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+  <div class="topline"></div>
+
+  <div class="masthead">
+    <div class="wrap">
+
+      <!-- Partie gauche -->
+      <div class="header-left">
+        <div class="brand-logo">
+          <img alt="BEMTECH Logo" src="logob.png">
+        </div>
+        <span class="brand-divider" aria-hidden="true"></span>
+        <div class="brand-title">Alumni</div>
+      </div>
+
+      <!-- Partie droite -->
+      <div class="header-right">
+        <nav class="nav-block" aria-label="Primary">
+          <div class="nav-top">
+            <a href="#join" id="membershipBtn">Membership</a>
+            <a href="actualite.html" class="restricted-link" data-page="actualites">Actualités &amp; Recompenses</a>
+            <a href="vie_school.html" class="restricted-link" data-page="vie-ecole">Vie a l'ecole</a>
+            <a href="after.html" class="restricted-link" data-page="apres-ecole">Apres l'ecole</a>
+            <a href="contact.html">Contactez-nous</a>
+          </div>
+          <div class="nav-bottom">
+            <!-- Notre Communaute -->
+            <div class="dropdown">
+              <a href="#">Notre Communauté</a>
+              <ul class="submenu">
+                <li><a href="reseau.html" class="restricted-link" data-page="reseau">Reseau</a></li>
+                <li><a href="Qui.html">Qui sommes-nous ??</a></li>
+                <li><a href="FAQ.html" class="active">FAQ</a></li>
+              </ul>
+            </div>
+            <div class="dropdown">
+              <a href="#">Carrières &amp; Ressources</a>
+              <ul class="submenu">
+                <li><a href="opportunite.html" class="restricted-link" data-page="opportunites">Opportunités</a></li>
+                <li><a href="mentorat.html" class="restricted-link" data-page="mentorat">Mentorat / Developpement professionnel</a></li>
+                <li><a href="projet.html" class="restricted-link" data-page="projet">Projet / Realisation</a></li>
+              </ul>
+            </div>
+            <!-- Evenement -->
+            <div class="dropdown">
+              <a href="#">Événement</a>
+              <ul class="submenu">
+                <li><a href="calendrier.html" class="restricted-link" data-page="calendrier">Calendrier</a></li>
+                <li><a href="reunion.html" class="restricted-link" data-page="retrouvaille">Reunion &amp; Retrouvaille</a></li>
+                <li><a href="evenements_etudiants.html" class="restricted-link" data-page="evenements-etudiants">Événements Étudiants</a></li>
+                <li><a href="journee.html" class="restricted-link" data-page="journee-culturelle">Seminaire</a></li>
+              </ul>
+            </div>
+
+            <!-- Benevole -->
+            <div class="dropdown">
+              <a href="#">Humanitaire</a>
+              <ul class="submenu">
+                <li><a href="don_annuel.html" class="restricted-link" data-page="don-annuel">Don annuel</a></li>
+                <li><a href="retrouvaille.html" class="restricted-link" data-page="conseil">Aide et Solidarité</a></li>
+                <li><a href="conseil.html" class="restricted-link" data-page="conseil">Benevolat</a></li>
+              </ul>
+            </div>
+            
+            <a href="Galerie.html">Galerie</a>
+            <button id="authBtn" class="auth-btn">Connexion</button>
+          </div>
+        </nav>
+
+        <div class="logo-section-2">
+          <img src="logor.png" alt="Logo">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="faq-container">
+    <div class="faq-header">
+      <h1>FAQ – Réseau Alumni BEM TECH 🎓🌍</h1>
+      <p>Rejoignez une communauté mondiale, développez votre réseau et saisissez des opportunités uniques.</p>
+    </div>
+
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span class="icon">🎓</span>
+          <h3>Qu'est-ce que le réseau alumni de BEM TECH ?</h3>
+          <span class="toggle">▼</span>
+        </div>
+        <div class="faq-answer">
+          <p>👩‍🎓👨‍🎓 Le réseau alumni de BEM TECH rassemble tous les anciens étudiants de l'école.</p>
+          <p>Il permet de :</p>
+          <ul>
+            <li>Maintenir les liens entre diplômés</li>
+            <li>Favoriser les échanges professionnels</li>
+            <li>Soutenir la communauté BEM TECH à l'international</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span class="icon">📝</span>
+          <h3>Comment m'inscrire sur la plateforme alumni ?</h3>
+          <span class="toggle">▼</span>
+        </div>
+        <div class="faq-answer">
+          <p>📝 Étapes simples :</p>
+          <ul>
+            <li>Cliquez sur "S'inscrire" depuis la page d'accueil du site alumni</li>
+            <li>Renseignez vos informations : nom, promotion, filière, email, etc.</li>
+            <li>Validez votre inscription via le mail de confirmation reçu</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span class="icon">💰</span>
+          <h3>L'accès à la plateforme est-il payant ?</h3>
+          <span class="toggle">▼</span>
+        </div>
+        <div class="faq-answer">
+          <p>💰 Non !</p>
+          <p>L'accès est 100% gratuit :</p>
+          <ul>
+            <li>✔️ Consulter l'annuaire des diplômés</li>
+            <li>✔️ Publier des offres</li>
+            <li>✔️ Participer à la plupart des activités</li>
+          </ul>
+          <p>⚠️ Certains événements exclusifs peuvent toutefois nécessiter une contribution.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span class="icon">🌟</span>
+          <h3>Pourquoi rejoindre le réseau alumni ?</h3>
+          <span class="toggle">▼</span>
+        </div>
+        <div class="faq-answer">
+          <p>🌟 Vos avantages exclusifs :</p>
+          <ul>
+            <li>📒 Annuaire complet : retrouvez tous les diplômés</li>
+            <li>🤝 Développez votre réseau pro</li>
+            <li>💼 Accédez à des offres d'emploi, stages & opportunités</li>
+            <li>🎤 Participez à des événements exclusifs : afterworks, conférences, rencontres</li>
+            <li>🎓 Bénéficiez d'un mentorat personnalisé</li>
+            <li>🚀 Contribuez au rayonnement de BEM TECH dans le monde</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span class="icon">🔍</span>
+          <h3>Comment retrouver mes anciens camarades ?</h3>
+          <span class="toggle">▼</span>
+        </div>
+        <div class="faq-answer">
+          <p>🔍 Grâce à l'annuaire alumni :</p>
+          <ul>
+            <li>Recherchez par nom, promotion, filière, ville ou secteur</li>
+            <li>Rejoignez des groupes de discussion par promotion</li>
+            <li>Échangez directement via la messagerie interne</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span class="icon">📌</span>
+          <h3>Comment publier une offre d'emploi ou de stage ?</h3>
+          <span class="toggle">▼</span>
+        </div>
+        <div class="faq-answer">
+          <p>📌 C'est simple :</p>
+          <ul>
+            <li>Connectez-vous à votre compte</li>
+            <li>Rendez-vous dans la rubrique "Opportunités"</li>
+            <li>Remplissez le formulaire pour publier votre annonce</li>
+            <li>L'équipe alumni la validera et la mettra en ligne rapidement ✅</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span class="icon">🌍</span>
+          <h3>Je vis à l'étranger, puis-je participer aux événements ?</h3>
+          <span class="toggle">▼</span>
+        </div>
+        <div class="faq-answer">
+          <p>🌍 Bien sûr !</p>
+          <ul>
+            <li>Des événements hybrides sont organisés à Dakar, Abidjan, Paris, Lille, Toronto, etc.</li>
+            <li>Beaucoup sont accessibles en ligne 🌐</li>
+            <li>En plus : des événements locaux sont organisés dans chaque bureau pour renforcer la cohésion entre alumni.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span class="icon">🤝</span>
+          <h3>En quoi consiste le programme de mentorat ?</h3>
+          <span class="toggle">▼</span>
+        </div>
+        <div class="faq-answer">
+          <p>🤝 Un accompagnement sur-mesure :</p>
+          <ul>
+            <li>Des diplômés expérimentés accompagnent des étudiants actuels et de jeunes diplômés</li>
+            <li>Des étudiants expérimentés peuvent aussi guider leurs camarades plus jeunes</li>
+            <li>Objectif : partager des conseils, booster les carrières et favoriser la réussite professionnelle 🚀</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span class="icon">🎁</span>
+          <h3>Comment contribuer au développement du réseau ?</h3>
+          <span class="toggle">▼</span>
+        </div>
+        <div class="faq-answer">
+          <p>🎁 Soutenez la communauté !</p>
+          <ul>
+            <li>Participez au don annuel</li>
+            <li>Contribuez à financer :</li>
+            <li>🎓 Projets étudiants</li>
+            <li>🎉 Événements</li>
+            <li>🎖️ Bourses</li>
+            <li>💛 Initiatives solidaires</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span class="icon">📧</span>
+          <h3>Qui contacter en cas de problème avec mon compte ?</h3>
+          <span class="toggle">▼</span>
+        </div>
+        <div class="faq-answer">
+          <p>📧 Support Alumni</p>
+          <ul>
+            <li>Via la rubrique "Contact" du site</li>
+            <li>Ou par email : support.alumni@bemtech.com</li>
+          </ul>
+          <p>Notre équipe est là pour vous aider rapidement ✅</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 BemTech Alumni</p>
+  </footer>
+
+  <script src="auth.js"></script>
+  <script>
+    function toggleFaq(element) {
+      const answer = element.nextElementSibling;
+      const isActive = answer.classList.contains('active');
+      
+      // Fermer toutes les autres FAQ
+      document.querySelectorAll('.faq-answer.active').forEach(item => {
+        item.classList.remove('active');
+      });
+      document.querySelectorAll('.faq-question.active').forEach(item => {
+        item.classList.remove('active');
+      });
+      
+      // Ouvrir/fermer la FAQ cliquée
+      if (!isActive) {
+        answer.classList.add('active');
+        element.classList.add('active');
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mentorat - BemTech Alumni</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Inter:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .hero-mentorat {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            color: white;
+            padding: 120px 0;
+            position: relative;
+            overflow: hidden;
+            min-height: 70vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-mentorat::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(255,255,255,0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255,255,255,0.15) 0%, transparent 50%),
+                url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='mentorPattern' width='20' height='20' patternUnits='userSpaceOnUse'%3E%3Ccircle cx='10' cy='10' r='1' fill='%23ffffff' opacity='0.1'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100' height='100' fill='url(%23mentorPattern)'/%3E%3C/svg%3E");
+            opacity: 0.4;
+        }
+
+        .hero-mentorat::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 600px;
+            height: 600px;
+            background: linear-gradient(45deg, rgba(255,255,255,0.05), rgba(255,255,255,0.1));
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .hero-text {
+            text-align: left;
+        }
+
+        .hero-visual {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .mentor-circle {
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        .mentor-icon {
+            font-size: 8rem;
+            color: rgba(255,255,255,0.9);
+            animation: glow 3s ease-in-out infinite alternate;
+        }
+
+        .floating-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .floating-element {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05));
+            border-radius: 50%;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .floating-element:nth-child(1) {
+            top: 10%;
+            left: 20%;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .floating-element:nth-child(2) {
+            top: 20%;
+            right: 15%;
+            animation: float 4s ease-in-out infinite 0.5s;
+        }
+
+        .floating-element:nth-child(3) {
+            bottom: 25%;
+            left: 10%;
+            animation: float 3.5s ease-in-out infinite 1s;
+        }
+
+        .floating-element:nth-child(4) {
+            bottom: 15%;
+            right: 25%;
+            animation: float 4.5s ease-in-out infinite 1.5s;
+        }
+
+        .hero-mentorat h1 {
+            font-family: 'Merriweather', serif;
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+            line-height: 1.2;
+            background: linear-gradient(135deg, #ffffff, #f0f8ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero-mentorat .subtitle {
+            font-size: 1.4rem;
+            margin-bottom: 40px;
+            opacity: 0.95;
+            line-height: 1.6;
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            margin-top: 40px;
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        .hero-btn {
+            padding: 18px 35px;
+            border-radius: 50px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-btn.primary {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .hero-btn.secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid rgba(255,255,255,0.5);
+        }
+
+        .hero-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+
+        .hero-btn.primary:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .hero-btn.secondary:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .mentorat-section {
+            padding: 80px 0;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-family: 'Merriweather', serif;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #7f8c8d;
+            margin-bottom: 60px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .mentorat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            padding: 0 20px;
+        }
+
+        .mentorat-card {
+            background: white;
+            border-radius: 15px;
+            padding: 40px 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border-top: 4px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mentorat-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .mentorat-card.orientation {
+            border-top-color: #3498db;
+        }
+
+        .mentorat-card.inspiration {
+            border-top-color: #e74c3c;
+        }
+
+        .mentorat-card.progression {
+            border-top-color: #2ecc71;
+        }
+
+        .mentorat-card.communaute {
+            border-top-color: #f39c12;
+        }
+
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .orientation .card-icon {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+        }
+
+        .inspiration .card-icon {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+        }
+
+        .progression .card-icon {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+        }
+
+        .communaute .card-icon {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+        }
+
+        .card-title {
+            font-family: 'Merriweather', serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+
+        .card-description {
+            color: #7f8c8d;
+            line-height: 1.6;
+            font-size: 1rem;
+        }
+
+        .process-section {
+            background: #f8f9fa;
+            padding: 80px 0;
+        }
+
+        .process-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .process-step {
+            text-align: center;
+            position: relative;
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0 auto 20px;
+        }
+
+        .step-title {
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+
+        .step-description {
+            color: #7f8c8d;
+            line-height: 1.5;
+        }
+
+        .cta-section {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .cta-content {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .cta-title {
+            font-family: 'Merriweather', serif;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .cta-description {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-btn {
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .cta-btn.primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .cta-btn.secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(255,255,255,0.3);
+            }
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 0 0 20px rgba(255,255,255,0);
+            }
+        }
+
+        @keyframes glow {
+            0% {
+                text-shadow: 0 0 20px rgba(255,255,255,0.5);
+            }
+            100% {
+                text-shadow: 0 0 30px rgba(255,255,255,0.8), 0 0 40px rgba(255,255,255,0.6);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-mentorat {
+                padding: 80px 0;
+                min-height: auto;
+            }
+            
+            .hero-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                text-align: center;
+            }
+            
+            .hero-text {
+                text-align: center;
+            }
+            
+            .hero-mentorat h1 {
+                font-size: 2.5rem;
+            }
+            
+            .mentor-circle {
+                width: 300px;
+                height: 300px;
+            }
+            
+            .mentor-icon {
+                font-size: 5rem;
+            }
+            
+            .hero-buttons {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            
+            .mentorat-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="topline"></div>
+
+    <div class="masthead">
+        <div class="wrap">
+            <!-- Partie gauche -->
+            <div class="header-left">
+                <div class="brand-logo">
+                    <img alt="BEMTECH Logo" src="logob.png">
+                </div>
+                <span class="brand-divider" aria-hidden="true"></span>
+                <div class="brand-title">Alumni</div>
+            </div>
+
+            <!-- Partie droite -->
+            <div class="header-right">
+                <nav class="nav-block" aria-label="Primary">
+                    <div class="nav-top">
+                        <a href="index.html#join" id="membershipBtn">Membership</a>
+                        <a href="actualite.html" class="restricted-link" data-page="actualites">Actualités &amp; Recompenses</a>
+                        <a href="vie_school.html" class="restricted-link" data-page="vie-ecole">Vie a l'ecole</a>
+                        <a href="after.html" class="restricted-link" data-page="apres-ecole">Apres l'ecole</a>
+                        <a href="contact.html">Contact</a>
+                    </div>
+                    <div class="nav-bottom">
+                        <!-- Notre Communaute -->
+                        <div class="dropdown">
+                            <a href="#">Notre Communauté</a>
+                            <ul class="submenu">
+                                <li><a href="reseau.html" class="restricted-link" data-page="reseau">Reseau</a></li>
+                                <li><a href="Qui.html">Qui sommes-nous ??</a></li>
+                                <li><a href="FAQ.html">FAQ</a></li>
+                            </ul>
+                        </div>
+                        <div class="dropdown">
+                            <a href="#">Carrières &amp; Ressources</a>
+                            <ul class="submenu">
+                                <li><a href="opportunite.html" class="restricted-link" data-page="opportunites">Opportunités</a></li>
+                                <li><a href="mentorat.html" class="restricted-link" data-page="mentorat">Mentorat / Developpement professionnel</a></li>
+                                <li><a href="projet.html" class="restricted-link" data-page="projet">Projet / Realisation</a></li>
+                            </ul>
+                        </div>
+                        <!-- Evenement -->
+                        <div class="dropdown">
+                            <a href="#">Événement</a>
+                            <ul class="submenu">
+                                <li><a href="calendrier.html" class="restricted-link" data-page="calendrier">Calendrier</a></li>
+                                <li><a href="reunion.html" class="restricted-link" data-page="retrouvaille">Reunion & Retrouvaille</a></li>
+                                <li><a href="evenements_etudiants.html" class="restricted-link" data-page="evenements-etudiants">Événements Étudiants</a></li>
+                                <li><a href="journee.html" class="restricted-link" data-page="journee-culturelle">Seminaire</a></li>
+                            </ul>
+                        </div>
+
+                        <!-- Benevole -->
+                        <div class="dropdown">
+                            <a href="#">Humanitaire</a>
+                            <ul class="submenu">
+                                <li><a href="don_annuel.html" class="restricted-link" data-page="don-annuel">Don annuel</a></li>
+                                <li><a href="retrouvaille.html" class="restricted-link" data-page="conseil">Aide et Solidarité</a></li>
+                                <li><a href="conseil.html" class="restricted-link" data-page="conseil">Benevolat</a></li>
+                            </ul>
+                        </div>
+                        
+                        <a href="Galerie.html">Galerie</a>
+                        <button id="authBtn" class="auth-btn">Connexion</button>
+                    </div>
+                </nav>
+
+                <div class="logo-section-2">
+                    <img src="logor.png" alt="Logo">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero-mentorat">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>Mentorat & Accompagnement</h1>
+                <p class="subtitle">À BEM TECH, l'accompagnement commence dès la première année grâce au mentorat. Chaque étudiant peut bénéficier d'un parrain ou d'une marraine pour l'orienter, l'inspirer et l'aider à progresser dans la vie professionnelle.</p>
+                
+                <div class="hero-buttons">
+                    <a href="#" class="hero-btn primary">Devenir Mentoré</a>
+                    <a href="#" class="hero-btn secondary">Devenir Mentor</a>
+                </div>
+            </div>
+            
+            <div class="hero-visual">
+                <div class="mentor-circle">
+                    <i class="fas fa-users mentor-icon"></i>
+                    <div class="floating-elements">
+                        <div class="floating-element">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <div class="floating-element">
+                            <i class="fas fa-compass"></i>
+                        </div>
+                        <div class="floating-element">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="floating-element">
+                            <i class="fas fa-handshake"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Principale -->
+    <section class="mentorat-section">
+        <h2 class="section-title">Le Mentorat à BEM TECH</h2>
+        <p class="section-subtitle">
+            À BEM TECH, l'accompagnement commence dès la première année grâce au mentorat. 
+            Chaque étudiant peut bénéficier d'un parrain ou d'une marraine pour l'orienter, l'inspirer et l'aider à progresser.
+        </p>
+
+        <div class="mentorat-grid">
+            <div class="mentorat-card orientation">
+                <div class="card-icon">
+                    <i class="fas fa-compass"></i>
+                </div>
+                <h3 class="card-title">Orientation & Guidance</h3>
+                <p class="card-description">
+                    Nos mentors vous aident à naviguer dans vos études, à choisir vos spécialisations 
+                    et à définir votre parcours académique selon vos aspirations professionnelles.
+                </p>
+            </div>
+
+            <div class="mentorat-card inspiration">
+                <div class="card-icon">
+                    <i class="fas fa-lightbulb"></i>
+                </div>
+                <h3 class="card-title">Inspiration & Motivation</h3>
+                <p class="card-description">
+                    Bénéficiez de l'expérience et des conseils de professionnels accomplis qui vous 
+                    inspirent et vous motivent à atteindre vos objectifs les plus ambitieux.
+                </p>
+            </div>
+
+            <div class="mentorat-card progression">
+                <div class="card-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <h3 class="card-title">Progression & Développement</h3>
+                <p class="card-description">
+                    Un accompagnement personnalisé pour développer vos compétences techniques et 
+                    soft skills, essentielles pour votre réussite professionnelle.
+                </p>
+            </div>
+
+            <div class="mentorat-card communaute">
+                <div class="card-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h3 class="card-title">Communauté de Soutien</h3>
+                <p class="card-description">
+                    Ce lien fort dépasse les années d'études et se prolonge dans la vie professionnelle, 
+                    faisant du réseau Alumni une véritable communauté de soutien et de réussite.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Processus -->
+    <section class="process-section">
+        <div class="mentorat-section">
+            <h2 class="section-title">Comment ça fonctionne ?</h2>
+            <p class="section-subtitle">Un processus simple et efficace pour vous accompagner</p>
+
+            <div class="process-steps">
+                <div class="process-step">
+                    <div class="step-number">1</div>
+                    <h4 class="step-title">Inscription</h4>
+                    <p class="step-description">
+                        Inscrivez-vous au programme de mentorat dès votre première année à BEM TECH
+                    </p>
+                </div>
+
+                <div class="process-step">
+                    <div class="step-number">2</div>
+                    <h4 class="step-title">Matching</h4>
+                    <p class="step-description">
+                        Nous vous associons avec un mentor selon vos objectifs et votre domaine d'intérêt
+                    </p>
+                </div>
+
+                <div class="process-step">
+                    <div class="step-number">3</div>
+                    <h4 class="step-title">Accompagnement</h4>
+                    <p class="step-description">
+                        Bénéficiez d'un suivi régulier et de conseils personnalisés tout au long de vos études
+                    </p>
+                </div>
+
+                <div class="process-step">
+                    <div class="step-number">4</div>
+                    <h4 class="step-title">Réseau Alumni</h4>
+                    <p class="step-description">
+                        Intégrez notre réseau professionnel et continuez à bénéficier du soutien communautaire
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="cta-section">
+        <div class="cta-content">
+            <h2 class="cta-title">Rejoignez le Programme de Mentorat</h2>
+            <p class="cta-description">
+                Que vous soyez étudiant cherchant un mentor ou professionnel souhaitant partager votre expérience, 
+                rejoignez notre communauté d'accompagnement.
+            </p>
+            <div class="cta-buttons">
+                <a href="#" class="cta-btn primary">Devenir Mentoré</a>
+                <a href="#" class="cta-btn secondary">Devenir Mentor</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer style="background: #2c3e50; color: white; padding: 40px 0; text-align: center;">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
+                <div>
+                    <h4 style="margin-bottom: 10px;">BemTech Alumni</h4>
+                    <p style="opacity: 0.8; margin: 0;">Ensemble, construisons l'avenir</p>
+                </div>
+                <div style="display: flex; gap: 20px;">
+                    <a href="#" style="color: white; text-decoration: none; opacity: 0.8; transition: opacity 0.3s;">
+                        <i class="fab fa-facebook"></i>
+                    </a>
+                    <a href="#" style="color: white; text-decoration: none; opacity: 0.8; transition: opacity 0.3s;">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="#" style="color: white; text-decoration: none; opacity: 0.8; transition: opacity 0.3s;">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" style="color: white; text-decoration: none; opacity: 0.8; transition: opacity 0.3s;">
+                        <i class="fab fa-tiktok"></i>
+                    </a>
+                    <a href="#" style="color: white; text-decoration: none; opacity: 0.8; transition: opacity 0.3s;">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                </div>
+            </div>
+            <hr style="margin: 30px 0; border: none; border-top: 1px solid rgba(255,255,255,0.2);">
+            <p style="margin: 0; opacity: 0.6;">&copy; 2025 Bem Tech Alumni. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <script src="auth.js"></script>
+
+</body>
+</html>

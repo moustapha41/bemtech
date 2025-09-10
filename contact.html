@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Contactez-nous - BemTech Alumni</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Inter:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+  <style>
+    /* Hero section compact */
+    .compact-hero {
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      padding: 80px 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .compact-hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="contact-pattern" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="rgba(114,188,244,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23contact-pattern)"/></svg>');
+      opacity: 0.3;
+    }
+    
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    .compact-hero h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      color: var(--ink);
+      font-weight: 700;
+      animation: fadeInUp 1s ease;
+    }
+    
+    .compact-hero p {
+      font-size: 1.2rem;
+      color: #666;
+      margin-bottom: 0;
+      opacity: 0.9;
+      animation: fadeInUp 1s ease 0.2s both;
+    }
+    
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .contact-main {
+      padding: 80px 0;
+      background: #f8f9fa;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 60px;
+      align-items: start;
+    }
+    
+    .contact-info, .contact-form {
+      background: white;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+    }
+    
+    .contact-info:hover, .contact-form:hover {
+      transform: translateY(-5px);
+    }
+    
+    .contact-info h2, .contact-form h2 {
+      margin-top: 0;
+      margin-bottom: 30px;
+      color: var(--ink);
+      font-size: 1.8rem;
+      font-weight: 600;
+    }
+    
+    .contact-info-item {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 20px;
+      background: #f8f9fa;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      transition: all 0.3s ease;
+    }
+    
+    .contact-info-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    
+    .contact-info-item .icon {
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, var(--washu-red), #ff6b6b);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.2rem;
+    }
+    
+    .contact-info-item .details h4 {
+      margin: 0 0 5px 0;
+      color: #333;
+      font-weight: 600;
+    }
+    
+    .contact-info-item .details p {
+      margin: 0;
+      color: #666;
+    }
+    
+    form input, form textarea, form button {
+      width: 100%;
+      padding: 15px;
+      margin: 10px 0;
+      border: 2px solid #e1e5e9;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-family: inherit;
+      transition: all 0.3s ease;
+    }
+    
+    form input:focus, form textarea:focus {
+      outline: none;
+      border-color: var(--washu-red);
+      box-shadow: 0 0 0 3px rgba(220, 38, 127, 0.1);
+    }
+    
+    form textarea {
+      resize: vertical;
+      height: 120px;
+    }
+    
+    form button {
+      background: linear-gradient(135deg, var(--washu-red), #ff6b6b);
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    
+    form button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(220, 38, 127, 0.3);
+    }
+    /* Section Localités */
+    .localites {
+      max-width: 1100px;
+      margin: 2rem auto;
+      padding: 2rem;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    .localites h2 {
+      color: var(--washu-red);
+      margin-bottom: 1rem;
+    }
+    #map {
+      width: 100%;
+      height: 500px;
+      border-radius: 12px;
+    }
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background: var(--washu-red);
+      color: white;
+      margin-top: 2rem;
+    }
+    @media (max-width: 768px) {
+      .compact-hero h1 {
+        font-size: 2rem;
+      }
+      
+      .container {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      
+      .contact-info, .contact-form {
+        padding: 30px 20px;
+      }
+      
+      #map {
+        height: 300px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="topline"></div>
+
+  <div class="masthead">
+    <div class="wrap">
+      <!-- Partie gauche -->
+      <div class="header-left">
+        <div class="brand-logo">
+          <img alt="BEMTECH Logo" src="logob.png">
+        </div>
+        <span class="brand-divider" aria-hidden="true"></span>
+        <div class="brand-title">Alumni</div>
+      </div>
+
+      <!-- Partie droite -->
+      <div class="header-right">
+        <nav class="nav-block" aria-label="Primary">
+          <div class="nav-top">
+            <a href="index.html#join" id="membershipBtn">Membership</a>
+            <a href="actualite.html" class="restricted-link" data-page="actualites">Actualités &amp; Recompenses</a>
+            <a href="vie_school.html" class="restricted-link" data-page="vie-ecole">Vie a l'ecole</a>
+            <a href="after.html" class="restricted-link" data-page="apres-ecole">Apres l'ecole</a>
+            <a href="contact.html" class="active">Contact</a>
+          </div>
+          <div class="nav-bottom">
+            <!-- Notre Communaute -->
+            <div class="dropdown">
+              <a href="#">Notre Communauté</a>
+              <ul class="submenu">
+                <li><a href="reseau.html" class="restricted-link" data-page="reseau">Reseau</a></li>
+                <li><a href="Qui.html">Qui sommes-nous ??</a></li>
+                <li><a href="FAQ.html">FAQ</a></li>
+              </ul>
+            </div>
+            <div class="dropdown">
+              <a href="#">Carrières &amp; Ressources</a>
+              <ul class="submenu">
+                <li><a href="opportunite.html" class="restricted-link" data-page="opportunites">Opportunités</a></li>
+                <li><a href="mentorat.html" class="restricted-link" data-page="mentorat">Mentorat / Developpement professionnel</a></li>
+                <li><a href="projet.html" class="restricted-link" data-page="projet">Projet / Realisation</a></li>
+              </ul>
+            </div>
+            <!-- Evenement -->
+            <div class="dropdown">
+              <a href="#">Événement</a>
+              <ul class="submenu">
+                <li><a href="calendrier.html" class="restricted-link" data-page="calendrier">Calendrier</a></li>
+                <li><a href="reunion.html" class="restricted-link" data-page="retrouvaille">Reunion & Retrouvaille</a></li>
+                <li><a href="evenements_etudiants.html" class="restricted-link" data-page="evenements-etudiants">Événements Étudiants</a></li>
+                <li><a href="journee.html" class="restricted-link" data-page="journee-culturelle">Seminaire</a></li>
+              </ul>
+            </div>
+
+            <!-- Benevole -->
+            <div class="dropdown">
+              <a href="#">Humanitaire</a>
+              <ul class="submenu">
+                <li><a href="don_annuel.html" class="restricted-link" data-page="don-annuel">Don annuel</a></li>
+                <li><a href="retrouvaille.html" class="restricted-link" data-page="conseil">Aide et Solidarité</a></li>
+                <li><a href="conseil.html" class="restricted-link" data-page="conseil">Benevolat</a></li>
+              </ul>
+            </div>
+            
+            <a href="Galerie.html">Galerie</a>
+            <button id="authBtn" class="auth-btn">Connexion</button>
+          </div>
+        </nav>
+
+        <div class="logo-section-2">
+          <img src="logor.png" alt="Logo">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Login Modal -->
+  <div id="loginModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <form class="login-form" id="loginForm">
+        <h2>Connexion</h2>
+        <div class="form-group">
+          <label for="loginEmail">Email:</label>
+          <input type="email" id="loginEmail" name="email" required>
+        </div>
+        <div class="form-group">
+          <label for="loginPassword">Mot de passe:</label>
+          <input type="password" id="loginPassword" name="password" required>
+        </div>
+        <button type="submit" class="login-btn">Se connecter</button>
+        <p class="login-help">Pas encore membre? <a href="index.html#join">Rejoignez la communauté</a></p>
+      </form>
+    </div>
+  </div>
+
+  <!-- Registration Modal -->
+  <div id="registerModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <form class="login-form" id="registerForm">
+        <h2>Créer un compte</h2>
+        <div class="form-group">
+          <label for="regNom">Nom complet:</label>
+          <input type="text" id="regNom" name="nom" required>
+        </div>
+        <div class="form-group">
+          <label for="regEmail">Email:</label>
+          <input type="email" id="regEmail" name="email" required>
+        </div>
+        <div class="form-group">
+          <label for="regPassword">Mot de passe:</label>
+          <input type="password" id="regPassword" name="password" required minlength="6">
+        </div>
+        <div class="form-group">
+          <label for="regPromo">Promotion:</label>
+          <select id="regPromo" name="promo" required>
+            <option value="">Sélectionnez…</option>
+            <option>2025</option>
+            <option>2024</option>
+            <option>2023</option>
+            <option>2022</option>
+            <option>2021</option>
+            <option>2020</option>
+            <option>Autre</option>
+          </select>
+        </div>
+        <button type="submit" class="login-btn">Créer le compte</button>
+        <p class="login-help">Déjà membre? <a href="#" id="showLoginFromReg">Se connecter</a></p>
+      </form>
+    </div>
+  </div>
+
+  <!-- Hero Section -->
+  <section class="compact-hero">
+    <div class="hero-content">
+      <h1><i class="fas fa-envelope" style="margin-right: 15px; color: var(--washu-red);"></i>Contactez-nous</h1>
+      <p>Nous sommes là pour vous accompagner dans votre parcours. N'hésitez pas à nous faire part de vos questions, suggestions ou demandes de collaboration.</p>
+    </div>
+  </section>
+
+  <!-- Main Contact Section -->
+  <section class="contact-main">
+    <div class="container">
+      <div class="contact-info">
+        <h2>Nos coordonnées</h2>
+        <div class="contact-info-item">
+          <div class="icon">
+            <i class="fas fa-map-marker-alt"></i>
+          </div>
+          <div class="details">
+            <h4>Adresse</h4>
+            <p>Dakar, Sénégal</p>
+          </div>
+        </div>
+        
+        <div class="contact-info-item">
+          <div class="icon">
+            <i class="fas fa-phone"></i>
+          </div>
+          <div class="details">
+            <h4>Téléphone</h4>
+            <p>+221 77 123 45 67</p>
+          </div>
+        </div>
+        
+        <div class="contact-info-item">
+          <div class="icon">
+            <i class="fas fa-envelope"></i>
+          </div>
+          <div class="details">
+            <h4>Email</h4>
+            <p>contact@bemtech-alumni.com</p>
+          </div>
+        </div>
+        
+        <div class="contact-info-item">
+          <div class="icon">
+            <i class="fas fa-clock"></i>
+          </div>
+          <div class="details">
+            <h4>Horaires</h4>
+            <p>Lun - Ven : 9h - 18h</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-form">
+        <h2>Envoyez-nous un message</h2>
+        <form id="contactForm">
+          <input type="text" name="name" placeholder="Nom complet *" required>
+          <input type="email" name="email" placeholder="Adresse email *" required>
+          <input type="text" name="subject" placeholder="Sujet de votre message *" required>
+          <textarea name="message" placeholder="Décrivez votre demande en détail..." required></textarea>
+          <button type="submit">
+            <i class="fas fa-paper-plane"></i>
+            Envoyer le message
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <div class="localites">
+    <h2>Nos Localités 🌍</h2>
+    <div id="map"></div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 MonSite. Tous droits réservés.</p>
+  </footer>
+
+  <script src="auth.js"></script>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    var map = L.map('map').setView([20, 0], 2);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap'
+    }).addTo(map);
+
+    var localites = [
+      { name: "Dakar", coords: [14.6928, -17.4467] },
+      { name: "Abidjan", coords: [5.3453, -4.0244] },
+      { name: "USA", coords: [37.0902, -95.7129] },
+      { name: "Canada", coords: [56.1304, -106.3468] },
+      { name: "Italie", coords: [41.8719, 12.5674] },
+      { name: "Lille", coords: [50.6292, 3.0573] }
+    ];
+
+    localites.forEach(loc => {
+      L.marker(loc.coords).addTo(map)
+        .bindPopup("<b>" + loc.name + "</b>");
+    });
+  </script>
+</body>
+</html>
