@@ -17,9 +17,34 @@ const PORT = process.env.PORT || 4000;
 app.use(helmet({
     contentSecurityPolicy: false // Allow inline scripts for development
 }));
-app.use(cors());
+// Configuration CORS plus permissive pour le développement
+const corsOptions = {
+    origin: ['http://localhost:4000', 'http://127.0.0.1:4000'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'Content-Length', 'X-Requested-With'],
+    credentials: true,
+    optionsSuccessStatus: 200 // Pour les navigateurs plus anciens
+};
+
+// Gestion des requêtes OPTIONS (pré-vol)
+app.options('*', cors(corsOptions));
+
+// Configuration CORS pour toutes les routes
+app.use(cors(corsOptions));
+
+// Middleware pour logger les requêtes
+app.use((req, res, next) => {
+    console.log(`[${new Date().toISOString()}] ${req.method} ${req.originalUrl}`);
+    if (req.method === 'POST' || req.method === 'PUT') {
+        console.log('Request body:', req.body);
+    }
+    next();
+});
 app.use(express.json());
+// Servir les fichiers statiques du répertoire courant
 app.use(express.static('.'));
+// Servir les fichiers du dossier img qui est dans le répertoire parent
+app.use('/img', express.static(path.join(__dirname, '..', 'img')));
 
 // Rate limiting
 const limiter = rateLimit({
@@ -35,90 +60,171 @@ const authLimiter = rateLimit({
 });
 
 // Database setup
-const dbPath = process.env.DB_PATH || './database/alumni.db';
-const db = new sqlite3.Database(dbPath);
+// Utilisation d'un chemin absolu pour la base de données
+const dbDir = path.join(__dirname, 'database');
+const dbPath = path.join(dbDir, 'alumni.db');
+
+// Créer le répertoire s'il n'existe pas
+try {
+    if (!require('fs').existsSync(dbDir)) {
+        require('fs').mkdirSync(dbDir, { recursive: true });
+        console.log(`Répertoire créé: ${dbDir}`);
+    }
+
+    // Vérifier les permissions du répertoire
+    require('fs').accessSync(dbDir, require('fs').constants.W_OK);
+    console.log(`Permissions en écriture sur le répertoire ${dbDir}: ✅`);
+    console.log('Chemin complet de la base de données:', dbPath);
+    
+    // Si le fichier de base de données n'existe pas, le créer
+    if (!require('fs').existsSync(dbPath)) {
+        require('fs').writeFileSync(dbPath, '');
+        console.log('Fichier de base de données créé avec succès');
+    }
+} catch (err) {
+    console.error('Erreur lors de la configuration de la base de données:', err);
+    process.exit(1);
+}
+
+// Connexion à la base de données
+const db = new sqlite3.Database(dbPath, sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE, (err) => {
+    if (err) {
+        console.error('Erreur de connexion à la base de données:', err);
+        process.exit(1);
+    }
+    console.log('Connecté à la base de données SQLite');
+    
+    // Activer les clés étrangères
+    db.get("PRAGMA foreign_keys = ON", (err) => {
+        if (err) {
+            console.error('Erreur lors de l\'activation des clés étrangères:', err);
+        } else {
+            console.log('Clés étrangères activées');
+        }
+    });
+});
 
 // Initialize database
-db.serialize(() => {
-    db.run(`CREATE TABLE IF NOT EXISTS users (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        nom TEXT NOT NULL,
-        email TEXT UNIQUE NOT NULL,
-        password TEXT NOT NULL,
-        promo TEXT NOT NULL,
-        linkedin TEXT,
-        motivation TEXT,
-        role TEXT DEFAULT 'member',
-        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-        updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
-    )`);
+function initializeDatabase(callback) {
+    db.serialize(() => {
+        db.run(`CREATE TABLE IF NOT EXISTS users (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            nom TEXT NOT NULL,
+            email TEXT UNIQUE NOT NULL,
+            password TEXT NOT NULL,
+            promo TEXT NOT NULL,
+            linkedin TEXT,
+            motivation TEXT,
+            role TEXT DEFAULT 'member',
+            last_login DATETIME,
+            login_count INTEGER DEFAULT 0,
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+            updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+        )`, (err) => {
+            if (err) return callback(err);
+            
+            // Table pour suivre l'activité des utilisateurs
+            db.run(`CREATE TABLE IF NOT EXISTS user_activity (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                user_id INTEGER NOT NULL,
+                login_time DATETIME DEFAULT CURRENT_TIMESTAMP,
+                ip_address TEXT,
+                user_agent TEXT,
+                FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+            )`, (err) => {
+                if (err) return callback(err);
+                
+                // Table pour les demandes d'adhésion aux bureaux
+                db.run(`CREATE TABLE IF NOT EXISTS bureau_requests (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    nom TEXT NOT NULL,
+                    prenom TEXT NOT NULL,
+                    promotion TEXT NOT NULL,
+                    bureau TEXT NOT NULL,
+                    email TEXT NOT NULL,
+                    telephone TEXT,
+                    motivation TEXT,
+                    status TEXT DEFAULT 'pending',
+                    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+                )`, (err) => {
+                    if (err) return callback(err);
+                    
+                    // Table pour les projets
+                    db.run(`CREATE TABLE IF NOT EXISTS projects (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT,
+                        title TEXT NOT NULL,
+                        objective TEXT NOT NULL,
+                        description TEXT,
+                        author TEXT NOT NULL,
+                        email TEXT NOT NULL,
+                        status TEXT DEFAULT 'en_attente',
+                        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                        updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+                    )`, (err) => {
+                        if (err) return callback(err);
+                        
+                        // Table pour les participants aux projets
+                        db.run(`CREATE TABLE IF NOT EXISTS project_participants (
+                            id INTEGER PRIMARY KEY AUTOINCREMENT,
+                            project_id INTEGER NOT NULL,
+                            name TEXT NOT NULL,
+                            email TEXT NOT NULL,
+                            phone TEXT,
+                            created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                            FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE CASCADE
+                        )`, (err) => {
+                            if (err) return callback(err);
+                            
+                            // Table pour les événements organisés
+                            db.run(`CREATE TABLE IF NOT EXISTS organized_events (
+                                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                                title TEXT NOT NULL,
+                                description TEXT NOT NULL,
+                                date TEXT NOT NULL,
+                                location TEXT NOT NULL,
+                                organizer TEXT NOT NULL,
+                                status TEXT DEFAULT 'planned',
+                                created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                                updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+                            )`, (err) => {
+                                if (err) return callback(err);
+                                
+                                // Table pour les demandes d'adhésion
+                                db.run(`CREATE TABLE IF NOT EXISTS membership_requests (
+                                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                                    nom TEXT NOT NULL,
+                                    prenom TEXT NOT NULL,
+                                    email TEXT NOT NULL,
+                                    promo TEXT NOT NULL,
+                                    linkedin TEXT,
+                                    motivation TEXT,
+                                    status TEXT DEFAULT 'pending',
+                                    access_token TEXT UNIQUE,
+                                    token_expires_at DATETIME,
+                                    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                                    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+                                )`, (err) => {
+                                    if (err) return callback(err);
+                                    callback(null);
+                                });
+                            });
+                        });
+                    });
+                });
+            });
+        });
+    });
+}
+
+// Démarrer le serveur une fois la base de données initialisée
+initializeDatabase((err) => {
+    if (err) {
+        console.error('Erreur lors de l\'initialisation de la base de données:', err);
+        process.exit(1);
+    }
     
-    // Table pour les demandes d'adhésion aux bureaux
-    db.run(`CREATE TABLE IF NOT EXISTS bureau_requests (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        nom TEXT NOT NULL,
-        prenom TEXT NOT NULL,
-        promotion TEXT NOT NULL,
-        bureau TEXT NOT NULL,
-        email TEXT NOT NULL,
-        telephone TEXT,
-        motivation TEXT,
-        status TEXT DEFAULT 'pending',
-        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-        updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
-    )`);
-    
-    // Table pour les projets
-    db.run(`CREATE TABLE IF NOT EXISTS projects (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        title TEXT NOT NULL,
-        objective TEXT NOT NULL,
-        author_name TEXT NOT NULL,
-        author_email TEXT NOT NULL,
-        author_phone TEXT NOT NULL,
-        status TEXT DEFAULT 'active',
-        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-        updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
-    )`);
-    
-    // Table pour les participants aux projets
-    db.run(`CREATE TABLE IF NOT EXISTS project_participants (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        project_id INTEGER NOT NULL,
-        participant_name TEXT NOT NULL,
-        participant_email TEXT NOT NULL,
-        participant_phone TEXT NOT NULL,
-        joined_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-        FOREIGN KEY (project_id) REFERENCES projects (id),
-        UNIQUE(project_id, participant_email)
-    )`);
-    
-    // Table pour les événements organisés par les utilisateurs
-    db.run(`CREATE TABLE IF NOT EXISTS organized_events (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        organizer_email TEXT NOT NULL,
-        event_type TEXT NOT NULL,
-        location TEXT NOT NULL,
-        description TEXT NOT NULL,
-        status TEXT DEFAULT 'pending',
-        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-        updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
-    )`);
-    
-    // Table pour les demandes d'adhésion à la communauté
-    db.run(`CREATE TABLE IF NOT EXISTS membership_requests (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        nom TEXT NOT NULL,
-        email TEXT NOT NULL,
-        promo TEXT NOT NULL,
-        linkedin TEXT,
-        motivation TEXT,
-        status TEXT DEFAULT 'pending',
-        access_token TEXT,
-        token_expires_at DATETIME,
-        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-        updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
-    )`);
+    console.log('Base de données initialisée avec succès');
     
     // Créer un compte administrateur par défaut
     const adminEmail = 'admin@bemtech.com';
@@ -410,29 +516,61 @@ app.post('/api/login', authLimiter, validateLogin, (req, res) => {
                 return res.status(401).json({ error: 'Email ou mot de passe incorrect' });
             }
 
-            // Generate JWT token
-            const token = jwt.sign(
-                { 
-                    id: user.id, 
-                    email: user.email,
-                    nom: user.nom,
-                    role: user.role
-                },
-                process.env.JWT_SECRET,
-                { expiresIn: process.env.JWT_EXPIRES_IN }
-            );
+            // Get IP and user agent
+            const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+            const userAgent = req.headers['user-agent'] || '';
+            
+            // Update user's last login and increment login count
+            const now = new Date().toISOString();
+            db.serialize(() => {
+                // Update user's last login and increment login count
+                db.run(
+                    'UPDATE users SET last_login = ?, login_count = login_count + 1, updated_at = CURRENT_TIMESTAMP WHERE id = ?',
+                    [now, user.id],
+                    (err) => {
+                        if (err) {
+                            console.error('Error updating user login info:', err);
+                        }
+                        
+                        // Log the login activity
+                        db.run(
+                            'INSERT INTO user_activity (user_id, login_time, ip_address, user_agent) VALUES (?, ?, ?, ?)',
+                            [user.id, now, ip, userAgent],
+                            (err) => {
+                                if (err) {
+                                    console.error('Error logging user activity:', err);
+                                }
+                                
+                                // Generate JWT token
+                                const token = jwt.sign(
+                                    { 
+                                        id: user.id, 
+                                        email: user.email,
+                                        nom: user.nom,
+                                        role: user.role
+                                    },
+                                    process.env.JWT_SECRET,
+                                    { expiresIn: process.env.JWT_EXPIRES_IN }
+                                );
 
-            res.json({
-                success: true,
-                message: 'Connexion réussie',
-                token: token,
-                user: {
-                    id: user.id,
-                    nom: user.nom,
-                    email: user.email,
-                    promo: user.promo,
-                    role: user.role
-                }
+                                res.json({
+                                    success: true,
+                                    message: 'Connexion réussie',
+                                    token: token,
+                                    user: {
+                                        id: user.id,
+                                        nom: user.nom,
+                                        email: user.email,
+                                        promo: user.promo,
+                                        role: user.role,
+                                        last_login: now,
+                                        login_count: (user.login_count || 0) + 1
+                                    }
+                                });
+                            }
+                        );
+                    }
+                );
             });
         });
     } catch (error) {
@@ -457,10 +595,12 @@ app.get('/api/profile', authenticateToken, (req, res) => {
 });
 
 // Verify token endpoint
-app.post('/api/verify-token', (req, res) => {
-    const { token } = req.body;
+app.post('/api/verify-token', express.json(), (req, res) => {
+    console.log('Verify token request body:', req.body);
+    const token = req.body?.token || req.headers.authorization?.split(' ')[1];
     
     if (!token) {
+        console.error('No token provided');
         return res.status(400).json({ error: 'Token requis' });
     }
 
@@ -635,8 +775,8 @@ app.post('/api/projects', limiter, [
         const { title, objective, author, email, phone } = req.body;
 
         db.run(
-            'INSERT INTO projects (title, objective, author_name, author_email, author_phone) VALUES (?, ?, ?, ?, ?)',
-            [title, objective, author, email, phone],
+            'INSERT INTO projects (title, objective, author, email, status) VALUES (?, ?, ?, ?, ?)',
+            [title, objective, author, email, 'en_attente'],
             function(err) {
                 if (err) {
                     console.error('Insert project error:', err);
@@ -673,14 +813,13 @@ app.get('/api/projects', (req, res) => {
             p.id,
             p.title,
             p.objective,
-            p.author_name,
-            p.author_email,
-            p.author_phone,
+            p.author as author_name,
+            p.email as author_email,
             p.created_at,
             COUNT(pp.id) as participant_count
         FROM projects p
         LEFT JOIN project_participants pp ON p.id = pp.project_id
-        WHERE p.status = 'active'
+        WHERE p.status = 'en_attente' OR p.status = 'active'
         GROUP BY p.id
         ORDER BY p.created_at DESC
     `;
@@ -701,7 +840,7 @@ app.get('/api/projects', (req, res) => {
 
         projects.forEach(project => {
             db.all(
-                'SELECT participant_name, participant_email, participant_phone, joined_at FROM project_participants WHERE project_id = ?',
+                'SELECT name, email, phone, created_at FROM project_participants WHERE project_id = ?',
                 [project.id],
                 (err, participants) => {
                     if (err) {
@@ -718,10 +857,10 @@ app.get('/api/projects', (req, res) => {
                         phone: project.author_phone,
                         dateCreated: new Date(project.created_at).toLocaleDateString('fr-FR'),
                         participants: participants.map(p => ({
-                            name: p.participant_name,
-                            email: p.participant_email,
-                            phone: p.participant_phone,
-                            joinedDate: new Date(p.joined_at).toLocaleDateString('fr-FR')
+                            name: p.name,
+                            email: p.email,
+                            phone: p.phone,
+                            joinedDate: new Date(p.created_at).toLocaleDateString('fr-FR')
                         }))
                     });
 
@@ -737,12 +876,26 @@ app.get('/api/projects', (req, res) => {
     });
 });
 
+// Configure express.json avec une limite de taille augmentée
+const jsonParser = express.json({ limit: '10mb' });
+
 // Join a project
-app.post('/api/projects/:id/join', limiter, [
+app.post('/api/projects/:id/join', [
+    jsonParser,
+    limiter,
     body('name').trim().isLength({ min: 2 }).withMessage('Le nom doit contenir au moins 2 caractères'),
     body('email').isEmail().normalizeEmail().withMessage('Email invalide'),
     body('phone').trim().isLength({ min: 8 }).withMessage('Numéro de téléphone invalide')
 ], (req, res) => {
+    console.log('=== DÉBUT TRAITEMENT /api/projects/:id/join ===');
+    console.log('Headers:', JSON.stringify(req.headers, null, 2));
+    console.log('Body:', JSON.stringify(req.body, null, 2));
+    console.log('Params:', JSON.stringify(req.params, null, 2));
+    console.log('Join project request received:', {
+        params: req.params,
+        body: req.body,
+        headers: req.headers
+    });
     try {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -755,6 +908,7 @@ app.post('/api/projects/:id/join', limiter, [
         const { id } = req.params;
         const { name, email, phone } = req.body;
 
+        console.log('Vérification de l\'existence du projet avec ID:', id);
         // Check if project exists
         db.get('SELECT id FROM projects WHERE id = ? AND status = "active"', [id], (err, project) => {
             if (err) {
@@ -766,8 +920,8 @@ app.post('/api/projects/:id/join', limiter, [
                 return res.status(404).json({ error: 'Projet non trouvé' });
             }
 
-            // Check if user already joined this project
-            db.get('SELECT id FROM project_participants WHERE project_id = ? AND participant_email = ?', 
+            console.log('Vérification si le participant existe déjà pour le projet:', { project_id: id, email });
+            db.get('SELECT id FROM project_participants WHERE project_id = ? AND email = ?', 
                 [id, email], (err, participant) => {
                 if (err) {
                     console.error('Check participant error:', err);
@@ -779,8 +933,9 @@ app.post('/api/projects/:id/join', limiter, [
                 }
 
                 // Add participant to project
+                console.log('Tentative d\'ajout du participant:', { project_id: id, name, email, phone });
                 db.run(
-                    'INSERT INTO project_participants (project_id, participant_name, participant_email, participant_phone) VALUES (?, ?, ?, ?)',
+                    'INSERT INTO project_participants (project_id, name, email, phone, created_at) VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP)',
                     [id, name, email, phone],
                     function(err) {
                         if (err) {
@@ -825,8 +980,8 @@ app.post('/api/organize-event', limiter, validateEventOrganization, (req, res) =
 
         // Insert event organization request
         db.run(
-            'INSERT INTO organized_events (organizer_email, event_type, location, description) VALUES (?, ?, ?, ?)',
-            [email, eventType, location, description],
+            'INSERT INTO organized_events (title, description, date, location, organizer, status) VALUES (?, ?, ?, ?, ?, ?)',
+            [eventType, description, new Date().toISOString().split('T')[0], location, email, 'pending'],
             function(err) {
                 if (err) {
                     console.error('Insert event error:', err);
@@ -904,11 +1059,13 @@ app.post('/api/membership-request', limiter, validateMembershipRequest, (req, re
             }
 
             // Insert membership request
+            // Extraire le prénom du nom complet
+            const prenom = nom.split(' ')[0] || '';
             db.run(
                 `INSERT INTO membership_requests 
-                (nom, email, promo, linkedin, motivation) 
-                VALUES (?, ?, ?, ?, ?)`,
-                [nom, email, promo, linkedin || '', motivation || ''],
+                (nom, prenom, email, promo, linkedin, motivation) 
+                VALUES (?, ?, ?, ?, ?, ?)`,
+                [nom, prenom, email, promo, linkedin || '', motivation || ''],
                 function(err) {
                     if (err) {
                         console.error('Insert error:', err);
@@ -1114,39 +1271,96 @@ app.get('/api/user-activity', authenticateToken, (req, res) => {
     // Get statistics
     const now = new Date();
     const fiveMinutesAgo = new Date(now.getTime() - 5 * 60 * 1000);
+    const oneHourAgo = new Date(now.getTime() - 60 * 60 * 1000);
     const oneDayAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);
     const oneWeekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
 
-    // Get user activities with last login simulation (since we don't have actual login tracking yet)
-    db.all(
-        `SELECT 
-            id, nom, email, promo, created_at,
-            datetime('now', '-' || (id * 7 + 3) || ' minutes') as last_login,
-            (id * 2 + 5) as total_logins
-         FROM users 
-         ORDER BY last_login DESC 
-         LIMIT 20`,
-        [],
-        (err, activities) => {
+    // Vérifier si les colonnes existent
+    db.all("PRAGMA table_info(users)", [], (err, columns) => {
+        if (err) {
+            console.error('Erreur lors de la vérification des colonnes:', err);
+            return res.status(500).json({ error: 'Erreur de base de données' });
+        }
+
+        const columnNames = columns.map(col => col.name);
+        const hasLastLogin = columnNames.includes('last_login');
+        const hasLoginCount = columnNames.includes('login_count');
+        const hasUserActivity = columnNames.includes('user_activity');
+
+        // Construire la requête en fonction des colonnes disponibles
+        let query = `
+            SELECT 
+                u.id, 
+                u.nom, 
+                u.email, 
+                u.promo, 
+                u.role,
+                ${hasLastLogin ? 'u.last_login' : 'NULL as last_login'},
+                ${hasLoginCount ? 'u.login_count' : '0 as login_count'},
+                u.created_at,
+                (SELECT COUNT(*) FROM user_activity WHERE user_id = u.id) as total_logins,
+                (SELECT login_time FROM user_activity WHERE user_id = u.id ORDER BY login_time DESC LIMIT 1) as last_activity
+             FROM users u
+             ${hasLastLogin ? 'WHERE u.last_login IS NOT NULL' : ''}
+             ORDER BY ${hasLastLogin ? 'u.last_login' : 'u.id'} DESC
+             LIMIT 100`;
+
+        db.all(query, [], (err, activities) => {
             if (err) {
                 console.error('Database error:', err);
                 return res.status(500).json({ error: 'Erreur de base de données' });
             }
 
-            // Calculate stats based on simulated data
+            // Format activities with proper dates
+            const formattedActivities = activities.map(activity => ({
+                ...activity,
+                last_login: activity.last_activity || activity.last_login || activity.created_at,
+                total_logins: activity.login_count || 0
+            }));
+
+            // Calculate stats based on available data
             const stats = {
-                online: activities.filter(a => new Date(a.last_login) > fiveMinutesAgo).length,
-                recent: activities.filter(a => new Date(a.last_login) > new Date(now.getTime() - 60 * 60 * 1000)).length,
-                today: activities.filter(a => new Date(a.last_login) > oneDayAgo).length,
-                week: activities.filter(a => new Date(a.last_login) > oneWeekAgo).length
+                online: 0,
+                recent: 0,
+                today: 0,
+                week: 0
             };
+
+            if (hasLastLogin) {
+                stats.online = activities.filter(a => a.last_login && new Date(a.last_login) > fiveMinutesAgo).length;
+                stats.recent = activities.filter(a => a.last_login && new Date(a.last_login) > oneHourAgo).length;
+                stats.today = activities.filter(a => a.last_login && new Date(a.last_login) > oneDayAgo).length;
+                stats.week = activities.filter(a => a.last_login && new Date(a.last_login) > oneWeekAgo).length;
+            } else {
+                // Si last_login n'est pas disponible, utiliser created_at comme approximation
+                const now = new Date();
+                const oneDay = 24 * 60 * 60 * 1000;
+                const oneWeek = 7 * oneDay;
+                
+                activities.forEach(activity => {
+                    const createdDate = new Date(activity.created_at);
+                    const daysSinceCreation = (now - createdDate) / oneDay;
+                    
+                    if (daysSinceCreation < 1) stats.today++;
+                    if (daysSinceCreation < 7) stats.week++;
+                });
+                
+                // Pour les compteurs en ligne et récents, on ne peut pas faire mieux sans last_login
+                stats.online = 0;
+                stats.recent = stats.today;
+            }
 
             res.json({ 
                 stats,
-                activities
+                activities: formattedActivities,
+                _debug: {
+                    hasLastLogin,
+                    hasLoginCount,
+                    hasUserActivity
+                }
             });
-        }
-    );
+        });
+    });
 });
 
 // Update organized event status (admin only)
@@ -1271,11 +1485,39 @@ process.on('SIGINT', () => {
     });
 });
 
-app.listen(PORT, () => {
-    console.log(`🚀 Serveur BemTech Alumni démarré sur http://localhost:${PORT}`);
-    console.log(`📊 Base de données: ${dbPath}`);
-    console.log(`🔒 Mode: ${process.env.NODE_ENV}`);
-    console.log(`📧 Email configuré: ${process.env.EMAIL_USER ? '✅' : '❌'}`);
+// Démarrer le serveur une fois la base de données initialisée
+initializeDatabase((err) => {
+    if (err) {
+        console.error('Erreur lors de l\'initialisation de la base de données:', err);
+        process.exit(1);
+    }
+    
+    console.log('Base de données initialisée avec succès');
+    
+    // Démarrer le serveur Express
+    const server = app.listen(PORT, '0.0.0.0', () => {
+        console.log(`🚀 Serveur BemTech Alumni démarré sur http://0.0.0.0:${PORT}`);
+        console.log(`🌐 Accessible via: http://localhost:${PORT} (local) et http://[IP-VPS]:${PORT} (externe)`);
+        console.log(`📊 Base de données: ${dbPath}`);
+        console.log(`🔒 Mode: ${process.env.NODE_ENV || 'development'}`);
+        console.log(`📧 Email configuré: ${process.env.EMAIL_USER ? '✅' : '❌'}`);
+    });
+
+    // Gestion de l'arrêt propre du serveur
+    process.on('SIGTERM', () => {
+        console.log('\nRéception du signal SIGTERM. Arrêt du serveur...');
+        server.close(() => {
+            console.log('Serveur arrêté.');
+            db.close((err) => {
+                if (err) {
+                    console.error('Erreur lors de la fermeture de la base de données:', err);
+                    process.exit(1);
+                }
+                console.log('Base de données fermée.');
+                process.exit(0);
+            });
+        });
+    });
 });
 
 module.exports = app;

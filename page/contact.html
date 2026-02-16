@@ -207,21 +207,114 @@
       margin-top: 2rem;
     }
     @media (max-width: 768px) {
+      .compact-hero {
+        padding: 50px 0;
+      }
+      
       .compact-hero h1 {
         font-size: 2rem;
       }
       
+      .compact-hero p {
+        font-size: 1rem;
+      }
+      
+      .contact-main {
+        padding: 40px 0;
+      }
+      
       .container {
         grid-template-columns: 1fr;
-        gap: 40px;
+        gap: 30px;
+        padding: 0 16px;
       }
       
       .contact-info, .contact-form {
-        padding: 30px 20px;
+        padding: 25px 20px;
+      }
+      
+      .contact-info-item {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+        padding: 15px;
+      }
+      
+      .contact-info-item .icon {
+        width: 45px;
+        height: 45px;
+        font-size: 1.1rem;
+      }
+      
+      .contact-info h2, .contact-form h2 {
+        font-size: 1.5rem;
+      }
+      
+      form input, form textarea, form button {
+        padding: 12px;
+        font-size: 0.95rem;
       }
       
       #map {
         height: 300px;
+      }
+      
+      .localites {
+        margin: 1.5rem auto;
+        padding: 1.5rem;
+      }
+      
+      .localites h2 {
+        font-size: 1.5rem;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .compact-hero {
+        padding: 40px 0;
+      }
+      
+      .compact-hero h1 {
+        font-size: 1.5rem;
+      }
+      
+      .compact-hero p {
+        font-size: 0.9rem;
+      }
+      
+      .contact-info, .contact-form {
+        padding: 20px 15px;
+      }
+      
+      .contact-info h2, .contact-form h2 {
+        font-size: 1.3rem;
+        margin-bottom: 20px;
+      }
+      
+      .contact-info-item .details h4 {
+        font-size: 0.95rem;
+      }
+      
+      .contact-info-item .details p {
+        font-size: 0.9rem;
+      }
+      
+      form input, form textarea, form button {
+        padding: 10px;
+        font-size: 0.9rem;
+      }
+      
+      #map {
+        height: 250px;
+      }
+      
+      .localites {
+        padding: 1rem;
+        margin: 1rem auto;
+      }
+      
+      .localites h2 {
+        font-size: 1.3rem;
       }
     }
   </style>
@@ -235,7 +328,7 @@
       <!-- Partie gauche -->
       <div class="header-left">
         <div class="brand-logo">
-          <img alt="BEMTECH Logo" src="logob.png">
+          <img alt="BEMTECH Logo" src="../img/logob.png">
         </div>
         <span class="brand-divider" aria-hidden="true"></span>
         <div class="brand-title">Alumni</div>
@@ -243,11 +336,16 @@
 
       <!-- Partie droite -->
       <div class="header-right">
-        <nav class="nav-block" aria-label="Primary">
+        <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <nav class="nav-block" id="mainNav" aria-label="Primary">
           <div class="nav-top">
             <a href="index.html#join" id="membershipBtn">Membership</a>
             <a href="actualite.html" class="restricted-link" data-page="actualites">Actualités &amp; Recompenses</a>
-            <a href="vie_school.html" class="restricted-link" data-page="vie-ecole">Vie a l'ecole</a>
+            <a href="vie_school.html" class="restricted-link" data-page="vie-ecole">Vie academique</a>
             <a href="after.html" class="restricted-link" data-page="apres-ecole">Apres l'ecole</a>
             <a href="contact.html" class="active">Contact</a>
           </div>
@@ -296,7 +394,7 @@
         </nav>
 
         <div class="logo-section-2">
-          <img src="logor.png" alt="Logo">
+          <img src="../img/logor.png" alt="Logo">
         </div>
       </div>
     </div>
@@ -439,6 +537,52 @@
   </footer>
 
   <script src="auth.js"></script>
+  <script>
+    // Mobile menu toggle
+    const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+    const mainNav = document.getElementById('mainNav');
+    
+    if (mobileMenuToggle && mainNav) {
+      mobileMenuToggle.addEventListener('click', function() {
+        this.classList.toggle('active');
+        mainNav.classList.toggle('active');
+        document.body.style.overflow = mainNav.classList.contains('active') ? 'hidden' : '';
+      });
+      
+      // Close menu when clicking on a link
+      const navLinks = mainNav.querySelectorAll('a');
+      navLinks.forEach(link => {
+        link.addEventListener('click', function() {
+          mobileMenuToggle.classList.remove('active');
+          mainNav.classList.remove('active');
+          document.body.style.overflow = '';
+        });
+      });
+      
+      // Close menu when clicking outside
+      document.addEventListener('click', function(event) {
+        if (!mainNav.contains(event.target) && !mobileMenuToggle.contains(event.target)) {
+          mobileMenuToggle.classList.remove('active');
+          mainNav.classList.remove('active');
+          document.body.style.overflow = '';
+        }
+      });
+    }
+    
+    // Dropdown menu toggle for mobile
+    const dropdowns = document.querySelectorAll('.dropdown');
+    dropdowns.forEach(dropdown => {
+      const dropdownLink = dropdown.querySelector('a');
+      if (dropdownLink) {
+        dropdownLink.addEventListener('click', function(e) {
+          if (window.innerWidth <= 900) {
+            e.preventDefault();
+            dropdown.classList.toggle('active');
+          }
+        });
+      }
+    });
+  </script>
 
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script>
@@ -454,7 +598,8 @@
       { name: "USA", coords: [37.0902, -95.7129] },
       { name: "Canada", coords: [56.1304, -106.3468] },
       { name: "Italie", coords: [41.8719, 12.5674] },
-      { name: "Lille", coords: [50.6292, 3.0573] }
+      { name: "Lille", coords: [50.6292, 3.0573] },
+      { name: "Paris", coords: [48.8566, 2.3522] }
     ];
 
     localites.forEach(loc => {

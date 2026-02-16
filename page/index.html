@@ -19,7 +19,7 @@
       <!-- Partie gauche -->
       <div class="header-left">
         <div class="brand-logo">
-          <img alt="BEMTECH Logo" src="logob.png">
+          <img alt="BEMTECH Logo" src="../img/logob.png">
         </div>
         <span class="brand-divider" aria-hidden="true"></span>
         <div class="brand-title">Alumni</div>
@@ -27,11 +27,16 @@
 
       <!-- Partie droite -->
       <div class="header-right">
-        <nav class="nav-block" aria-label="Primary">
+        <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <nav class="nav-block" id="mainNav" aria-label="Primary">
           <div class="nav-top">
             <a href="#join" id="membershipBtn">Membership</a>
             <a href="actualite.html" class="restricted-link" data-page="actualites">Actualités &amp; Recompenses</a>
-            <a href="vie_school.html" class="restricted-link" data-page="vie-ecole">Vie a l'ecole</a>
+            <a href="vie_school.html" class="restricted-link" data-page="vie-ecole">Vie academique</a>
             <a href="after.html" class="restricted-link" data-page="apres-ecole">Apres l'ecole</a>
             <a href="contact.html">Contactez-nous</a>
           </div>
@@ -80,7 +85,7 @@
         </nav>
 
         <div class="logo-section-2">
-          <img src="logor.png" alt="Logo">
+          <img src="../img/logor.png" alt="Logo">
         </div>
       </div>
 
@@ -225,7 +230,7 @@
     <div class="hero-container">
       <div class="hero-content">
         <div class="hero-image">
-          <img src="Sakoura-27.jpg" alt="University Campus" />
+          <img src="../img/Sakoura-27.jpg" alt="University Campus" />
         </div>
       </div>
       
@@ -304,7 +309,7 @@
 <section class="networks-section">
   <div class="networks-container">
     <div class="networks-image">
-      <img src="468961362_18026728211571239_8595113573541418585_n.jpg" alt="Alumni Networking">
+      <img src="../img/468961362_18026728211571239_8595113573541418585_n.jpg" alt="Alumni Networking">
     </div>
     <div class="networks-text">
       <h2>Avantages du réseau</h2>
@@ -312,7 +317,7 @@
         Explorez nos réseaux pour rencontrer d'autres anciens élèves, parents et amis de BEM TECH, 
         connectez-vous autour d'intérêts communs ou d'expériences partagées, et trouvez des professionnels dans votre secteur.
       </p><br><br>
-      <a href="#" class="connect-btn">Adhesion</a>
+      <a href="#" class="connect-btn">Adhésion</a>
     </div>
   </div>
 </section>
@@ -368,7 +373,7 @@
     <div class="footer-about">
       <h3>Bem Tech Alumni</h3>
       <p>
-        Connecter les anciens, inspirer la communauté et bâtir un futur meilleur ensemble.
+        Connecter les anciens, inspirer la communauté et bâtir un meilleur future ensemble.
       </p>
     </div>
 
@@ -385,7 +390,7 @@
     </div>
 
     <div class="footer-contact">
-      <h4>Contactez-nous</h4>
+      <strong><h4>Contactez-nous</h4></strong>
       <div class="contact-info-footer">
         <div class="contact-item-footer">
           <i class="fas fa-phone"></i>
@@ -426,5 +431,51 @@
 
 <script src="auth.js"></script>
 <script src="animations.js"></script>
+<script>
+  // Mobile menu toggle
+  const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+  const mainNav = document.getElementById('mainNav');
+  
+  if (mobileMenuToggle && mainNav) {
+    mobileMenuToggle.addEventListener('click', function() {
+      this.classList.toggle('active');
+      mainNav.classList.toggle('active');
+      document.body.style.overflow = mainNav.classList.contains('active') ? 'hidden' : '';
+    });
+    
+    // Close menu when clicking on a link
+    const navLinks = mainNav.querySelectorAll('a');
+    navLinks.forEach(link => {
+      link.addEventListener('click', function() {
+        mobileMenuToggle.classList.remove('active');
+        mainNav.classList.remove('active');
+        document.body.style.overflow = '';
+      });
+    });
+    
+    // Close menu when clicking outside
+    document.addEventListener('click', function(event) {
+      if (!mainNav.contains(event.target) && !mobileMenuToggle.contains(event.target)) {
+        mobileMenuToggle.classList.remove('active');
+        mainNav.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    });
+  }
+  
+  // Dropdown menu toggle for mobile
+  const dropdowns = document.querySelectorAll('.dropdown');
+  dropdowns.forEach(dropdown => {
+    const dropdownLink = dropdown.querySelector('a');
+    if (dropdownLink) {
+      dropdownLink.addEventListener('click', function(e) {
+        if (window.innerWidth <= 900) {
+          e.preventDefault();
+          dropdown.classList.toggle('active');
+        }
+      });
+    }
+  });
+</script>
 </body>
 </html>

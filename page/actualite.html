@@ -356,7 +356,7 @@
             <!-- Partie gauche -->
             <div class="header-left">
                 <div class="brand-logo">
-                    <img alt="BEMTECH Logo" src="logob.png">
+                    <img alt="BEMTECH Logo" src="../img/logob.png">
                 </div>
                 <span class="brand-divider" aria-hidden="true"></span>
                 <div class="brand-title">Alumni</div>
@@ -368,7 +368,7 @@
                     <div class="nav-top">
                         <a href="index.html#join" id="membershipBtn">Membership</a>
                         <a href="actualite.html" style="color: #79c7f1; font-weight: 800;">Actualités & Recompenses</a>
-                        <a href="vie_school.html" class="restricted-link" data-page="vie-ecole">Vie a l'ecole</a>
+                        <a href="vie_school.html" class="restricted-link" data-page="vie-ecole">Vie academique</a>
                         <a href="after.html" class="restricted-link" data-page="apres-ecole">Apres l'ecole</a>
                         <a href="contact.html">Contact</a>
                     </div>
@@ -417,7 +417,7 @@
                 </nav>
 
                 <div class="logo-section-2">
-                    <img src="logor.png" alt="Logo">
+                    <img src="../img/logor.png" alt="Logo">
                 </div>
             </div>
         </div>
@@ -443,7 +443,36 @@
                 <div class="alumni-avatar">
                     <i class="fas fa-handshake" style="font-size: 3rem; color: var(--washu-red);"></i>
                 </div>
-                <h3 class="alumni-name">Partenariat Stratégique</h3>
+                
+                <h3 class="alumni-name">Nouvelles Filières 2025</h3>
+                <p class="alumni-position">Nouveautés technologiques</p>
+                <p class="alumni-company">Spécialisations: Computer Engineering, Cybersecurity Management, Data Science & Analytics, Biotechnology</p>
+                <div class="alumni-meta">
+                    <span class="alumni-promotion">2025</span>
+                    <span class="alumni-location">USA 🇺🇸 & Europe 🇪🇺</span>
+                </div>
+                <div class="alumni-actions">
+                    <button class="interaction-btn" onclick="toggleInteraction(this, 'like')">
+                        <i class="fas fa-thumbs-up"></i>
+                        <span>Je salue ceci</span>
+                    </button>
+                    <button class="interaction-btn" onclick="toggleInteraction(this, 'love')">
+                        <i class="fas fa-heart"></i>
+                        <span>J'adore</span>
+                    </button>
+                    <button class="interaction-btn" onclick="toggleInteraction(this, 'celebrate')">
+                        <i class="fas fa-star"></i>
+                        <span>Super</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Avantages Étudiants -->
+            <div class="alumni-card">
+                <div class="alumni-avatar">
+                    <i class="fas fa-star" style="font-size: 3rem; color: var(--washu-red);"></i>
+                </div>
+                <h3 class="alumni-name">Partenariats</h3>
                 <p class="alumni-position">BEM TECH × Seneca Polytechnic</p>
                 <p class="alumni-company">Nouveau programme International Bachelor of Technology en partenariat avec Seneca Polytechnic (Canada)</p>
                 <div class="alumni-meta">
@@ -471,37 +500,9 @@
                 <div class="alumni-avatar">
                     <i class="fas fa-graduation-cap" style="font-size: 3rem; color: var(--washu-red);"></i>
                 </div>
-                <h3 class="alumni-name">Nouvelles Filières 2025</h3>
-                <p class="alumni-position">International Master of Technology</p>
-                <p class="alumni-company">Spécialisations: Computer Engineering, Cybersecurity Management, Data Science & Analytics, Biotechnology</p>
-                <div class="alumni-meta">
-                    <span class="alumni-promotion">2025</span>
-                    <span class="alumni-location">USA 🇺🇸 & Europe 🇪🇺</span>
-                </div>
-                <div class="alumni-actions">
-                    <button class="interaction-btn" onclick="toggleInteraction(this, 'like')">
-                        <i class="fas fa-thumbs-up"></i>
-                        <span>Je salue ceci</span>
-                    </button>
-                    <button class="interaction-btn" onclick="toggleInteraction(this, 'love')">
-                        <i class="fas fa-heart"></i>
-                        <span>J'adore</span>
-                    </button>
-                    <button class="interaction-btn" onclick="toggleInteraction(this, 'celebrate')">
-                        <i class="fas fa-star"></i>
-                        <span>Super</span>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Avantages Étudiants -->
-            <div class="alumni-card">
-                <div class="alumni-avatar">
-                    <i class="fas fa-star" style="font-size: 3rem; color: var(--washu-red);"></i>
-                </div>
                 <h3 class="alumni-name">Avantages Exclusifs</h3>
-                <p class="alumni-position">Programme International</p>
-                <p class="alumni-company">Double diplôme international, immersion USA/Europe, encadrement par experts, réseau mondial, opportunités carrière</p>
+                <p class="alumni-position">Membre du reseau</p>
+                <p class="alumni-company">Double diplôme international, Les membres bénéficient d’un accès privilégié au réseau Alumni, véritable passerelle vers des opportunités de stages, d’emplois et de mentorat. 🌐</p>
                 <div class="alumni-meta">
                     <span class="alumni-promotion">Avantages</span>
                     <span class="alumni-location">Mondial 🌍</span>
@@ -535,28 +536,28 @@
             <div class="carousel-container">
                 <div class="carousel-wrapper" id="carouselWrapper">
                     <div class="carousel-slide">
-                        <img src="photos/partenariat_1.jpg" alt="Réunion de partenariat BEM TECH">
+                        <img src="../photos/partenariat_1.jpg" alt="Réunion de partenariat BEM TECH">
                         <div class="slide-overlay">
                             <h3>Réunion Stratégique</h3>
                             <p>Rencontre avec nos partenaires internationaux pour définir les axes de collaboration et d'échange académique.</p>
                         </div>
                     </div>
                     <div class="carousel-slide">
-                        <img src="WhatsApp Image 2025-08-31 at 23.57.53.jpeg" alt="Conférence partenariat international">
+                        <img src="../img/WhatsApp Image 2025-08-31 at 23.57.53.jpeg" alt="Conférence partenariat international">
                         <div class="slide-overlay">
                             <h3>Conférence Internationale</h3>
                             <p>Présentation des programmes d'échange et des opportunités de double diplôme avec nos partenaires.</p>
                         </div>
                     </div>
                     <div class="carousel-slide">
-                        <img src="WhatsApp Image 2025-08-31 at 23.57.57.jpeg" alt="Présentation des programmes BEM TECH">
+                        <img src="../img/WhatsApp Image 2025-08-31 at 23.57.57.jpeg" alt="Présentation des programmes BEM TECH">
                         <div class="slide-overlay">
                             <h3>Innovation & Leadership</h3>
                             <p>Mise en avant de nos programmes innovants et de notre approche pédagogique centrée sur l'excellence.</p>
                         </div>
                     </div>
                     <div class="carousel-slide">
-                        <img src="WhatsApp Image 2025-08-31 at 23.57.59.jpeg" alt="Signature partenariat Seneca Polytechnic">
+                        <img src="../img/WhatsApp Image 2025-08-31 at 23.57.59.jpeg" alt="Signature partenariat Seneca Polytechnic">
                         <div class="slide-overlay">
                             <h3>Partenariat Seneca Polytechnic</h3>
                             <p>Signature officielle du partenariat avec Seneca Polytechnic (Canada) pour le programme International Bachelor.</p>
