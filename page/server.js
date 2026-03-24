@@ -416,47 +416,105 @@ function initializeDatabase(callback) {
 }
 
 // Démarrer le serveur une fois la base de données initialisée
-initializeDatabase((err) => {
-    if (err) {
+if (process.env.NODE_ENV === 'production') {
+    // PostgreSQL initialization
+    initializeDatabase().then(() => {
+        console.log('Base de données initialisée avec succès');
+        startServer();
+    }).catch(err => {
         console.error('Erreur lors de l\'initialisation de la base de données:', err);
         process.exit(1);
-    }
-    
-    console.log('Base de données initialisée avec succès');
-    
+    });
+} else {
+    // SQLite initialization
+    initializeDatabase((err) => {
+        if (err) {
+            console.error('Erreur lors de l\'initialisation de la base de données:', err);
+            process.exit(1);
+        }
+        console.log('Base de données initialisée avec succès');
+        startServer();
+    });
+}
+
+function startServer() {
     // Créer un compte administrateur par défaut
     const adminEmail = 'admin@bemtech.com';
     const adminPassword = 'admin123';
     
-    db.get('SELECT id FROM users WHERE email = ?', [adminEmail], async (err, row) => {
-        if (err) {
-            console.error('Erreur lors de la vérification de l\'admin:', err);
-            return;
-        }
-        
-        if (!row) {
-            // Créer le compte admin s'il n'existe pas
-            const bcrypt = require('bcryptjs');
-            const hashedPassword = await bcrypt.hash(adminPassword, 12);
+    if (process.env.NODE_ENV === 'production') {
+        // PostgreSQL
+        db.query('SELECT id FROM users WHERE email = $1', [adminEmail], async (err, res) => {
+            if (err) {
+                console.error('Erreur lors de la vérification de l\'admin:', err);
+                return;
+            }
             
-            db.run(
-                'INSERT INTO users (nom, email, password, promo, role) VALUES (?, ?, ?, ?, ?)',
-                ['Administrateur', adminEmail, hashedPassword, 'Admin', 'admin'],
-                function(err) {
-                    if (err) {
-                        console.error('Erreur lors de la création de l\'admin:', err);
-                    } else {
-                        console.log('🔐 Compte administrateur créé:');
-                        console.log('   Email: admin@bemtech.com');
-                        console.log('   Mot de passe: admin123');
-                        console.log('   URL: http://localhost:4000/admin.html');
+            if (res.rows.length === 0) {
+                // Créer le compte admin s'il n'existe pas
+                const bcrypt = require('bcryptjs');
+                const hashedPassword = await bcrypt.hash(adminPassword, 12);
+                
+                db.query(
+                    'INSERT INTO users (nom, email, password, promo, role) VALUES ($1, $2, $3, $4, $5)',
+                    ['Administrateur', adminEmail, hashedPassword, 'Admin', 'admin'],
+                    function(err) {
+                        if (err) {
+                            console.error('Erreur lors de la création de l\'admin:', err);
+                        } else {
+                            console.log('🔐 Compte administrateur créé:');
+                            console.log('   Email: admin@bemtech.com');
+                            console.log('   Mot de passe: admin123');
+                            console.log('   URL: https://bemtech.onrender.com/admin.html');
+                        }
                     }
-                }
-            );
-        }
-    });
+                );
+            }
+        });
+    } else {
+        // SQLite
+        db.get('SELECT id FROM users WHERE email = ?', [adminEmail], async (err, row) => {
+            if (err) {
+                console.error('Erreur lors de la vérification de l\'admin:', err);
+                return;
+            }
+            
+            if (!row) {
+                // Créer le compte admin s'il n'existe pas
+                const bcrypt = require('bcryptjs');
+                const hashedPassword = await bcrypt.hash(adminPassword, 12);
+                
+                db.run(
+                    'INSERT INTO users (nom, email, password, promo, role) VALUES (?, ?, ?, ?, ?)',
+                    ['Administrateur', adminEmail, hashedPassword, 'Admin', 'admin'],
+                    function(err) {
+                        if (err) {
+                            console.error('Erreur lors de la création de l\'admin:', err);
+                        } else {
+                            console.log('🔐 Compte administrateur créé:');
+                            console.log('   Email: admin@bemtech.com');
+                            console.log('   Mot de passe: admin123');
+                            console.log('   URL: http://localhost:4000/admin.html');
+                        }
+                    }
+                );
+            }
+        });
+    }
     
-});
+    // Démarrer le serveur Express
+    const server = app.listen(PORT, '0.0.0.0', () => {
+        console.log(`🚀 Serveur BemTech Alumni démarré sur http://0.0.0.0:${PORT}`);
+        if (process.env.NODE_ENV === 'production') {
+            console.log(`🌐 Production: https://bemtech.onrender.com`);
+            console.log(`🔐 Admin: https://bemtech.onrender.com/admin.html`);
+        } else {
+            console.log(`🌐 Local: http://localhost:${PORT}`);
+            console.log(`🔐 Admin: http://localhost:${PORT}/admin.html`);
+        }
+        console.log(`🔒 Mode: ${process.env.NODE_ENV || 'development'}`);
+    });
+}
 
 // JWT middleware
 const authenticateToken = (req, res, next) => {
@@ -1673,49 +1731,21 @@ app.use((req, res) => {
 // Graceful shutdown
 process.on('SIGINT', () => {
     console.log('\nFermeture du serveur...');
-    db.close((err) => {
-        if (err) {
-            console.error('Erreur lors de la fermeture de la base de données:', err.message);
-        } else {
-            console.log('Base de données fermée.');
-        }
-        process.exit(0);
-    });
-});
-
-// Démarrer le serveur une fois la base de données initialisée
-initializeDatabase((err) => {
-    if (err) {
-        console.error('Erreur lors de l\'initialisation de la base de données:', err);
-        process.exit(1);
-    }
-    
-    console.log('Base de données initialisée avec succès');
-    
-    // Démarrer le serveur Express
-    const server = app.listen(PORT, '0.0.0.0', () => {
-        console.log(`🚀 Serveur BemTech Alumni démarré sur http://0.0.0.0:${PORT}`);
-        console.log(`🌐 Accessible via: http://localhost:${PORT} (local) et http://[IP-VPS]:${PORT} (externe)`);
-        console.log(`📊 Base de données: ${dbPath}`);
-        console.log(`🔒 Mode: ${process.env.NODE_ENV || 'development'}`);
-        console.log(`📧 Email configuré: ${process.env.EMAIL_USER ? '✅' : '❌'}`);
-    });
-
-    // Gestion de l'arrêt propre du serveur
-    process.on('SIGTERM', () => {
-        console.log('\nRéception du signal SIGTERM. Arrêt du serveur...');
-        server.close(() => {
-            console.log('Serveur arrêté.');
-            db.close((err) => {
-                if (err) {
-                    console.error('Erreur lors de la fermeture de la base de données:', err);
-                    process.exit(1);
-                }
-                console.log('Base de données fermée.');
-                process.exit(0);
-            });
+    if (process.env.NODE_ENV === 'production') {
+        db.end(() => {
+            console.log('Base de données PostgreSQL fermée.');
+            process.exit(0);
         });
-    });
+    } else {
+        db.close((err) => {
+            if (err) {
+                console.error('Erreur lors de la fermeture de la base de données:', err.message);
+            } else {
+                console.log('Base de données SQLite fermée.');
+            }
+            process.exit(0);
+        });
+    }
 });
 
 module.exports = app;
