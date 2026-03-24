@@ -585,56 +585,111 @@ app.post('/api/register', authLimiter, validateRegistration, async (req, res) =>
         const { nom, email, password, promo, linkedin, motivation } = req.body;
 
         // Check if user already exists
-        db.get('SELECT id FROM users WHERE email = ?', [email], async (err, row) => {
-            if (err) {
-                return res.status(500).json({ error: 'Erreur de base de données' });
-            }
-
-            if (row) {
-                return res.status(409).json({ error: 'Un utilisateur avec cet email existe déjà' });
-            }
-
-            // Hash password
-            const saltRounds = 12;
-            const hashedPassword = await bcrypt.hash(password, saltRounds);
-
-            // Insert user
-            db.run(
-                'INSERT INTO users (nom, email, password, promo, linkedin, motivation) VALUES (?, ?, ?, ?, ?, ?)',
-                [nom, email, hashedPassword, promo, linkedin || '', motivation || ''],
-                function(err) {
-                    if (err) {
-                        return res.status(500).json({ error: 'Erreur lors de la création du compte' });
-                    }
-
-                    // Generate JWT token
-                    const token = jwt.sign(
-                        { 
-                            id: this.lastID, 
-                            email: email,
-                            nom: nom,
-                            role: 'member'
-                        },
-                        process.env.JWT_SECRET,
-                        { expiresIn: process.env.JWT_EXPIRES_IN }
-                    );
-
-                    console.log(`✅ Nouveau compte créé: ${nom} (${email}) - Promo ${promo}`);
-                    res.status(201).json({
-                        success: true,
-                        message: 'Compte créé avec succès',
-                        token: token,
-                        user: {
-                            id: this.lastID,
-                            nom: nom,
-                            email: email,
-                            promo: promo,
-                            role: 'member'
-                        }
-                    });
+        if (process.env.NODE_ENV === 'production') {
+            // PostgreSQL version
+            db.query('SELECT id FROM users WHERE email = $1', [email], async (err, res) => {
+                if (err) {
+                    return res.status(500).json({ error: 'Erreur de base de données' });
                 }
-            );
-        });
+
+                if (res.rows.length > 0) {
+                    return res.status(409).json({ error: 'Un utilisateur avec cet email existe déjà' });
+                }
+
+                // Hash password
+                const saltRounds = 12;
+                const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+                // Insert user
+                db.query(
+                    'INSERT INTO users (nom, email, password, promo, linkedin, motivation) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id',
+                    [nom, email, hashedPassword, promo, linkedin || '', motivation || ''],
+                    (err, res) => {
+                        if (err) {
+                            return res.status(500).json({ error: 'Erreur lors de la création du compte' });
+                        }
+
+                        // Generate JWT token
+                        const token = jwt.sign(
+                            { 
+                                id: res.rows[0].id, 
+                                email: email,
+                                nom: nom,
+                                role: 'member'
+                            },
+                            process.env.JWT_SECRET,
+                            { expiresIn: process.env.JWT_EXPIRES_IN }
+                        );
+
+                        console.log(`✅ Nouveau compte créé: ${nom} (${email}) - Promo ${promo}`);
+                        res.status(201).json({
+                            success: true,
+                            message: 'Compte créé avec succès',
+                            token: token,
+                            user: {
+                                id: res.rows[0].id,
+                                nom: nom,
+                                email: email,
+                                promo: promo,
+                                role: 'member'
+                            }
+                        });
+                    }
+                );
+            });
+        } else {
+            // SQLite version
+            db.get('SELECT id FROM users WHERE email = ?', [email], async (err, row) => {
+                if (err) {
+                    return res.status(500).json({ error: 'Erreur de base de données' });
+                }
+
+                if (row) {
+                    return res.status(409).json({ error: 'Un utilisateur avec cet email existe déjà' });
+                }
+
+                // Hash password
+                const saltRounds = 12;
+                const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+                // Insert user
+                db.run(
+                    'INSERT INTO users (nom, email, password, promo, linkedin, motivation) VALUES (?, ?, ?, ?, ?, ?)',
+                    [nom, email, hashedPassword, promo, linkedin || '', motivation || ''],
+                    function(err) {
+                        if (err) {
+                            return res.status(500).json({ error: 'Erreur lors de la création du compte' });
+                        }
+
+                        // Generate JWT token
+                        const token = jwt.sign(
+                            { 
+                                id: this.lastID, 
+                                email: email,
+                                nom: nom,
+                                role: 'member'
+                            },
+                            process.env.JWT_SECRET,
+                            { expiresIn: process.env.JWT_EXPIRES_IN }
+                        );
+
+                        console.log(`✅ Nouveau compte créé: ${nom} (${email}) - Promo ${promo}`);
+                        res.status(201).json({
+                            success: true,
+                            message: 'Compte créé avec succès',
+                            token: token,
+                            user: {
+                                id: this.lastID,
+                                nom: nom,
+                                email: email,
+                                promo: promo,
+                                role: 'member'
+                            }
+                        });
+                    }
+                );
+            });
+        }
     } catch (error) {
         res.status(500).json({ error: 'Erreur serveur' });
     }
@@ -674,56 +729,101 @@ app.post('/api/login', authLimiter, validateLogin, (req, res) => {
             
             // Update user's last login and increment login count
             const now = new Date().toISOString();
-            db.serialize(() => {
-                // Update user's last login and increment login count
-                db.run(
-                    'UPDATE users SET last_login = ?, login_count = login_count + 1, updated_at = CURRENT_TIMESTAMP WHERE id = ?',
-                    [now, user.id],
-                    (err) => {
+            
+            if (process.env.NODE_ENV === 'production') {
+                // PostgreSQL version
+                db.query('UPDATE users SET last_login = $1, login_count = login_count + 1, updated_at = CURRENT_TIMESTAMP WHERE id = $2', [now, user.id], (err) => {
+                    if (err) {
+                        console.error('Error updating user login info:', err);
+                    }
+                    
+                    // Log the login activity
+                    db.query('INSERT INTO user_activity (user_id, login_time, ip_address, user_agent) VALUES ($1, $2, $3, $4)', [user.id, now, ip, userAgent], (err) => {
                         if (err) {
-                            console.error('Error updating user login info:', err);
+                            console.error('Error logging user activity:', err);
                         }
                         
-                        // Log the login activity
-                        db.run(
-                            'INSERT INTO user_activity (user_id, login_time, ip_address, user_agent) VALUES (?, ?, ?, ?)',
-                            [user.id, now, ip, userAgent],
-                            (err) => {
-                                if (err) {
-                                    console.error('Error logging user activity:', err);
-                                }
-                                
-                                // Generate JWT token
-                                const token = jwt.sign(
-                                    { 
-                                        id: user.id, 
-                                        email: user.email,
-                                        nom: user.nom,
-                                        role: user.role
-                                    },
-                                    process.env.JWT_SECRET,
-                                    { expiresIn: process.env.JWT_EXPIRES_IN }
-                                );
-
-                                res.json({
-                                    success: true,
-                                    message: 'Connexion réussie',
-                                    token: token,
-                                    user: {
-                                        id: user.id,
-                                        nom: user.nom,
-                                        email: user.email,
-                                        promo: user.promo,
-                                        role: user.role,
-                                        last_login: now,
-                                        login_count: (user.login_count || 0) + 1
-                                    }
-                                });
-                            }
+                        // Generate JWT token
+                        const token = jwt.sign(
+                            { 
+                                id: user.id, 
+                                email: user.email,
+                                nom: user.nom,
+                                role: user.role
+                            },
+                            process.env.JWT_SECRET,
+                            { expiresIn: process.env.JWT_EXPIRES_IN }
                         );
-                    }
-                );
-            });
+
+                        res.json({
+                            success: true,
+                            message: 'Connexion réussie',
+                            token: token,
+                            user: {
+                                id: user.id,
+                                nom: user.nom,
+                                email: user.email,
+                                promo: user.promo,
+                                role: user.role,
+                                last_login: now,
+                                login_count: (user.login_count || 0) + 1
+                            }
+                        });
+                    });
+                });
+            } else {
+                // SQLite version
+                db.serialize(() => {
+                    // Update user's last login and increment login count
+                    db.run(
+                        'UPDATE users SET last_login = ?, login_count = login_count + 1, updated_at = CURRENT_TIMESTAMP WHERE id = ?',
+                        [now, user.id],
+                        (err) => {
+                            if (err) {
+                                console.error('Error updating user login info:', err);
+                            }
+                            
+                            // Log the login activity
+                            db.run(
+                                'INSERT INTO user_activity (user_id, login_time, ip_address, user_agent) VALUES (?, ?, ?, ?)',
+                                [user.id, now, ip, userAgent],
+                                (err) => {
+                                    if (err) {
+                                        console.error('Error logging user activity:', err);
+                                    }
+                                    
+                                    // Generate JWT token
+                                    const token = jwt.sign(
+                                        { 
+                                            id: user.id, 
+                                            email: user.email,
+                                            nom: user.nom,
+                                            role: user.role
+                                        },
+                                        process.env.JWT_SECRET,
+                                        { expiresIn: process.env.JWT_EXPIRES_IN }
+                                    );
+
+                                    res.json({
+                                        success: true,
+                                        message: 'Connexion réussie',
+                                        token: token,
+                                        user: {
+                                            id: user.id,
+                                            nom: user.nom,
+                                            email: user.email,
+                                            promo: user.promo,
+                                            role: user.role,
+                                            last_login: now,
+                                            login_count: (user.login_count || 0) + 1
+                                        }
+                                    });
+                                }
+                            );
+                        }
+                    );
+                });
+            }
         });
     } catch (error) {
         res.status(500).json({ error: 'Erreur serveur' });
