@@ -1,0 +1,26 @@
+services:
+  # Service web principal
+  - type: web
+    name: bemtech-alumni
+    env: node
+    plan: free
+    buildCommand: "npm install"
+    startCommand: "node server.js"
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_EXPIRES_IN
+        value: 7d
+    healthCheck:
+      path: /
+      initialDelaySeconds: 30
+
+  # Base de données PostgreSQL
+  - type: postgres
+    name: bemtech-db
+    plan: free
+    ipAllowList: [] # Autoriser les connexions depuis le service web

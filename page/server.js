@@ -1,7 +1,6 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const sqlite3 = require('sqlite3').verbose();
 const cors = require('cors');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
@@ -10,6 +9,28 @@ const path = require('path');
 const nodemailer = require('nodemailer');
 require('dotenv').config();
 
+// Database configuration
+let db;
+if (process.env.NODE_ENV === 'production') {
+    // PostgreSQL pour Render
+    const { Pool } = require('pg');
+    db = new Pool({
+        connectionString: process.env.DATABASE_URL,
+        ssl: { rejectUnauthorized: false }
+    });
+} else {
+    // SQLite pour le développement local
+    const sqlite3 = require('sqlite3').verbose();
+    const dbPath = path.join(__dirname, 'database', 'alumni.db');
+    
+    // Créer le répertoire s'il n'existe pas
+    if (!require('fs').existsSync(path.dirname(dbPath))) {
+        require('fs').mkdirSync(path.dirname(dbPath), { recursive: true });
+    }
+    
+    db = new sqlite3.Database(dbPath, sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE);
+}
+
 const app = express();
 const PORT = process.env.PORT || 4000;
 
@@ -17,19 +38,21 @@ const PORT = process.env.PORT || 4000;
 app.use(helmet({
     contentSecurityPolicy: false // Allow inline scripts for development
 }));
-// Configuration CORS plus permissive pour le développement
+// Configuration CORS dynamique
 const corsOptions = {
-    origin: ['http://localhost:4000', 'http://127.0.0.1:4000'],
+    origin: process.env.NODE_ENV === 'production' 
+        ? [process.env.RENDER_EXTERNAL_URL || 'https://bemtech-alumni.onrender.com']
+        : ['http://localhost:4000', 'http://127.0.0.1:4000'],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'Content-Length', 'X-Requested-With'],
     credentials: true,
-    optionsSuccessStatus: 200 // Pour les navigateurs plus anciens
+    optionsSuccessStatus: 200 
 };
 
-// Gestion des requêtes OPTIONS (pré-vol)
+
 app.options('*', cors(corsOptions));
 
-// Configuration CORS pour toutes les routes
+
 app.use(cors(corsOptions));
 
 // Middleware pour logger les requêtes
@@ -60,49 +83,224 @@ const authLimiter = rateLimit({
 });
 
 // Database setup
-// Utilisation d'un chemin absolu pour la base de données
-const dbDir = path.join(__dirname, 'database');
-const dbPath = path.join(dbDir, 'alumni.db');
-
-// Créer le répertoire s'il n'existe pas
-try {
-    if (!require('fs').existsSync(dbDir)) {
-        require('fs').mkdirSync(dbDir, { recursive: true });
-        console.log(`Répertoire créé: ${dbDir}`);
-    }
-
-    // Vérifier les permissions du répertoire
-    require('fs').accessSync(dbDir, require('fs').constants.W_OK);
-    console.log(`Permissions en écriture sur le répertoire ${dbDir}: ✅`);
-    console.log('Chemin complet de la base de données:', dbPath);
-    
-    // Si le fichier de base de données n'existe pas, le créer
-    if (!require('fs').existsSync(dbPath)) {
-        require('fs').writeFileSync(dbPath, '');
-        console.log('Fichier de base de données créé avec succès');
-    }
-} catch (err) {
-    console.error('Erreur lors de la configuration de la base de données:', err);
-    process.exit(1);
-}
-
-// Connexion à la base de données
-const db = new sqlite3.Database(dbPath, sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE, (err) => {
-    if (err) {
-        console.error('Erreur de connexion à la base de données:', err);
-        process.exit(1);
-    }
-    console.log('Connecté à la base de données SQLite');
-    
-    // Activer les clés étrangères
-    db.get("PRAGMA foreign_keys = ON", (err) => {
-        if (err) {
-            console.error('Erreur lors de l\'activation des clés étrangères:', err);
-        } else {
-            console.log('Clés étrangères activées');
+async function initializeDatabase() {
+    if (process.env.NODE_ENV === 'production') {
+        // PostgreSQL initialization
+        try {
+            await db.query(`
+                CREATE TABLE IF NOT EXISTS users (
+                    id SERIAL PRIMARY KEY,
+                    nom VARCHAR(255) NOT NULL,
+                    email VARCHAR(255) UNIQUE NOT NULL,
+                    password VARCHAR(255) NOT NULL,
+                    promo VARCHAR(255) NOT NULL,
+                    linkedin TEXT,
+                    motivation TEXT,
+                    role VARCHAR(50) DEFAULT 'member',
+                    last_login TIMESTAMP,
+                    login_count INTEGER DEFAULT 0,
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                );
+            `);
+            
+            await db.query(`
+                CREATE TABLE IF NOT EXISTS user_activity (
+                    id SERIAL PRIMARY KEY,
+                    user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+                    login_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    ip_address TEXT,
+                    user_agent TEXT
+                );
+            `);
+            
+            await db.query(`
+                CREATE TABLE IF NOT EXISTS bureau_requests (
+                    id SERIAL PRIMARY KEY,
+                    nom VARCHAR(255) NOT NULL,
+                    prenom VARCHAR(255) NOT NULL,
+                    promotion VARCHAR(255) NOT NULL,
+                    bureau VARCHAR(255) NOT NULL,
+                    email VARCHAR(255) NOT NULL,
+                    telephone TEXT,
+                    motivation TEXT,
+                    status VARCHAR(50) DEFAULT 'pending',
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                );
+            `);
+            
+            await db.query(`
+                CREATE TABLE IF NOT EXISTS projects (
+                    id SERIAL PRIMARY KEY,
+                    title VARCHAR(255) NOT NULL,
+                    objective TEXT NOT NULL,
+                    description TEXT,
+                    author VARCHAR(255) NOT NULL,
+                    email VARCHAR(255) NOT NULL,
+                    status VARCHAR(50) DEFAULT 'en_attente',
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                );
+            `);
+            
+            await db.query(`
+                CREATE TABLE IF NOT EXISTS project_participants (
+                    id SERIAL PRIMARY KEY,
+                    project_id INTEGER REFERENCES projects(id) ON DELETE CASCADE,
+                    name VARCHAR(255) NOT NULL,
+                    email VARCHAR(255) NOT NULL,
+                    phone TEXT,
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                );
+            `);
+            
+            await db.query(`
+                CREATE TABLE IF NOT EXISTS organized_events (
+                    id SERIAL PRIMARY KEY,
+                    title VARCHAR(255) NOT NULL,
+                    description TEXT NOT NULL,
+                    date TEXT NOT NULL,
+                    location VARCHAR(255) NOT NULL,
+                    organizer VARCHAR(255) NOT NULL,
+                    status VARCHAR(50) DEFAULT 'planned',
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                );
+            `);
+            
+            await db.query(`
+                CREATE TABLE IF NOT EXISTS membership_requests (
+                    id SERIAL PRIMARY KEY,
+                    nom VARCHAR(255) NOT NULL,
+                    prenom VARCHAR(255) NOT NULL,
+                    email VARCHAR(255) NOT NULL,
+                    promo VARCHAR(255) NOT NULL,
+                    linkedin TEXT,
+                    motivation TEXT,
+                    status VARCHAR(50) DEFAULT 'pending',
+                    access_token VARCHAR(255) UNIQUE,
+                    token_expires_at TIMESTAMP,
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                );
+            `);
+            
+            console.log('Base de données PostgreSQL initialisée');
+        } catch (error) {
+            console.error('Erreur PostgreSQL:', error);
+            throw error;
         }
-    });
-});
+    } else {
+        // SQLite initialization (code existant)
+        return new Promise((resolve, reject) => {
+            db.serialize(() => {
+                db.run(`CREATE TABLE IF NOT EXISTS users (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    nom TEXT NOT NULL,
+                    email TEXT UNIQUE NOT NULL,
+                    password TEXT NOT NULL,
+                    promo TEXT NOT NULL,
+                    linkedin TEXT,
+                    motivation TEXT,
+                    role TEXT DEFAULT 'member',
+                    last_login DATETIME,
+                    login_count INTEGER DEFAULT 0,
+                    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+                )`, (err) => {
+                    if (err) return reject(err);
+                    
+                    db.run(`CREATE TABLE IF NOT EXISTS user_activity (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT,
+                        user_id INTEGER NOT NULL,
+                        login_time DATETIME DEFAULT CURRENT_TIMESTAMP,
+                        ip_address TEXT,
+                        user_agent TEXT,
+                        FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+                    )`, (err) => {
+                        if (err) return reject(err);
+                        
+                        db.run(`CREATE TABLE IF NOT EXISTS bureau_requests (
+                            id INTEGER PRIMARY KEY AUTOINCREMENT,
+                            nom TEXT NOT NULL,
+                            prenom TEXT NOT NULL,
+                            promotion TEXT NOT NULL,
+                            bureau TEXT NOT NULL,
+                            email TEXT NOT NULL,
+                            telephone TEXT,
+                            motivation TEXT,
+                            status TEXT DEFAULT 'pending',
+                            created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                            updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+                        )`, (err) => {
+                            if (err) return reject(err);
+                            
+                            db.run(`CREATE TABLE IF NOT EXISTS projects (
+                                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                                title TEXT NOT NULL,
+                                objective TEXT NOT NULL,
+                                description TEXT,
+                                author TEXT NOT NULL,
+                                email TEXT NOT NULL,
+                                status TEXT DEFAULT 'en_attente',
+                                created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                                updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+                            )`, (err) => {
+                                if (err) return reject(err);
+                                
+                                db.run(`CREATE TABLE IF NOT EXISTS project_participants (
+                                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                                    project_id INTEGER NOT NULL,
+                                    name TEXT NOT NULL,
+                                    email TEXT NOT NULL,
+                                    phone TEXT,
+                                    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                                    FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE CASCADE
+                                )`, (err) => {
+                                    if (err) return reject(err);
+                                    
+                                    db.run(`CREATE TABLE IF NOT EXISTS organized_events (
+                                        id INTEGER PRIMARY KEY AUTOINCREMENT,
+                                        title TEXT NOT NULL,
+                                        description TEXT NOT NULL,
+                                        date TEXT NOT NULL,
+                                        location TEXT NOT NULL,
+                                        organizer TEXT NOT NULL,
+                                        status TEXT DEFAULT 'planned',
+                                        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                                        updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+                                    )`, (err) => {
+                                        if (err) return reject(err);
+                                        
+                                        db.run(`CREATE TABLE IF NOT EXISTS membership_requests (
+                                            id INTEGER PRIMARY KEY AUTOINCREMENT,
+                                            nom TEXT NOT NULL,
+                                            prenom TEXT NOT NULL,
+                                            email TEXT NOT NULL,
+                                            promo TEXT NOT NULL,
+                                            linkedin TEXT,
+                                            motivation TEXT,
+                                            status TEXT DEFAULT 'pending',
+                                            access_token TEXT UNIQUE,
+                                            token_expires_at DATETIME,
+                                            created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                                            updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+                                        )`, (err) => {
+                                            if (err) return reject(err);
+                                            console.log('Base de données SQLite initialisée');
+                                            resolve();
+                                        });
+                                    });
+                                });
+                            });
+                        });
+                    });
+                });
+            });
+        });
+    }
+}
 
 // Initialize database
 function initializeDatabase(callback) {
