@@ -562,6 +562,15 @@ app.get('/galerie.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'Galerie.html'));
 });
 
+// Handle missing routes - redirect to home
+app.get('/review', (req, res) => {
+    res.redirect('/');
+});
+
+app.get('*', (req, res) => {
+    res.redirect('/');
+});
+
 // Registration endpoint
 app.post('/api/register', authLimiter, validateRegistration, async (req, res) => {
     try {
