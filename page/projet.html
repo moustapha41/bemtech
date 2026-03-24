@@ -1034,7 +1034,7 @@
     class ProjectManager {
       constructor() {
         this.projects = [];
-        this.apiUrl = 'http://localhost:4000/api';
+        this.apiUrl = window.location.origin + '/api';
         this.initEventListeners();
       }
 

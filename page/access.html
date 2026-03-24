@@ -1134,7 +1134,7 @@ motivation: window.membershipData?.motivation || ''
 };
 console.log('📤 Envoi des données:', userData);
 // Créer le compte automatiquement
-const response = await fetch('http://localhost:4000/api/register', {
+const response = await fetch(`${window.location.origin}/api/register`, {
 method: 'POST',
 headers: {
 'Content-Type': 'application/json',
@@ -1160,7 +1160,7 @@ console.log('🔄 Début de la redirection...');
 // Redirection vers la page principale après 2 secondes
 setTimeout(() => {
 console.log('🔄 Redirection en cours vers index.html');
-window.location.href = 'http://localhost:4000/';
+window.location.href = window.location.origin + '/';
 }, 2000);
 } else {
 console.error('❌ Erreur serveur:', data);
@@ -1181,7 +1181,7 @@ submitBtn.querySelector('.btn-text').textContent = 'INITIALISER CONNEXION';
 // Fonction pour vérifier le token d'accès
 async function verifyAccessToken(token) {
 try {
-const response = await fetch(`http://localhost:4000/api/verify-access-token/${token}`);
+const response = await fetch(`${window.location.origin}/api/verify-access-token/${token}`);
 const data = await response.json();
 if (response.ok && data.valid) {
 // Stocker les données de la demande d'adhésion

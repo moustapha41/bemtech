@@ -3,7 +3,7 @@ class AuthSystem {
     constructor() {
         this.isLoggedIn = false;
         this.currentUser = null;
-        this.apiUrl = 'http://localhost:4000/api';
+        this.apiUrl = window.location.origin + '/api';
         this.token = localStorage.getItem('authToken');
         this.init();
     }

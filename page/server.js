@@ -381,7 +381,7 @@ function startServer() {
                             console.log('🔐 Compte administrateur créé:');
                             console.log('   Email: admin@bemtech.com');
                             console.log('   Mot de passe: admin123');
-                            console.log('   URL: http://localhost:4000/admin.html');
+                            console.log('   URL: https://bemtech.onrender.com/admin.html');
                         }
                     }
                 );
@@ -1291,7 +1291,7 @@ app.post('/api/membership-requests/:id/approve', authenticateToken, (req, res) =
                     return res.status(500).json({ error: 'Erreur lors de la récupération des détails' });
                 }
 
-                const accessLink = `http://localhost:4000/access.html?token=${accessToken}`;
+                const accessLink = `${window.location.origin}/access.html?token=${accessToken}`;
                 
                 console.log(`✅ Demande d'adhésion approuvée: ${request.nom} (${request.email})`);
                 console.log(`🔗 Lien d'accès généré: ${accessLink}`);

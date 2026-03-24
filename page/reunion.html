@@ -811,7 +811,7 @@
                 };
 
                 try {
-                    const response = await fetch('http://localhost:4000/api/organize-event', {
+                    const response = await fetch(`${window.location.origin}/api/organize-event`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',

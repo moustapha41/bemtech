@@ -709,7 +709,7 @@
     <script>
         class AdminPanel {
             constructor() {
-                this.apiUrl = 'http://localhost:4000/api';
+                this.apiUrl = window.location.origin + '/api';
                 this.token = localStorage.getItem('adminToken');
                 this.init();
             }
@@ -855,7 +855,7 @@
                                 ${request.status === 'approved' && request.access_token ? `
                                     <div class="access-link">
                                         <strong>Lien d'accès:</strong><br>
-                                        <span id="link-${request.id}">http://localhost:4000/access.html?token=${request.access_token}</span>
+                                        <span id="link-${request.id}">${window.location.origin}/access.html?token=${request.access_token}</span>
                                         <button class="copy-btn" onclick="adminPanel.copyLink('link-${request.id}')">
                                             <i class="fas fa-copy"></i> Copier
                                         </button>

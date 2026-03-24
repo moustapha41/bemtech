@@ -2248,7 +2248,7 @@ body {
       try {
         console.log('Sending data:', data);
         
-        const response = await fetch('http://localhost:4000/api/join-bureau', {
+        const response = await fetch(`${window.location.origin}/api/join-bureau`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
