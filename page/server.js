@@ -618,7 +618,7 @@ app.post('/api/register', authLimiter, validateRegistration, async (req, res) =>
                                 role: 'member'
                             },
                             process.env.JWT_SECRET,
-                            { expiresIn: process.env.JWT_EXPIRES_IN }
+                            { expiresIn: '7d' }
                         );
 
                         console.log(`✅ Nouveau compte créé: ${nom} (${email}) - Promo ${promo}`);
@@ -670,7 +670,7 @@ app.post('/api/register', authLimiter, validateRegistration, async (req, res) =>
                                 role: 'member'
                             },
                             process.env.JWT_SECRET,
-                            { expiresIn: process.env.JWT_EXPIRES_IN }
+                            { expiresIn: '7d' }
                         );
 
                         console.log(`✅ Nouveau compte créé: ${nom} (${email}) - Promo ${promo}`);
@@ -756,7 +756,7 @@ app.post('/api/login', authLimiter, validateLogin, (req, res) => {
                             role: user.role
                         },
                         process.env.JWT_SECRET,
-                        { expiresIn: process.env.JWT_EXPIRES_IN }
+                        { expiresIn: '7d' }
                     );
 
                     console.log('✅ Token generated successfully');
@@ -839,7 +839,7 @@ app.post('/api/login', authLimiter, validateLogin, (req, res) => {
                                             role: user.role
                                         },
                                         process.env.JWT_SECRET,
-                                        { expiresIn: process.env.JWT_EXPIRES_IN }
+                                        { expiresIn: '7d' }
                                     );
 
                                     res.json({
