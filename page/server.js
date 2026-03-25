@@ -437,6 +437,30 @@ function startServer() {
         }
         console.log(`🔒 Mode: ${process.env.NODE_ENV || 'development'}`);
     });
+
+    // Handle EADDRINUSE error gracefully
+    server.on('error', (err) => {
+        if (err.code === 'EADDRINUSE') {
+            console.error(`❌ Port ${PORT} is already in use. Trying a different port...`);
+            // Try a random port
+            const newPort = Math.floor(Math.random() * (65535 - 49152) + 49152);
+            console.log(`🔄 Retrying with port ${newPort}...`);
+            server.listen(newPort, '0.0.0.0', () => {
+                console.log(`🚀 Serveur BemTech Alumni démarré sur http://0.0.0.0:${newPort}`);
+                if (process.env.NODE_ENV === 'production') {
+                    console.log(`🌐 Production: https://bemtech.onrender.com`);
+                    console.log(`🔐 Admin: https://bemtech.onrender.com/admin.html`);
+                } else {
+                    console.log(`🌐 Local: http://localhost:${newPort}`);
+                    console.log(`🔐 Admin: http://localhost:${newPort}/admin.html`);
+                }
+                console.log(`🔒 Mode: ${process.env.NODE_ENV || 'development'}`);
+            });
+        } else {
+            console.error('❌ Server error:', err);
+            process.exit(1);
+        }
+    });
 }
 
 // JWT middleware
