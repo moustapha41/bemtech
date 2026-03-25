@@ -476,23 +476,14 @@
                     { src: '../2023/Salon/Copie de IMG-20220311-WA0009.jpg', title: 'Salon 2023 - WhatsApp 9', year: '2023', type: 'salon', date: '2023-06-30' },
                     { src: '../2023/Salon/Copie de IMG-20220325-WA0005.jpg', title: 'Salon 2023 - WhatsApp 25', year: '2023', type: 'salon', date: '2023-06-30' },
                     
-                    // 2023 Photos - Visite d'entreprise
+                    // 2023 Photos - Visite d'entreprise (uniquement les fichiers présents dans 2023/Visite_d_entreprise/)
                     { src: '../2023/Visite_d_entreprise/Copie de IMG-20220610-WA0012.jpg', title: 'Visite d\'entreprise 2023 - Photo 1', year: '2023', type: 'visite', date: '2023-06-10' },
                     { src: '../2023/Visite_d_entreprise/Copie de IMG-20220610-WA0015.jpg', title: 'Visite d\'entreprise 2023 - Photo 2', year: '2023', type: 'visite', date: '2023-06-10' },
                     { src: '../2023/Visite_d_entreprise/Copie de IMG-20220613-WA0003.jpg', title: 'Visite d\'entreprise 2023 - Photo 3', year: '2023', type: 'visite', date: '2023-06-13' },
                     { src: '../2023/Visite_d_entreprise/Copie de IMG-20220613-WA0004.jpg', title: 'Visite d\'entreprise 2023 - Photo 4', year: '2023', type: 'visite', date: '2023-06-13' },
                     { src: '../2023/Visite_d_entreprise/Copie de IMG-20220613-WA0005.jpg', title: 'Visite d\'entreprise 2023 - Photo 5', year: '2023', type: 'visite', date: '2023-06-13' },
-                    { src: '../2023/Visite_d_entreprise/Copie de IMG-20220613-WA0006.jpg', title: 'Visite d\'entreprise 2023 - Photo 6', year: '2023', type: 'visite', date: '2023-06-13' },
-                    { src: '../2023/Visite_d_entreprise/Copie de IMG-20220613-WA0009.jpg', title: 'Visite d\'entreprise 2023 - Photo 7', year: '2023', type: 'visite', date: '2023-06-13' },
-                    { src: '../2023/Visite_d_entreprise/Copie de IMG-20220613-WA0010.jpg', title: 'Visite d\'entreprise 2023 - Photo 8', year: '2023', type: 'visite', date: '2023-06-13' },
-                    { src: '../2023/Visite_d_entreprise/IMG_0437.jpg', title: 'Visite d\'entreprise 2023 - IMG 437', year: '2023', type: 'visite', date: '2023-06-13' },
-                    { src: '../2023/Visite_d_entreprise/IMG_0440.jpg', title: 'Visite d\'entreprise 2023 - IMG 440', year: '2023', type: 'visite', date: '2023-06-13' },
-                    { src: '../2023/Visite_d_entreprise/IMG_0441.jpg', title: 'Visite d\'entreprise 2023 - IMG 441', year: '2023', type: 'visite', date: '2023-06-13' },
-                    { src: '../2023/Visite_d_entreprise/IMG_0443.jpg', title: 'Visite d\'entreprise 2023 - IMG 443', year: '2023', type: 'visite', date: '2023-06-13' },
-                    { src: '../2023/Visite_d_entreprise/IMG_0445.jpg', title: 'Visite d\'entreprise 2023 - IMG 445', year: '2023', type: 'visite', date: '2023-06-13' },
-                    { src: '../2023/Visite_d_entreprise/IMG_0453.jpg', title: 'Visite d\'entreprise 2023 - IMG 453', year: '2023', type: 'visite', date: '2023-06-13' },
-                    { src: '../2023/Visite_d_entreprise/IMG_0458.jpg', title: 'Visite d\'entreprise 2023 - IMG 458', year: '2023', type: 'visite', date: '2023-06-13' },
-                    { src: '../2023/Visite_d_entreprise/c7c162f3-ed45-4f02-b5ba-09b58d4bfb17.jpg', title: 'Visite d\'entreprise 2023 - Photo spéciale', year: '2023', type: 'visite', date: '2023-06-13' },
+                    { src: '../2023/Visite_d_entreprise/Copie de IMG-20220325-WA0005.jpg', title: 'Visite d\'entreprise 2023 - Photo 6', year: '2023', type: 'visite', date: '2023-06-13' },
+                    { src: '../2023/Visite_d_entreprise/c7c162f3-ed45-4f02-b5ba-09b58d4bfb17.jpg', title: 'Visite d\'entreprise 2023 - Photo 7', year: '2023', type: 'visite', date: '2023-06-13' },
                     
                     // 2023 Photos - Weekend d'intégration
                     { src: '../2023/Weekend_d_integration/Image 2023-12-19 à 10.01.27_4c140149.jpg', title: 'Weekend d\'intégration 2023 - Photo 1', year: '2023', type: 'weekend', date: '2023-12-19' },
@@ -564,6 +555,13 @@
                     { src: '../2025/Weekend_d_integration/IMG_9647.jpg', title: 'Weekend d\'intégration 2025 - IMG 9647', year: '2025', type: 'weekend', date: '2025-12-15' }
                 ];
 
+                // Miniature pour la grille (dossier thumbs/ à côté de l’original — voir npm run thumbs)
+                function galleryThumbUrl(fullSrc) {
+                    const i = fullSrc.lastIndexOf('/');
+                    if (i === -1) return fullSrc;
+                    return fullSrc.slice(0, i) + '/thumbs' + fullSrc.slice(i);
+                }
+
                 // Générer les cartes de photos dynamiquement
                 const photosContainer = document.getElementById('photosContainer');
                 
@@ -572,9 +570,9 @@
                         photoCard.className = 'photo-card';
                         photoCard.setAttribute('data-year', photo.year);
                         photoCard.setAttribute('data-type', photo.type);
-                        
+                        const thumbSrc = galleryThumbUrl(photo.src);
                         photoCard.innerHTML = `
-                            <img src="${photo.src}" alt="${photo.title}" class="photo-image" loading="lazy" onclick="openModal('${photo.src}', '${photo.title}')">
+                            <img src="${thumbSrc}" alt="${photo.title.replace(/"/g, '&quot;')}" class="photo-image" loading="lazy" decoding="async" onclick='openModal(${JSON.stringify(photo.src)}, ${JSON.stringify(photo.title)})' onerror='this.onerror=null;this.src=${JSON.stringify(photo.src)}'>
                             <div class="photo-info">
                                 <h3 class="photo-title">${photo.title}</h3>
                                 <div class="photo-meta">

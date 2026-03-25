@@ -64,8 +64,34 @@ app.use((req, res, next) => {
     next();
 });
 app.use(express.json());
-// Servir les fichiers statiques du répertoire courant
-app.use(express.static('.'));
+
+// Rediriger les anciennes URLs *.html vers leur version "propre"
+app.use((req, res, next) => {
+    if (req.method !== 'GET' && req.method !== 'HEAD') {
+        return next();
+    }
+
+    const htmlPathMatch = req.path.match(/^\/([A-Za-z0-9_-]+)\.html$/);
+    if (!htmlPathMatch) {
+        return next();
+    }
+
+    const page = htmlPathMatch[1];
+    if (page.toLowerCase() === 'index') {
+        return res.redirect(301, '/');
+    }
+
+    return res.redirect(301, `/${page}`);
+});
+
+// Serve static files from page directory
+app.use(express.static(__dirname));
+
+// Serve photos from parent directories
+app.use('/2022', express.static(path.join(__dirname, '..', '2022')));
+app.use('/2023', express.static(path.join(__dirname, '..', '2023')));
+app.use('/2024', express.static(path.join(__dirname, '..', '2024')));
+app.use('/2025', express.static(path.join(__dirname, '..', '2025')));
 // Servir les fichiers du dossier img qui est dans le répertoire parent
 app.use('/img', express.static(path.join(__dirname, '..', 'img')));
 
@@ -484,6 +510,56 @@ const validateMembershipRequest = [
 ];
 
 
+// URLs propres: /admin, /give, /reunion, etc.
+const cleanRouteToFile = {
+    access: 'access',
+    admin: 'admin',
+    after: 'after',
+    contact: 'contact',
+    reseau: 'reseau',
+    projet: 'projet',
+    qui: 'Qui',
+    FAQ: 'FAQ',
+    evenements_etudiants: 'evenements_etudiants',
+    opportunite: 'opportunite',
+    mentorat: 'mentorat',
+    calendrier: 'calendrier',
+    actualite: 'actualite',
+    retrouvaille: 'retrouvaille',
+    reunion: 'reunion',
+    journee: 'journee',
+    weekend: 'weekend',
+    don_annuel: 'don_annuel',
+    conseil: 'conseil',
+    galerie: 'Galerie',
+    give: 'give',
+    vie_school: 'vie_school'
+};
+
+// Rediriger /xxx.html -> /xxx pour les pages connues
+app.get('/:page.html', (req, res, next) => {
+    const pageParam = String(req.params.page || '').toLowerCase();
+    if (pageParam === 'index') {
+        return res.redirect(301, '/');
+    }
+
+    const cleanRoute = Object.keys(cleanRouteToFile).find(
+        (route) => route.toLowerCase() === pageParam
+    );
+
+    if (!cleanRoute) {
+        return next();
+    }
+
+    return res.redirect(301, `/${cleanRoute}`);
+});
+
+Object.entries(cleanRouteToFile).forEach(([route, fileName]) => {
+    app.get(`/${route}`, (req, res) => {
+        res.sendFile(path.join(__dirname, `${fileName}.html`));
+    });
+});
+
 // Routes
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
@@ -560,15 +636,6 @@ app.get('/conseil.html', (req, res) => {
 
 app.get('/galerie.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'Galerie.html'));
-});
-
-// Handle missing routes - redirect to home
-app.get('/review', (req, res) => {
-    res.redirect('/');
-});
-
-app.get('*', (req, res) => {
-    res.redirect('/');
 });
 
 // Registration endpoint
@@ -1752,6 +1819,15 @@ app.get('/api/verify-access-token/:token', (req, res) => {
     );
 });
 
+// Après toutes les routes API en GET : sinon app.get('*') intercepte /api/... et casse l’admin
+app.get('/review', (req, res) => {
+    res.redirect('/');
+});
+
+app.get('*', (req, res) => {
+    res.redirect('/');
+});
+
 // Error handling middleware
 app.use((err, req, res, next) => {
     console.error(err.stack);
@@ -1782,5 +1858,8 @@ process.on('SIGINT', () => {
         });
     }
 });
+
+// Démarrer le serveur
+startServer();
 
 module.exports = app;
