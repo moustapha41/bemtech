@@ -861,7 +861,7 @@ app.post('/api/login', authLimiter, validateLogin, (req, res) => {
                         }
                     );
                 });
-            }
+            });
         }
     } catch (error) {
         console.error('❌ Login endpoint error:', error);
