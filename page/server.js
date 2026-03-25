@@ -34,6 +34,10 @@ if (process.env.NODE_ENV === 'production') {
 const app = express();
 const PORT = process.env.PORT || 4000;
 
+// Debug: Log the PORT value
+console.log('🔍 PORT environment variable:', process.env.PORT);
+console.log('🔍 Using PORT:', PORT);
+
 // Security middleware
 app.use(helmet({
     contentSecurityPolicy: false // Allow inline scripts for development
