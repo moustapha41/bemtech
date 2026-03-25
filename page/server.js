@@ -697,9 +697,12 @@ app.post('/api/register', authLimiter, validateRegistration, async (req, res) =>
 
 // Login endpoint
 app.post('/api/login', authLimiter, validateLogin, (req, res) => {
+    console.log('🔐 Login attempt for email:', req.body.email);
+    
     try {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
+            console.log('❌ Validation errors:', errors.array());
             return res.status(400).json({ 
                 error: 'Données invalides', 
                 details: errors.array() 
@@ -707,72 +710,107 @@ app.post('/api/login', authLimiter, validateLogin, (req, res) => {
         }
 
         const { email, password } = req.body;
+        console.log('🔍 Looking for user with email:', email);
 
-        db.get('SELECT * FROM users WHERE email = ?', [email], async (err, user) => {
-            if (err) {
-                return res.status(500).json({ error: 'Erreur de base de données' });
-            }
+        if (process.env.NODE_ENV === 'production') {
+            // PostgreSQL version
+            db.query('SELECT * FROM users WHERE email = $1', [email], async (err, result) => {
+                if (err) {
+                    console.error('❌ Database error (PostgreSQL):', err);
+                    return res.status(500).json({ error: 'Erreur de base de données' });
+                }
 
-            if (!user) {
-                return res.status(401).json({ error: 'Email ou mot de passe incorrect' });
-            }
+                console.log('📊 Query result:', result.rows);
+                const user = result.rows[0];
 
-            // Verify password
-            const isValidPassword = await bcrypt.compare(password, user.password);
-            if (!isValidPassword) {
-                return res.status(401).json({ error: 'Email ou mot de passe incorrect' });
-            }
+                if (!user) {
+                    console.log('❌ User not found');
+                    return res.status(401).json({ error: 'Email ou mot de passe incorrect' });
+                }
 
-            // Get IP and user agent
-            const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-            const userAgent = req.headers['user-agent'] || '';
-            
-            // Update user's last login and increment login count
-            const now = new Date().toISOString();
-            
-            if (process.env.NODE_ENV === 'production') {
-                // PostgreSQL version
-                db.query('UPDATE users SET last_login = $1, login_count = login_count + 1, updated_at = CURRENT_TIMESTAMP WHERE id = $2', [now, user.id], (err) => {
-                    if (err) {
-                        console.error('Error updating user login info:', err);
-                    }
+                console.log('✅ User found, verifying password...');
+                
+                // Verify password
+                const isValidPassword = await bcrypt.compare(password, user.password);
+                if (!isValidPassword) {
+                    console.log('❌ Invalid password');
+                    return res.status(401).json({ error: 'Email ou mot de passe incorrect' });
+                }
+
+                console.log('✅ Password valid, generating token...');
+
+                // Get IP and user agent
+                const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+                const userAgent = req.headers['user-agent'] || '';
+                
+                // Update user's last login and increment login count
+                const now = new Date().toISOString();
+                
+                // Generate JWT token
+                try {
+                    const token = jwt.sign(
+                        { 
+                            id: user.id, 
+                            email: user.email,
+                            nom: user.nom,
+                            role: user.role
+                        },
+                        process.env.JWT_SECRET,
+                        { expiresIn: process.env.JWT_EXPIRES_IN }
+                    );
+
+                    console.log('✅ Token generated successfully');
                     
-                    // Log the login activity
-                    db.query('INSERT INTO user_activity (user_id, login_time, ip_address, user_agent) VALUES ($1, $2, $3, $4)', [user.id, now, ip, userAgent], (err) => {
+                    // Update user login info (simplified)
+                    db.query('UPDATE users SET last_login = $1, login_count = login_count + 1 WHERE id = $2', [now, user.id], (err) => {
                         if (err) {
-                            console.error('Error logging user activity:', err);
+                            console.error('⚠️ Error updating login info:', err);
                         }
-                        
-                        // Generate JWT token
-                        const token = jwt.sign(
-                            { 
-                                id: user.id, 
-                                email: user.email,
-                                nom: user.nom,
-                                role: user.role
-                            },
-                            process.env.JWT_SECRET,
-                            { expiresIn: process.env.JWT_EXPIRES_IN }
-                        );
-
-                        res.json({
-                            success: true,
-                            message: 'Connexion réussie',
-                            token: token,
-                            user: {
-                                id: user.id,
-                                nom: user.nom,
-                                email: user.email,
-                                promo: user.promo,
-                                role: user.role,
-                                last_login: now,
-                                login_count: (user.login_count || 0) + 1
-                            }
-                        });
                     });
-                });
-            } else {
-                // SQLite version
+
+                    res.json({
+                        success: true,
+                        message: 'Connexion réussie',
+                        token: token,
+                        user: {
+                            id: user.id,
+                            nom: user.nom,
+                            email: user.email,
+                            promo: user.promo,
+                            role: user.role,
+                            last_login: now,
+                            login_count: (user.login_count || 0) + 1
+                        }
+                    });
+                } catch (jwtError) {
+                    console.error('❌ JWT generation error:', jwtError);
+                    return res.status(500).json({ error: 'Erreur lors de la génération du token' });
+                }
+            });
+        } else {
+            // SQLite version (keep existing code)
+            db.get('SELECT * FROM users WHERE email = ?', [email], async (err, user) => {
+                if (err) {
+                    return res.status(500).json({ error: 'Erreur de base de données' });
+                }
+
+                if (!user) {
+                    return res.status(401).json({ error: 'Email ou mot de passe incorrect' });
+                }
+
+                // Verify password
+                const isValidPassword = await bcrypt.compare(password, user.password);
+                if (!isValidPassword) {
+                    return res.status(401).json({ error: 'Email ou mot de passe incorrect' });
+                }
+
+                // Get IP and user agent
+                const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+                const userAgent = req.headers['user-agent'] || '';
+                
+                // Update user's last login and increment login count
+                const now = new Date().toISOString();
+                
                 db.serialize(() => {
                     // Update user's last login and increment login count
                     db.run(
@@ -824,8 +862,9 @@ app.post('/api/login', authLimiter, validateLogin, (req, res) => {
                     );
                 });
             }
-        });
+        }
     } catch (error) {
+        console.error('❌ Login endpoint error:', error);
         res.status(500).json({ error: 'Erreur serveur' });
     }
 });
