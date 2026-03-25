@@ -988,19 +988,23 @@ app.get('/api/profile', authenticateToken, (req, res) => {
 
 // Verify token endpoint
 app.post('/api/verify-token', express.json(), (req, res) => {
-    console.log('Verify token request body:', req.body);
+    console.log('🔍 Verify token request body:', req.body);
+    console.log('🔍 JWT_SECRET exists:', !!process.env.JWT_SECRET);
     const token = req.body?.token || req.headers.authorization?.split(' ')[1];
+    console.log('🔍 Token provided:', !!token);
     
     if (!token) {
-        console.error('No token provided');
+        console.error('❌ No token provided');
         return res.status(400).json({ error: 'Token requis' });
     }
 
     jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
         if (err) {
+            console.error('❌ Token verification failed:', err.message);
             return res.status(401).json({ error: 'Token invalide' });
         }
 
+        console.log('✅ Token verified successfully:', decoded);
         res.json({ 
             valid: true, 
             user: {
@@ -1102,14 +1106,27 @@ app.get('/api/bureau-requests', authenticateToken, (req, res) => {
 
     query += ' ORDER BY created_at DESC';
 
-    db.all(query, params, (err, rows) => {
-        if (err) {
-            console.error('Database error:', err);
-            return res.status(500).json({ error: 'Erreur de base de données' });
-        }
-
-        res.json({ requests: rows });
-    });
+    if (process.env.NODE_ENV === 'production') {
+        // PostgreSQL version
+        db.query(query, params, (err, result) => {
+            if (err) {
+                console.error('❌ PostgreSQL error in bureau requests:', err);
+                return res.status(500).json({ error: 'Erreur de base de données PostgreSQL' });
+            }
+            console.log('✅ PostgreSQL bureau requests successful, rows:', result.rows.length);
+            res.json({ requests: result.rows });
+        });
+    } else {
+        // SQLite version
+        db.all(query, params, (err, rows) => {
+            if (err) {
+                console.error('❌ SQLite error in bureau requests:', err);
+                return res.status(500).json({ error: 'Erreur de base de données SQLite' });
+            }
+            console.log('✅ SQLite bureau requests successful, rows:', rows.length);
+            res.json({ requests: rows });
+        });
+    }
 });
 
 // Update bureau request status (admin only)
@@ -1200,6 +1217,8 @@ app.post('/api/projects', limiter, [
 
 // Get all projects with participants
 app.get('/api/projects', (req, res) => {
+    console.log('🔍 Projects list accessed');
+    
     const query = `
         SELECT 
             p.id,
@@ -1216,19 +1235,62 @@ app.get('/api/projects', (req, res) => {
         ORDER BY p.created_at DESC
     `;
 
-    db.all(query, [], (err, projects) => {
-        if (err) {
-            console.error('Get projects error:', err);
-            return res.status(500).json({ error: 'Erreur lors de la récupération des projets' });
-        }
+    if (process.env.NODE_ENV === 'production') {
+        // PostgreSQL version
+        db.query(query, [], (err, result) => {
+            if (err) {
+                console.error('❌ PostgreSQL error in projects query:', err);
+                return res.status(500).json({ error: 'Erreur lors de la récupération des projets (PostgreSQL)' });
+            }
 
-        // Get participants for each project
-        const projectsWithParticipants = [];
-        let completed = 0;
+            const projects = result.rows;
+            console.log('✅ PostgreSQL projects query successful, rows:', projects.length);
+            
+            // Get participants for each project
+            const projectsWithParticipants = [];
+            let completed = 0;
 
-        if (projects.length === 0) {
-            return res.json({ projects: [] });
-        }
+            if (projects.length === 0) {
+                return res.json({ projects: [] });
+            }
+
+            projects.forEach(project => {
+                const participantQuery = 'SELECT name, email, phone FROM project_participants WHERE project_id = ? ORDER BY created_at';
+                db.query(participantQuery, [project.id], (err, participantResult) => {
+                    if (err) {
+                        console.error('❌ PostgreSQL error getting participants:', err);
+                        return res.status(500).json({ error: 'Erreur lors de la récupération des participants' });
+                    }
+
+                    projectsWithParticipants.push({
+                        ...project,
+                        participants: participantResult.rows
+                    });
+
+                    completed++;
+                    if (completed === projects.length) {
+                        res.json({ projects: projectsWithParticipants });
+                    }
+                });
+            });
+        });
+    } else {
+        // SQLite version
+        db.all(query, [], (err, projects) => {
+            if (err) {
+                console.error('❌ SQLite error in projects query:', err);
+                return res.status(500).json({ error: 'Erreur lors de la récupération des projets (SQLite)' });
+            }
+
+            console.log('✅ SQLite projects query successful, rows:', projects.length);
+            
+            // Get participants for each project
+            const projectsWithParticipants = [];
+            let completed = 0;
+
+            if (projects.length === 0) {
+                return res.json({ projects: [] });
+            }
 
         projects.forEach(project => {
             db.all(
@@ -1482,11 +1544,15 @@ app.post('/api/membership-request', limiter, validateMembershipRequest, (req, re
 
 // Get membership requests (admin only)
 app.get('/api/membership-requests', authenticateToken, (req, res) => {
+    console.log('🔍 Membership requests accessed by user:', req.user.email, 'role:', req.user.role);
+    
     // Check if user has admin role
     if (req.user.role !== 'admin') {
+        console.error('❌ Access denied - user is not admin');
         return res.status(403).json({ error: 'Accès non autorisé' });
     }
 
+    console.log('✅ Admin access granted');
     const { status } = req.query;
     let query = 'SELECT * FROM membership_requests';
     let params = [];
@@ -1498,14 +1564,27 @@ app.get('/api/membership-requests', authenticateToken, (req, res) => {
 
     query += ' ORDER BY created_at DESC';
 
-    db.all(query, params, (err, rows) => {
-        if (err) {
-            console.error('Database error:', err);
-            return res.status(500).json({ error: 'Erreur de base de données' });
-        }
-
-        res.json({ requests: rows });
-    });
+    if (process.env.NODE_ENV === 'production') {
+        // PostgreSQL version
+        db.query(query, params, (err, result) => {
+            if (err) {
+                console.error('❌ PostgreSQL error:', err);
+                return res.status(500).json({ error: 'Erreur de base de données PostgreSQL' });
+            }
+            console.log('✅ PostgreSQL query successful, rows:', result.rows.length);
+            res.json({ requests: result.rows });
+        });
+    } else {
+        // SQLite version
+        db.all(query, params, (err, rows) => {
+            if (err) {
+                console.error('❌ SQLite error:', err);
+                return res.status(500).json({ error: 'Erreur de base de données SQLite' });
+            }
+            console.log('✅ SQLite query successful, rows:', rows.length);
+            res.json({ requests: rows });
+        });
+    }
 });
 
 // Approve membership request and generate access token (admin only)
@@ -1558,23 +1637,45 @@ app.post('/api/membership-requests/:id/approve', authenticateToken, (req, res) =
 
 // Get all users (admin only)
 app.get('/api/users', authenticateToken, (req, res) => {
+    console.log('🔍 Users list accessed by user:', req.user.email, 'role:', req.user.role);
+    
     // Check if user has admin role
     if (req.user.role !== 'admin') {
+        console.error('❌ Access denied - user is not admin');
         return res.status(403).json({ error: 'Accès non autorisé' });
     }
 
-    db.all(
-        'SELECT id, nom, email, promo, linkedin, role, created_at FROM users ORDER BY created_at DESC',
-        [],
-        (err, users) => {
-            if (err) {
-                console.error('Database error:', err);
-                return res.status(500).json({ error: 'Erreur de base de données' });
+    console.log('✅ Admin access granted for users list');
+    
+    if (process.env.NODE_ENV === 'production') {
+        // PostgreSQL version
+        db.query(
+            'SELECT id, nom, email, promo, linkedin, role, created_at FROM users ORDER BY created_at DESC',
+            [],
+            (err, result) => {
+                if (err) {
+                    console.error('❌ PostgreSQL error in users query:', err);
+                    return res.status(500).json({ error: 'Erreur de base de données PostgreSQL' });
+                }
+                console.log('✅ PostgreSQL users query successful, rows:', result.rows.length);
+                res.json({ users: result.rows });
             }
-
-            res.json({ users });
-        }
-    );
+        );
+    } else {
+        // SQLite version
+        db.all(
+            'SELECT id, nom, email, promo, linkedin, role, created_at FROM users ORDER BY created_at DESC',
+            [],
+            (err, users) => {
+                if (err) {
+                    console.error('❌ SQLite error in users query:', err);
+                    return res.status(500).json({ error: 'Erreur de base de données SQLite' });
+                }
+                console.log('✅ SQLite users query successful, rows:', users.length);
+                res.json({ users });
+            }
+        );
+    }
 });
 
 // Update user role (admin only)
