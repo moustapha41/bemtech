@@ -33,10 +33,10 @@ if (process.env.NODE_ENV === 'production') {
 
 const app = express();
 // Use CUSTOM_PORT if set, otherwise PORT, otherwise 4000
-// But force port 3000 if PORT is 10000 (to avoid conflict)
+// But force a different port if common ports are in use (to avoid conflict)
 let PORT = process.env.CUSTOM_PORT || process.env.PORT || 4000;
-if (PORT === '10000') {
-    PORT = 3000;
+if (PORT === '10000' || PORT === '3000') {
+    PORT = 49152; // Use a high-numbered port that's unlikely to be in use
 }
 
 // Debug: Log the PORT value
