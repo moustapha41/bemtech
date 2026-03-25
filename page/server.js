@@ -32,10 +32,12 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 const app = express();
-const PORT = process.env.PORT || 4000;
+// Use CUSTOM_PORT if set, otherwise PORT, otherwise 4000
+const PORT = process.env.CUSTOM_PORT || process.env.PORT || 4000;
 
 // Debug: Log the PORT value
 console.log('🔍 PORT environment variable:', process.env.PORT);
+console.log('🔍 CUSTOM_PORT environment variable:', process.env.CUSTOM_PORT);
 console.log('🔍 Using PORT:', PORT);
 
 // Security middleware
