@@ -1292,42 +1292,43 @@ app.get('/api/projects', (req, res) => {
                 return res.json({ projects: [] });
             }
 
-        projects.forEach(project => {
-            db.all(
-                'SELECT name, email, phone, created_at FROM project_participants WHERE project_id = ?',
-                [project.id],
-                (err, participants) => {
-                    if (err) {
-                        console.error('Get participants error:', err);
-                        participants = [];
-                    }
+            projects.forEach(project => {
+                db.all(
+                    'SELECT name, email, phone, created_at FROM project_participants WHERE project_id = ?',
+                    [project.id],
+                    (err, participants) => {
+                        if (err) {
+                            console.error('Get participants error:', err);
+                            participants = [];
+                        }
 
-                    projectsWithParticipants.push({
-                        id: project.id,
-                        title: project.title,
-                        objective: project.objective,
-                        author: project.author_name,
-                        email: project.author_email,
-                        phone: project.author_phone,
-                        dateCreated: new Date(project.created_at).toLocaleDateString('fr-FR'),
-                        participants: participants.map(p => ({
-                            name: p.name,
-                            email: p.email,
-                            phone: p.phone,
-                            joinedDate: new Date(p.created_at).toLocaleDateString('fr-FR')
-                        }))
-                    });
+                        projectsWithParticipants.push({
+                            id: project.id,
+                            title: project.title,
+                            objective: project.objective,
+                            author: project.author_name,
+                            email: project.author_email,
+                            phone: project.author_phone,
+                            dateCreated: new Date(project.created_at).toLocaleDateString('fr-FR'),
+                            participants: participants.map(p => ({
+                                name: p.name,
+                                email: p.email,
+                                phone: p.phone,
+                                joinedDate: new Date(p.created_at).toLocaleDateString('fr-FR')
+                            }))
+                        });
 
-                    completed++;
-                    if (completed === projects.length) {
-                        // Sort by creation date (newest first)
-                        projectsWithParticipants.sort((a, b) => new Date(b.dateCreated) - new Date(a.dateCreated));
-                        res.json({ projects: projectsWithParticipants });
+                        completed++;
+                        if (completed === projects.length) {
+                            // Sort by creation date (newest first)
+                            projectsWithParticipants.sort((a, b) => new Date(b.dateCreated) - new Date(a.dateCreated));
+                            res.json({ projects: projectsWithParticipants });
+                        }
                     }
-                }
-            );
+                );
+            });
         });
-    });
+    }
 });
 
 // Configure express.json avec une limite de taille augmentée
